@@ -20,12 +20,15 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.example.phamn.learningtoeic.JSON.JSON;
 import com.example.phamn.learningtoeic.Model.Question_Part1;
 import com.example.phamn.learningtoeic.R;
 import com.example.phamn.learningtoeic.ViewModel.Part1ViewModel;
 import com.example.phamn.learningtoeic.databinding.ActivityPart1Binding;
 import com.example.phamn.learningtoeic.databinding.FragmentPart1Binding;
 import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 public class Part1Activity extends AppCompatActivity {
     Part1ViewModel part1ViewModel;
@@ -81,10 +84,15 @@ public class Part1Activity extends AppCompatActivity {
         imageView = (ImageView) findViewById(R.id.image);
     }
 
+    public void getLiveData(){
+
+    }
+
     public void registerLiveDataListener(){
         part1ViewModel.getQuestion().observe(this, new Observer<Question_Part1>() {
             @Override
             public void onChanged(@Nullable Question_Part1 question_part1) {
+                updateImage();
                 radioButtonA.setText(part1ViewModel.getQuestion().getValue().getAnswerA());
                 radioButtonB.setText(part1ViewModel.getQuestion().getValue().getAnswerB());
                 radioButtonC.setText(part1ViewModel.getQuestion().getValue().getAnswerC());
@@ -97,7 +105,12 @@ public class Part1Activity extends AppCompatActivity {
                 Toast.makeText(Part1Activity.this, "alo", Toast.LENGTH_SHORT).show();
             }
         });
-        updateImage();
+        part1ViewModel.getListQuestion().observe(this, new Observer<List<Question_Part1>>() {
+            @Override
+            public void onChanged(@Nullable List<Question_Part1> question_part1s) {
+
+            }
+        });
     }
 
     public void updateImage(){
