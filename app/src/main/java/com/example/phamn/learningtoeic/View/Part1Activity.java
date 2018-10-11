@@ -1,5 +1,6 @@
 package com.example.phamn.learningtoeic.View;
 
+import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.arch.lifecycle.Observer;
@@ -20,7 +21,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.example.phamn.learningtoeic.Model.Question_Part1;
+import com.example.phamn.learningtoeic.Model.QuestionPart1;
 import com.example.phamn.learningtoeic.R;
 import com.example.phamn.learningtoeic.ViewModel.Part1ViewModel;
 import com.example.phamn.learningtoeic.databinding.ActivityPart1Binding;
@@ -29,12 +30,20 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class Part1Activity extends AppCompatActivity {
     Part1ViewModel part1ViewModel;
-    Button buttonPrevious, buttonNext;
-    RadioGroup radioGroup;
-    RadioButton radioButtonA,radioButtonB,radioButtonC,radioButtonD;
-    ImageView imageView;
+    @BindView(R.id.button_previous) Button buttonPrevious;
+    @BindView(R.id.button_next) Button buttonNext;
+    @BindView(R.id.radio_group) RadioGroup radioGroup;
+    @BindView(R.id.radioButton_A) RadioButton radioButtonA;
+    @BindView(R.id.radioButton_B) RadioButton radioButtonB;
+    @BindView(R.id.radioButton_C) RadioButton radioButtonC;
+    @BindView(R.id.radioButton_D) RadioButton radioButtonD;
+    @BindView(R.id.image) ImageView imageView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +51,7 @@ public class Part1Activity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);    // set fullscreen
         this.requestWindowFeature(Window.FEATURE_NO_TITLE); // xóa tiêu đề
         setContentView(R.layout.activity_part1);
-        mapping();
+        ButterKnife.bind(this);
 //        FragmentManager fragmentManager = getFragmentManager();
 //        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 //        FragmentPart1 fragmentPart1 = new FragmentPart1();
@@ -57,7 +66,8 @@ public class Part1Activity extends AppCompatActivity {
 
         //dùng livedata
         part1ViewModel = ViewModelProviders.of(this).get(Part1ViewModel.class);
-        registerLiveDataListener();
+        liveDataListener();
+
         buttonPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,36 +97,31 @@ public class Part1Activity extends AppCompatActivity {
 
     }
 
-    public void registerLiveDataListener(){
-        part1ViewModel.getQuestion().observe(this, new Observer<Question_Part1>() {
+    public void liveDataListener(){
+        part1ViewModel.getQuestion().observe(this, new Observer<QuestionPart1>() {
             @Override
-            public void onChanged(@Nullable Question_Part1 question_part1) {
-                updateImage();
-                radioButtonA.setText(part1ViewModel.getQuestion().getValue().getAnswerA());
-                radioButtonB.setText(part1ViewModel.getQuestion().getValue().getAnswerB());
-                radioButtonC.setText(part1ViewModel.getQuestion().getValue().getAnswerC());
-                radioButtonD.setText(part1ViewModel.getQuestion().getValue().getAnswerD());
+            public void onChanged(@Nullable QuestionPart1 questionPart1) {
+                radioButtonA.setText(questionPart1.getAnswerA());
+                radioButtonB.setText(questionPart1.getAnswerB());
+                radioButtonC.setText(questionPart1.getAnswerC());
+                radioButtonD.setText(questionPart1.getAnswerD());
+                Picasso.with(getApplicationContext()).load(questionPart1.getImage())
+                        .placeholder(R.drawable.loading)
+                        .error(R.drawable.error_image)
+                        .into(imageView);
             }
         });
         part1ViewModel.getCurrentIndex().observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(@Nullable Integer integer) {
-                Toast.makeText(Part1Activity.this, "alo", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(Part1Activity.this, ""+ integer, Toast.LENGTH_SHORT).show();
             }
         });
-        part1ViewModel.getListQuestion().observe(this, new Observer<List<Question_Part1>>() {
+        part1ViewModel.getListQuestion().observe(this, new Observer<List<QuestionPart1>>() {
             @Override
-            public void onChanged(@Nullable List<Question_Part1> question_part1s) {
+            public void onChanged(@Nullable List<QuestionPart1> question_part1s) {
 
             }
         });
     }
-
-    public void updateImage(){
-        Picasso.with(this).load("http://upfile.vn/download/guest/65jCA~XmNhKb/AVXmZVXmNV-O/LZOHgoOYgfaL/whSylCZoaCa0/13b65e335eac1b4cf/1539102357/cdac74e5ee1fb7f71ffa10ab203b531046e6a1f278379fd47/1.png")
-                .placeholder(R.drawable.loading)
-                .error(R.drawable.error_image)
-                .into(imageView);
-    }
-
 }

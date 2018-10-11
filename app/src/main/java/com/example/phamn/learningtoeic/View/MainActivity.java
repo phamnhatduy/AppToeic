@@ -1,5 +1,6 @@
 package com.example.phamn.learningtoeic.View;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -15,7 +16,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.phamn.learningtoeic.Model.QuestionResponse;
 import com.example.phamn.learningtoeic.R;
 
 import org.json.JSONArray;
@@ -24,8 +24,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
-    Button buttonPart1, buttonTest;
+public class MainActivity extends Activity {
+    Button buttonPart1;
     TextView tvTest;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,22 +43,10 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.add(R.id.frame_main, fragmentMain);
         fragmentTransaction.commit();
 
-
-        buttonTest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, TestActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-        //QuestionResponse questionResponse = new QuestionResponse();
     }
 
     public void mapping(){
         buttonPart1 = (Button)findViewById(R.id.button_part1);
-        buttonTest = (Button) findViewById(R.id.button_test);
         tvTest = (TextView) findViewById(R.id.textView_test);
     }
 }

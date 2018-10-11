@@ -8,53 +8,61 @@ import android.arch.lifecycle.ViewModel;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
 
-import com.example.phamn.learningtoeic.Model.Part1;
-import com.example.phamn.learningtoeic.Model.Question_Part1;
+import com.example.phamn.learningtoeic.Model.QuestionPart1;
+import com.example.phamn.learningtoeic.Service.APIService;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Part1ViewModel extends AndroidViewModel{
-    public Part1 part1;
-    public List<Question_Part1> list = new ArrayList<>();
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
-    public MutableLiveData<Question_Part1> question = new MutableLiveData<>();
-    public MutableLiveData<List<Question_Part1>> listQuestion = new MutableLiveData<>();
+public class Part1ViewModel extends AndroidViewModel{
+    public List<QuestionPart1> list = new ArrayList<>();
+
+    public MutableLiveData<QuestionPart1> question = new MutableLiveData<>();
+    public MutableLiveData<List<QuestionPart1>> listQuestion = new MutableLiveData<>();
     public MutableLiveData<Integer> currentIndex = new MutableLiveData<>();
 
     public Part1ViewModel(@NonNull Application application) {
         super(application);
-        init();
-    }
-
-    public void init() {
         currentIndex.setValue(0);
-        this.part1 = new Part1();
-        list.add(new Question_Part1(1,1,"1 answerA","1 answerB",
-                "1 answerC","1 answerD",'a'));
-        list.add(new Question_Part1(1,1,"2 answerA","2 answerB",
-                "2 answerC","2 answerD",'a'));
-        list.add(new Question_Part1(1,1,"3 answerA","3 answerB",
-                "3 answerC","3 answerD",'a'));
-        list.add(new Question_Part1(1,1,"4 answerA","4 answerB",
-                "4 answerC","4 answerD",'a'));
-        // gán giá trị cho listQuestion
-        listQuestion.setValue(list);
-        // gán giá trị cho question
-        question.setValue(listQuestion.getValue().get(currentIndex.getValue()));
-//        question.setValue(new Question_Part1(1,1,"1 answerA","1 answerB",
-//                "1 answerC","1 answerD",'a'));
-
-    }
-    public Part1 getPart1(){
-        return new Part1();
+        getAllQuestion();
     }
 
-    public MutableLiveData<Question_Part1> getQuestion() {
+    public void getAllQuestion() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://myhost2018.000webhostapp.com/Test1/Part1/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        APIService apiService = retrofit.create(APIService.class);
+        Call<List<QuestionPart1>> call = apiService.getAllQuestion();
+        call.enqueue(new Callback<List<QuestionPart1>>() {
+            @Override
+            public void onResponse(Call<List<QuestionPart1>> call, Response<List<QuestionPart1>> response) {
+                List<QuestionPart1> questionPart1List = response.body();
+                for (int i = 0; i < questionPart1List.size() ; i++) {
+                    list.add(questionPart1List.get(i));
+                }
+                listQuestion.setValue(list);
+                question.setValue(list.get(0));
+            }
+
+            @Override
+            public void onFailure(Call<List<QuestionPart1>> call, Throwable t) {
+                //Log.e(Tag, "onFailure: " + t.getMessage());
+            }
+        });
+    }
+
+    public MutableLiveData<QuestionPart1> getQuestion() {
         return question;
     }
 
-    public MutableLiveData<List<Question_Part1>> getListQuestion() {
+    public MutableLiveData<List<QuestionPart1>> getListQuestion() {
         return listQuestion;
     }
 
