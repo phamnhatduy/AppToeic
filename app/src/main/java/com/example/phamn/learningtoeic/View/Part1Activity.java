@@ -20,7 +20,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.example.phamn.learningtoeic.JSON.JSON;
 import com.example.phamn.learningtoeic.Model.Question_Part1;
 import com.example.phamn.learningtoeic.R;
 import com.example.phamn.learningtoeic.ViewModel.Part1ViewModel;
@@ -114,7 +113,7 @@ public class Part1Activity extends AppCompatActivity {
     }
 
     public void updateImage(){
-        Picasso.with(this).load("https://lh6.googleusercontent.com/E5EYoD7Fl8rqmd4wMNdln5jfTJaQNO5NxoHMxeexgeNX9uBG4L1AzowkpkM7x_YgrrO7KIBtMIL61IQ7kag=w1366-h657")
+        Picasso.with(this).load("http://upfile.vn/download/guest/65jCA~XmNhKb/AVXmZVXmNV-O/LZOHgoOYgfaL/whSylCZoaCa0/13b65e335eac1b4cf/1539102357/cdac74e5ee1fb7f71ffa10ab203b531046e6a1f278379fd47/1.png")
                 .placeholder(R.drawable.loading)
                 .error(R.drawable.error_image)
                 .into(imageView);

@@ -15,7 +15,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.phamn.learningtoeic.JSON.JSON;
 import com.example.phamn.learningtoeic.Model.QuestionResponse;
 import com.example.phamn.learningtoeic.R;
 
@@ -55,12 +54,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //QuestionResponse questionResponse = new QuestionResponse();
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                new JSON().execute("https://myhost2018.000webhostapp.com/Test1/Part1/json.php");
-            }
-        });
     }
 
     public void mapping(){

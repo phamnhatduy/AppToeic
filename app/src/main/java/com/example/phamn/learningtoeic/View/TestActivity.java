@@ -48,13 +48,11 @@ public class TestActivity extends AppCompatActivity {
                 JSONArray array = new JSONArray(s);
                 for(int i = 0; i < array.length(); i++){
                     JSONObject jsonObject = array.getJSONObject(i);
-                    if(i == 0){
-                        arrName.add("Question " + jsonObject.getString("number") + ":");
-                    }
-                    if( (i > 0) && ((i) % 4 == 0)){
-                        arrName.add("Question " + jsonObject.getString("number") + ":");
-                    }
-                    arrName.add(jsonObject.getString("answer") + ". "+ jsonObject.getString("contentAnswer"));  // cột name
+                    arrName.add("Question " + jsonObject.getString("number") + ":");
+                    arrName.add(jsonObject.getString("answerA"));
+                    arrName.add(jsonObject.getString("answerB"));
+                    arrName.add(jsonObject.getString("answerC"));
+                    arrName.add(jsonObject.getString("answerD"));
                 }
                 ArrayAdapter adapter = new ArrayAdapter(TestActivity.this, android.R.layout.simple_list_item_1, arrName);
                 listViewTest.setAdapter(adapter);
