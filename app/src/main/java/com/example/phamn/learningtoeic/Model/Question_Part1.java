@@ -1,19 +1,22 @@
 package com.example.phamn.learningtoeic.Model;
 
+import android.graphics.Bitmap;
+
 public class Question_Part1 {
     private int questionNumber;
-    private int image;
+    private String image;
     private String answerA;
     private String answerB;
     private String answerC;
     private String answerD;
-    private char correctAnswer;
+    private String correctAnswer;
+    private String answerChosen;
 
     public Question_Part1(){
 
     }
 
-    public Question_Part1(int questionNumber, int image, String answerA, String answerB, String answerC, String answerD, char correctAnswer) {
+    public Question_Part1(int questionNumber, String image, String answerA, String answerB, String answerC, String answerD, String correctAnswer, String answerChosen) {
         this.questionNumber = questionNumber;
         this.image = image;
         this.answerA = answerA;
@@ -21,6 +24,7 @@ public class Question_Part1 {
         this.answerC = answerC;
         this.answerD = answerD;
         this.correctAnswer = correctAnswer;
+        this.answerChosen = answerChosen;
     }
 
     public int getQuestionNumber() {
@@ -31,11 +35,11 @@ public class Question_Part1 {
         this.questionNumber = questionNumber;
     }
 
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
@@ -71,12 +75,19 @@ public class Question_Part1 {
         this.answerD = answerD;
     }
 
-    public char getCorrectAnswer() {
+    public String getCorrectAnswer() {
         return correctAnswer;
     }
 
-    public void setCorrectAnswer(char correctAnswer) {
+    public void setCorrectAnswer(String correctAnswer) {
         this.correctAnswer = correctAnswer;
     }
 
+    public String getAnswerChosen() {
+        return answerChosen;
+    }
+
+    public void setAnswerChosen(String answerChosen) {
+        this.answerChosen = answerChosen;
+    }
 }

@@ -1,109 +1,209 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-    <data>
-        <variable
-            name="viewModel"
-            type="com.example.phamn.learningtoeic.ViewModel.Part1ViewModel"/>
-    </data>
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools">
+<data>
+    <variable
+        name="viewModel"
+        type="com.example.phamn.learningtoeic.ViewModel.Part1ViewModel"/>
+</data>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="1dp"
+        android:text="Part 1"
+        android:textSize="25dp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/button_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="Submit" />
+
+    <Button
+        android:id="@+id/button_back"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginRight="5dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:text="Back"
+        android:layout_alignParentRight="true" />
+
+    <SeekBar
+        android:id="@+id/seekbar_time"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_alignParentLeft="true" />
+
+
+    <TextView
+        android:id="@+id/tv_current_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/seekbar_time"
+        android:layout_marginLeft="5dp"
+        android:text="0"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_total_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="5dp"
+        android:layout_below="@+id/seekbar_time"
+        android:text="0"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_alignParentRight="true" />
+
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:id="@+id/linear_layout_media"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tv_current_time"
+        android:background="#00DD00"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_alignParentLeft="true">
+
+        <Button
+            android:id="@+id/button_previous"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:text="Pre"
+            android:textSize="15dp" />
+
+        <Button
+            android:id="@+id/button_pause"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:text="Pause"
+            android:textSize="15dp" />
+
+        <Button
+            android:id="@+id/button_next"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:text="Nex"
+            android:textSize="15dp" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_marginTop="5dp"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:layout_below="@+id/linear_layout_media"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center" />
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <ProgressBar
-            android:layout_width="match_parent"
-            android:layout_height="10dp"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-            android:id="@+id/progressBar_Time"
-            />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:orientation="horizontal"
-            android:background="@color/colorAccent"
-            android:gravity="center">
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:text=""
-                android:textSize="15dp"
-                android:id="@+id/button_p"/>
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:text=""
-                android:textSize="15dp"
-                android:id="@+id/button_pause"/>
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:text=""
-                android:textSize="15dp"
-                android:id="@+id/button_N"/>
-        </LinearLayout>
-        <ImageView
-            android:layout_gravity="center"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_marginTop="20dp"
-            android:id="@+id/image"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
-            <Button
-                android:layout_width="130dp"
-                android:layout_height="wrap_content"
-                android:text="Previous"
-                android:textSize="15dp"
-                android:id="@+id/button_previous"/>
-            <Button
-                android:layout_width="130dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:text="Next"
-                android:textSize="15dp"
-                android:id="@+id/button_next"/>
-        </LinearLayout>
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:id="@+id/linear_layout_control"
+        android:layout_below="@+id/image"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_alignParentLeft="true">
 
-        <RadioGroup
+        <Button
+            android:id="@+id/button_previous_question"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:text="Previous"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/tv_number"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="1"
+            android:textAlignment="center"
+            android:textSize="20dp" />
+
+        <Button
+            android:id="@+id/button_next_question"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:text="Next"
+            android:textSize="15dp" />
+    </LinearLayout>
+
+    <RadioGroup
+        android:id="@+id/radio_group"
+        android:layout_width="393dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_below="@+id/linear_layout_control"
+        android:layout_alignParentLeft="true">
+
+        <RadioButton
+            android:id="@+id/radioButton_A"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="10dp"
-            android:id="@+id/radio_group">
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/radioButton_A"
-                android:text="a"
-                android:textSize="20dp"/>
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/radioButton_B"
-                android:text="b"
-                android:textSize="20dp"/>
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/radioButton_C"
-                android:text="C"
-                android:textSize="20dp"/>
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/radioButton_D"
-                android:text="D"
-                android:textSize="20dp"/>
-        </RadioGroup>
+            android:text="a"
+            android:textSize="20dp" />
+
+        <RadioButton
+            android:id="@+id/radioButton_B"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="b"
+            android:textSize="20dp" />
+
+        <RadioButton
+            android:id="@+id/radioButton_C"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="C"
+            android:textSize="20dp" />
+
+        <RadioButton
+            android:id="@+id/radioButton_D"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="D"
+            android:textSize="20dp" />
+    </RadioGroup>
     <!--<FrameLayout
         android:id="@+id/frame_part1"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </FrameLayout>-->
-    </LinearLayout>
+</RelativeLayout>
 </layout>
