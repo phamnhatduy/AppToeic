@@ -18,7 +18,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".View.Part1Activity"></activity>
+        <activity android:name=".View.Part1Activity" />
+        <activity android:name=".ViewModel.Part2Activity" />
+        <activity android:name=".View.Part2Activity"></activity>
     </application>
 
 </manifest>

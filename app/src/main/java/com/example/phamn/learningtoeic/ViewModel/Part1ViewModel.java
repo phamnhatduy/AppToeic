@@ -2,9 +2,7 @@ package com.example.phamn.learningtoeic.ViewModel;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.ViewModel;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
@@ -53,7 +51,7 @@ public class Part1ViewModel extends AndroidViewModel{
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         APIService apiService = retrofit.create(APIService.class);
-        Call<List<QuestionPart1>> call = apiService.getAllQuestion();
+        Call<List<QuestionPart1>> call = apiService.getAllQuestionPart1();
         call.enqueue(new Callback<List<QuestionPart1>>() {
             @Override
             public void onResponse(Call<List<QuestionPart1>> call, Response<List<QuestionPart1>> response) {
