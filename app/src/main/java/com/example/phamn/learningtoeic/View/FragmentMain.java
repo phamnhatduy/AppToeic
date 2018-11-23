@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.phamn.learningtoeic.R;
-import com.example.phamn.learningtoeic.ViewModel.Part2Activity;
 
 public class FragmentMain extends Fragment{
     Button btnPart1;
@@ -33,7 +32,7 @@ public class FragmentMain extends Fragment{
         btnPart2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), com.example.phamn.learningtoeic.View.Part2Activity.class);
+                Intent intent = new Intent(getActivity(), Part2Activity.class);
                 startActivity(intent);
                 getActivity().finish();
             }

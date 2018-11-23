@@ -38,8 +38,7 @@ import butterknife.ButterKnife;
 
 public class Part2Activity extends AppCompatActivity {
     Part2ViewModel part2ViewModel;
-    @BindView(R.id.button_previous)
-    Button btnPreviousTime;
+    @BindView(R.id.button_previous) Button btnPreviousTime;
     @BindView(R.id.button_next) Button btnNextTime;
     @BindView(R.id.button_previous_question) Button btnPreviousQuestion;
     @BindView(R.id.button_next_question) Button btnNextQuestion;
@@ -50,7 +49,6 @@ public class Part2Activity extends AppCompatActivity {
     @BindView(R.id.radioButton_A) RadioButton radioButtonA;
     @BindView(R.id.radioButton_B) RadioButton radioButtonB;
     @BindView(R.id.radioButton_C) RadioButton radioButtonC;
-    @BindView(R.id.image) ImageView imageView;
     @BindView(R.id.tv_number) TextView tvNumber;
     @BindView(R.id.seekbar_time) SeekBar seekBar;
     @BindView(R.id.tv_current_time) TextView tvCurrentTime;
@@ -67,29 +65,29 @@ public class Part2Activity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         part2ViewModel = ViewModelProviders.of(this).get(Part2ViewModel.class);
-//        liveDataListener();
+        liveDataListener();
 
         // show dialog Loading
         showDialogLoading();
 
-        //initAudio();
+        initAudio();
 
-//        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-//            @Override
-//            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-//                tvCurrentTime.setText(new SimpleDateFormat("mm:ss").format(progress));
-//            }
-//
-//            @Override
-//            public void onStartTrackingTouch(SeekBar seekBar) {
-//
-//            }
-//
-//            @Override
-//            public void onStopTrackingTouch(SeekBar seekBar) {
-//                mediaPlayer.seekTo(seekBar.getProgress());
-//            }
-//        });
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                tvCurrentTime.setText(new SimpleDateFormat("mm:ss").format(progress));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                mediaPlayer.seekTo(seekBar.getProgress());
+            }
+        });
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
