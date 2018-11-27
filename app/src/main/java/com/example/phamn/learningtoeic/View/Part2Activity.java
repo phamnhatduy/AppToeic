@@ -24,7 +24,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.phamn.learningtoeic.Model.Part2OnPhone;
-import com.example.phamn.learningtoeic.Model.Question_Part1;
+import com.example.phamn.learningtoeic.Model.Part1OnPhone;
 import com.example.phamn.learningtoeic.R;
 import com.example.phamn.learningtoeic.View.MainActivity;
 import com.example.phamn.learningtoeic.ViewModel.Part2ViewModel;
@@ -68,8 +68,8 @@ public class Part2Activity extends AppCompatActivity {
         liveDataListener();
 
         // show dialog Loading
-        showDialogLoading();
-
+        showLoadingDialog();
+        //
         initAudio();
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -175,7 +175,7 @@ public class Part2Activity extends AppCompatActivity {
         });
     }
 
-    public void showDialogLoading(){
+    public void showLoadingDialog(){
         dialogLoading = new Dialog(this);
         dialogLoading.setContentView(R.layout.loading_layout);
         dialogLoading.show();
@@ -186,8 +186,8 @@ public class Part2Activity extends AppCompatActivity {
     }
 
     public void initAudio(){
-        String url = "https://myhost2018.000webhostapp.com/Test1/Part1/Audio/Test1_Part1.m4a";
-//        String url = "http://myhost2018.byethost31.com/Toeic/Test1/Part1/Audio/Test1_Part1.m4a";
+        String url = "https://myhost2018.000webhostapp.com/Test1/Audio/Test1_Part1.m4a";
+//       String url = "https://myhost2018.000webhostapp.com/Test1/Audio/TestAudio.mp3";
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         try {
             mediaPlayer.setDataSource(url);
@@ -248,39 +248,101 @@ public class Part2Activity extends AppCompatActivity {
 
     public void showSubmitDialog() {
         final Dialog dialogNotice = new Dialog(this);
-        dialogNotice.setContentView(R.layout.end_part1_layout);
+        dialogNotice.setContentView(R.layout.end_part2_layout);
         dialogNotice.show();
         dialogNotice.setCanceledOnTouchOutside(true);
-        Button btn1 = (Button)dialogNotice.findViewById(R.id.button_1);
+        Button btn11 = (Button)dialogNotice.findViewById(R.id.button_11);
         if(!part2ViewModel.getListQuestion().getValue().get(0).getAnswerChosen().equals(""))
-            btn1.setBackgroundResource(R.drawable.question_chosen);
-        Button btn2 = (Button)dialogNotice.findViewById(R.id.button_2);
+            btn11.setBackgroundResource(R.drawable.question_chosen);
+        Button btn12 = (Button)dialogNotice.findViewById(R.id.button_12);
         if(!part2ViewModel.getListQuestion().getValue().get(1).getAnswerChosen().equals(""))
-            btn2.setBackgroundResource(R.drawable.question_chosen);
-        Button btn3 = (Button)dialogNotice.findViewById(R.id.button_3);
+            btn12.setBackgroundResource(R.drawable.question_chosen);
+        Button btn13 = (Button)dialogNotice.findViewById(R.id.button_13);
         if(!part2ViewModel.getListQuestion().getValue().get(2).getAnswerChosen().equals(""))
-            btn3.setBackgroundResource(R.drawable.question_chosen);
-        Button btn4 = (Button)dialogNotice.findViewById(R.id.button_4);
+            btn13.setBackgroundResource(R.drawable.question_chosen);
+        Button btn14 = (Button)dialogNotice.findViewById(R.id.button_14);
         if(!part2ViewModel.getListQuestion().getValue().get(3).getAnswerChosen().equals(""))
-            btn4.setBackgroundResource(R.drawable.question_chosen);
-        Button btn5 = (Button)dialogNotice.findViewById(R.id.button_5);
+            btn14.setBackgroundResource(R.drawable.question_chosen);
+        Button btn15 = (Button)dialogNotice.findViewById(R.id.button_15);
         if(!part2ViewModel.getListQuestion().getValue().get(4).getAnswerChosen().equals(""))
-            btn5.setBackgroundResource(R.drawable.question_chosen);
-        Button btn6 = (Button)dialogNotice.findViewById(R.id.button_6);
+            btn15.setBackgroundResource(R.drawable.question_chosen);
+        Button btn16 = (Button)dialogNotice.findViewById(R.id.button_16);
         if(!part2ViewModel.getListQuestion().getValue().get(5).getAnswerChosen().equals(""))
-            btn6.setBackgroundResource(R.drawable.question_chosen);
-        Button btn7 = (Button)dialogNotice.findViewById(R.id.button_7);
+            btn16.setBackgroundResource(R.drawable.question_chosen);
+        Button btn17 = (Button)dialogNotice.findViewById(R.id.button_17);
         if(!part2ViewModel.getListQuestion().getValue().get(6).getAnswerChosen().equals(""))
-            btn7.setBackgroundResource(R.drawable.question_chosen);
-        Button btn8 = (Button)dialogNotice.findViewById(R.id.button_8);
+            btn17.setBackgroundResource(R.drawable.question_chosen);
+        Button btn8 = (Button)dialogNotice.findViewById(R.id.button_18);
         if(!part2ViewModel.getListQuestion().getValue().get(7).getAnswerChosen().equals(""))
             btn8.setBackgroundResource(R.drawable.question_chosen);
-        Button btn9 = (Button)dialogNotice.findViewById(R.id.button_9);
+        Button btn19 = (Button)dialogNotice.findViewById(R.id.button_19);
         if(!part2ViewModel.getListQuestion().getValue().get(8).getAnswerChosen().equals(""))
-            btn9.setBackgroundResource(R.drawable.question_chosen);
-        Button btn10 = (Button)dialogNotice.findViewById(R.id.button_10);
+            btn19.setBackgroundResource(R.drawable.question_chosen);
+        Button btn20 = (Button)dialogNotice.findViewById(R.id.button_20);
         if(!part2ViewModel.getListQuestion().getValue().get(9).getAnswerChosen().equals(""))
-            btn10.setBackgroundResource(R.drawable.question_chosen);
+            btn20.setBackgroundResource(R.drawable.question_chosen);
+
+        Button btn21 = (Button)dialogNotice.findViewById(R.id.button_21);
+        if(!part2ViewModel.getListQuestion().getValue().get(10).getAnswerChosen().equals(""))
+            btn21.setBackgroundResource(R.drawable.question_chosen);
+        Button btn22 = (Button)dialogNotice.findViewById(R.id.button_22);
+        if(!part2ViewModel.getListQuestion().getValue().get(11).getAnswerChosen().equals(""))
+            btn22.setBackgroundResource(R.drawable.question_chosen);
+        Button btn23 = (Button)dialogNotice.findViewById(R.id.button_23);
+        if(!part2ViewModel.getListQuestion().getValue().get(12).getAnswerChosen().equals(""))
+            btn23.setBackgroundResource(R.drawable.question_chosen);
+        Button btn24 = (Button)dialogNotice.findViewById(R.id.button_24);
+        if(!part2ViewModel.getListQuestion().getValue().get(13).getAnswerChosen().equals(""))
+            btn24.setBackgroundResource(R.drawable.question_chosen);
+        Button btn25 = (Button)dialogNotice.findViewById(R.id.button_25);
+        if(!part2ViewModel.getListQuestion().getValue().get(14).getAnswerChosen().equals(""))
+            btn25.setBackgroundResource(R.drawable.question_chosen);
+        Button btn26 = (Button)dialogNotice.findViewById(R.id.button_26);
+        if(!part2ViewModel.getListQuestion().getValue().get(15).getAnswerChosen().equals(""))
+            btn26.setBackgroundResource(R.drawable.question_chosen);
+        Button btn27 = (Button)dialogNotice.findViewById(R.id.button_27);
+        if(!part2ViewModel.getListQuestion().getValue().get(16).getAnswerChosen().equals(""))
+            btn27.setBackgroundResource(R.drawable.question_chosen);
+        Button btn28 = (Button)dialogNotice.findViewById(R.id.button_28);
+        if(!part2ViewModel.getListQuestion().getValue().get(17).getAnswerChosen().equals(""))
+            btn28.setBackgroundResource(R.drawable.question_chosen);
+        Button btn29 = (Button)dialogNotice.findViewById(R.id.button_29);
+        if(!part2ViewModel.getListQuestion().getValue().get(18).getAnswerChosen().equals(""))
+            btn29.setBackgroundResource(R.drawable.question_chosen);
+        Button btn30 = (Button)dialogNotice.findViewById(R.id.button_30);
+        if(!part2ViewModel.getListQuestion().getValue().get(19).getAnswerChosen().equals(""))
+            btn30.setBackgroundResource(R.drawable.question_chosen);
+
+        Button btn31 = (Button)dialogNotice.findViewById(R.id.button_31);
+        if(!part2ViewModel.getListQuestion().getValue().get(20).getAnswerChosen().equals(""))
+            btn31.setBackgroundResource(R.drawable.question_chosen);
+        Button btn32 = (Button)dialogNotice.findViewById(R.id.button_32);
+        if(!part2ViewModel.getListQuestion().getValue().get(21).getAnswerChosen().equals(""))
+            btn32.setBackgroundResource(R.drawable.question_chosen);
+        Button btn33 = (Button)dialogNotice.findViewById(R.id.button_33);
+        if(!part2ViewModel.getListQuestion().getValue().get(22).getAnswerChosen().equals(""))
+            btn33.setBackgroundResource(R.drawable.question_chosen);
+        Button btn34 = (Button)dialogNotice.findViewById(R.id.button_34);
+        if(!part2ViewModel.getListQuestion().getValue().get(23).getAnswerChosen().equals(""))
+            btn34.setBackgroundResource(R.drawable.question_chosen);
+        Button btn35 = (Button)dialogNotice.findViewById(R.id.button_35);
+        if(!part2ViewModel.getListQuestion().getValue().get(24).getAnswerChosen().equals(""))
+            btn35.setBackgroundResource(R.drawable.question_chosen);
+        Button btn36 = (Button)dialogNotice.findViewById(R.id.button_36);
+        if(!part2ViewModel.getListQuestion().getValue().get(25).getAnswerChosen().equals(""))
+            btn36.setBackgroundResource(R.drawable.question_chosen);
+        Button btn37 = (Button)dialogNotice.findViewById(R.id.button_37);
+        if(!part2ViewModel.getListQuestion().getValue().get(26).getAnswerChosen().equals(""))
+            btn37.setBackgroundResource(R.drawable.question_chosen);
+        Button btn38 = (Button)dialogNotice.findViewById(R.id.button_38);
+        if(!part2ViewModel.getListQuestion().getValue().get(27).getAnswerChosen().equals(""))
+            btn38.setBackgroundResource(R.drawable.question_chosen);
+        Button btn39 = (Button)dialogNotice.findViewById(R.id.button_39);
+        if(!part2ViewModel.getListQuestion().getValue().get(28).getAnswerChosen().equals(""))
+            btn39.setBackgroundResource(R.drawable.question_chosen);
+        Button btn40 = (Button)dialogNotice.findViewById(R.id.button_40);
+        if(!part2ViewModel.getListQuestion().getValue().get(29).getAnswerChosen().equals(""))
+            btn40.setBackgroundResource(R.drawable.question_chosen);
 
         Button btnSubmit = (Button)dialogNotice.findViewById(R.id.button_submit);
         btnSubmit.setOnClickListener(new View.OnClickListener() {
@@ -354,18 +416,18 @@ public class Part2Activity extends AppCompatActivity {
                     radioButtonB.setEnabled(false);
                     radioButtonC.setTextColor(Color.parseColor("#000000"));
                     radioButtonC.setEnabled(false);
-                    if (!questionPart2.getAnswerChosen().trim().equals("")){
-                        if (questionPart2.getAnswerChosen().equals(questionPart2.getCorrectAnswer())) {
-                            getRadioButton(questionPart2.getAnswerChosen()).setTextColor(Color.parseColor("#00EE00"));
-                        } else {
-                            if (!questionPart2.getAnswerChosen().equals(questionPart2.getCorrectAnswer())) {
-                                getRadioButton(questionPart2.getAnswerChosen()).setTextColor(Color.parseColor("#FF0000"));
-                                getRadioButton(questionPart2.getCorrectAnswer()).setTextColor(Color.parseColor("#00FF00"));
-                            }
-                        }
-                    }
-                    else
-                        getRadioButton(questionPart2.getCorrectAnswer()).setTextColor(Color.parseColor("#00FF00"));
+//                    if (!questionPart2.getAnswerChosen().trim().equals("")){
+//                        if (questionPart2.getAnswerChosen().equals(questionPart2.getCorrectAnswer())) {
+//                            getRadioButton(questionPart2.getAnswerChosen()).setTextColor(Color.parseColor("#00EE00"));
+//                        } else {
+//                            if (!questionPart2.getAnswerChosen().equals(questionPart2.getCorrectAnswer())) {
+//                                getRadioButton(questionPart2.getAnswerChosen()).setTextColor(Color.parseColor("#FF0000"));
+//                                getRadioButton(questionPart2.getCorrectAnswer()).setTextColor(Color.parseColor("#00FF00"));
+//                            }
+//                        }
+//                    }
+//                    else
+//                        getRadioButton(questionPart2.getCorrectAnswer()).setTextColor(Color.parseColor("#00FF00"));
                 }
             }
         });
@@ -384,7 +446,7 @@ public class Part2Activity extends AppCompatActivity {
                     btnPreviousQuestion.setEnabled(false);
                 else
                     btnPreviousQuestion.setEnabled(true);
-                if (integer == 10 - 1)
+                if (integer == 30 - 1)
                     btnNextQuestion.setEnabled(false);
                 else
                     btnNextQuestion.setEnabled(true);

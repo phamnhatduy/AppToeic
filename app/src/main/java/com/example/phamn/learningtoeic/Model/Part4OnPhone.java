@@ -1,27 +1,28 @@
 package com.example.phamn.learningtoeic.Model;
 
-public class Question_Part1 {
+public class Part4OnPhone {
     private int questionNumber;
-    private String image;
+    private String questionContent;
     private String answerA;
     private String answerB;
     private String answerC;
     private String answerD;
     private String correctAnswer;
+    private String note;
     private String answerChosen;
 
-    public Question_Part1(){
-
+    public Part4OnPhone() {
     }
 
-    public Question_Part1(int questionNumber, String image, String answerA, String answerB, String answerC, String answerD, String correctAnswer, String answerChosen) {
+    public Part4OnPhone(int questionNumber, String questionContent, String answerA, String answerB, String answerC, String answerD, String correctAnswer, String note, String answerChosen) {
         this.questionNumber = questionNumber;
-        this.image = image;
+        this.questionContent = questionContent;
         this.answerA = answerA;
         this.answerB = answerB;
         this.answerC = answerC;
         this.answerD = answerD;
         this.correctAnswer = correctAnswer;
+        this.note = note;
         this.answerChosen = answerChosen;
     }
 
@@ -33,12 +34,12 @@ public class Question_Part1 {
         this.questionNumber = questionNumber;
     }
 
-    public String getImage() {
-        return image;
+    public String getQuestionContent() {
+        return questionContent;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setQuestionContent(String questionContent) {
+        this.questionContent = questionContent;
     }
 
     public String getAnswerA() {
@@ -79,6 +80,14 @@ public class Question_Part1 {
 
     public void setCorrectAnswer(String correctAnswer) {
         this.correctAnswer = correctAnswer;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 
     public String getAnswerChosen() {

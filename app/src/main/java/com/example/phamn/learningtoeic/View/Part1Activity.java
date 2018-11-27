@@ -34,7 +34,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.phamn.learningtoeic.Model.QuestionPart1;
-import com.example.phamn.learningtoeic.Model.Question_Part1;
+import com.example.phamn.learningtoeic.Model.Part1OnPhone;
 import com.example.phamn.learningtoeic.R;
 import com.example.phamn.learningtoeic.ViewModel.Part1ViewModel;
 import com.example.phamn.learningtoeic.databinding.ActivityPart1Binding;
@@ -217,7 +217,7 @@ public class Part1Activity extends AppCompatActivity {
     }
 
     public void initAudio(){
-        String url = "https://myhost2018.000webhostapp.com/Test1/Part1/Audio/Test1_Part1.m4a";
+        String url = "https://myhost2018.000webhostapp.com/Test1/Audio/Test1_Part1.m4a";
 //        String url = "http://myhost2018.byethost31.com/Toeic/Test1/Part1/Audio/Test1_Part1.m4a";
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         try {
@@ -353,9 +353,9 @@ public class Part1Activity extends AppCompatActivity {
     }
 
     public void liveDataListener(){
-        part1ViewModel.getQuestion().observe(this, new Observer<Question_Part1>() {
+        part1ViewModel.getQuestion().observe(this, new Observer<Part1OnPhone>() {
             @Override
-            public void onChanged(@Nullable Question_Part1 questionPart1) {
+            public void onChanged(@Nullable Part1OnPhone questionPart1) {
                 tvNumber.setText("" + questionPart1.getQuestionNumber());
                 radioButtonA.setText("A. " + questionPart1.getAnswerA());
                 radioButtonB.setText("B. " + questionPart1.getAnswerB());
@@ -416,9 +416,9 @@ public class Part1Activity extends AppCompatActivity {
             }
         });
 
-        part1ViewModel.getListQuestion().observe(this, new Observer<List<Question_Part1>>() {
+        part1ViewModel.getListQuestion().observe(this, new Observer<List<Part1OnPhone>>() {
             @Override
-            public void onChanged(@Nullable List<Question_Part1> question_part1s) {
+            public void onChanged(@Nullable List<Part1OnPhone> question_part1s) {
 
             }
         });

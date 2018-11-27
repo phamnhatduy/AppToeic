@@ -8,8 +8,8 @@ import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
 
+import com.example.phamn.learningtoeic.Model.Part1OnPhone;
 import com.example.phamn.learningtoeic.Model.QuestionPart1;
-import com.example.phamn.learningtoeic.Model.Question_Part1;
 import com.example.phamn.learningtoeic.Service.APIService;
 
 import java.io.IOException;
@@ -26,10 +26,10 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Part1ViewModel extends AndroidViewModel{
-    public List<Question_Part1> list = new ArrayList<>();
+    public List<Part1OnPhone> list = new ArrayList<>();
 
-    public MutableLiveData<Question_Part1> question = new MutableLiveData<>();
-    public MutableLiveData<List<Question_Part1>> listQuestion = new MutableLiveData<>();
+    public MutableLiveData<Part1OnPhone> question = new MutableLiveData<>();
+    public MutableLiveData<List<Part1OnPhone>> listQuestion = new MutableLiveData<>();
     public MutableLiveData<Integer> currentIndex = new MutableLiveData<>();
     public MutableLiveData<List<String>> listAnswerChosen = new MutableLiveData<>();
     public List<String> stringList = new ArrayList<>();
@@ -58,7 +58,7 @@ public class Part1ViewModel extends AndroidViewModel{
                 List<QuestionPart1> questionPart1List = response.body();
                 for (int i = 0; i < questionPart1List.size() ; i++) {
                     //list.add(questionPart1List.get(i));
-                    Question_Part1 q = new Question_Part1();
+                    Part1OnPhone q = new Part1OnPhone();
                     q.setQuestionNumber(questionPart1List.get(i).getNumber());
                     q.setAnswerA(questionPart1List.get(i).getAnswerA());
                     q.setAnswerB(questionPart1List.get(i).getAnswerB());
@@ -122,11 +122,11 @@ public class Part1ViewModel extends AndroidViewModel{
         listQuestion.getValue().get(currentIndex.getValue()).setAnswerChosen(answer);
     }
 
-    public MutableLiveData<Question_Part1> getQuestion() {
+    public MutableLiveData<Part1OnPhone> getQuestion() {
         return question;
     }
 
-    public MutableLiveData<List<Question_Part1>> getListQuestion() {
+    public MutableLiveData<List<Part1OnPhone>> getListQuestion() {
         return listQuestion;
     }
 

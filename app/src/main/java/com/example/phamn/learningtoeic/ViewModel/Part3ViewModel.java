@@ -6,8 +6,8 @@ import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
 
-import com.example.phamn.learningtoeic.Model.Part2OnPhone;
-import com.example.phamn.learningtoeic.Model.QuestionPart2;
+import com.example.phamn.learningtoeic.Model.Part3OnPhone;
+import com.example.phamn.learningtoeic.Model.QuestionPart3;
 import com.example.phamn.learningtoeic.Service.APIService;
 
 import java.util.ArrayList;
@@ -19,46 +19,45 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class Part2ViewModel extends AndroidViewModel {
-    public List<Part2OnPhone> list = new ArrayList<>();
+public class Part3ViewModel extends AndroidViewModel {
+    public List<Part3OnPhone> list = new ArrayList<>();
 
-    public MutableLiveData<Part2OnPhone> question = new MutableLiveData<>();
-    public MutableLiveData<List<Part2OnPhone>> listQuestion = new MutableLiveData<>();
+    public MutableLiveData<Part3OnPhone> question = new MutableLiveData<>();
+    public MutableLiveData<List<Part3OnPhone>> listQuestion = new MutableLiveData<>();
     public MutableLiveData<Integer> currentIndex = new MutableLiveData<>();
     public MutableLiveData<List<String>> listAnswerChosen = new MutableLiveData<>();
     public List<String> stringList = new ArrayList<>();
 
-
-    public Part2ViewModel(@NonNull Application application) {
+    public Part3ViewModel(@NonNull Application application) {
         super(application);
-        currentIndex.setValue(0);
         getAllQuestion();
         for (int i = 0; i < list.size(); i++){
             stringList.add("A");
         }
         listAnswerChosen.setValue(stringList);
     }
-
     public void getAllQuestion() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://myhost2018.000webhostapp.com/Test1/Part2/")
+                .baseUrl("https://myhost2018.000webhostapp.com/Test1/Part3/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         APIService apiService = retrofit.create(APIService.class);
-        Call<List<QuestionPart2>> call = apiService.getAllQuestionPart2();
-        call.enqueue(new Callback<List<QuestionPart2>>() {
+        Call<List<QuestionPart3>> call = apiService.getAllQuestionPart3();
+        call.enqueue(new Callback<List<QuestionPart3>>() {
             @Override
-            public void onResponse(Call<List<QuestionPart2>> call, Response<List<QuestionPart2>> response) {
-                List<QuestionPart2> questionPart2List = response.body();
-                for (int i = 0; i < questionPart2List.size(); i++) {
-                    Part2OnPhone q = new Part2OnPhone();
-                    q.setQuestionNumber(questionPart2List.get(i).getNumber());
-                    q.setQuestionContent(questionPart2List.get(i).getQuestionContent());
-                    q.setAnswerA(questionPart2List.get(i).getAnswerA());
-                    q.setAnswerB(questionPart2List.get(i).getAnswerB());
-                    q.setAnswerC(questionPart2List.get(i).getAnswerC());
+            public void onResponse(Call<List<QuestionPart3>> call, Response<List<QuestionPart3>> response) {
+                List<QuestionPart3> questionPart3List = response.body();
+                for (int i = 0; i < questionPart3List.size(); i++) {
+                    Part3OnPhone q = new Part3OnPhone();
+                    q.setQuestionNumber(questionPart3List.get(i).getNumber());
+                    q.setQuestionContent(questionPart3List.get(i).getQuestionContent());
+                    q.setAnswerA(questionPart3List.get(i).getAnswerA());
+                    q.setAnswerB(questionPart3List.get(i).getAnswerB());
+                    q.setAnswerC(questionPart3List.get(i).getAnswerC());
+                    q.setAnswerD(questionPart3List.get(i).getAnswerD());
                     q.setAnswerChosen("");
-                    q.setCorrectAnswer(questionPart2List.get(i).getCorrectAnswer());
+                    q.setCorrectAnswer(questionPart3List.get(i).getCorrectAnswer());
+                    q.setNote(questionPart3List.get(i).getNote());
                     list.add(q);
                 }
                 listQuestion.setValue(list);
@@ -66,7 +65,7 @@ public class Part2ViewModel extends AndroidViewModel {
             }
 
             @Override
-            public void onFailure(Call<List<QuestionPart2>> call, Throwable t) {
+            public void onFailure(Call<List<QuestionPart3>> call, Throwable t) {
                 //Log.e(Tag, "onFailure: " + t.getMessage());
             }
         });
@@ -97,11 +96,11 @@ public class Part2ViewModel extends AndroidViewModel {
         listQuestion.getValue().get(currentIndex.getValue()).setAnswerChosen(answer);
     }
 
-    public MutableLiveData<Part2OnPhone> getQuestion() {
+    public MutableLiveData<Part3OnPhone> getQuestion() {
         return question;
     }
 
-    public MutableLiveData<List<Part2OnPhone>> getListQuestion() {
+    public MutableLiveData<List<Part3OnPhone>> getListQuestion() {
         return listQuestion;
     }
 

@@ -14,7 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
-import com.example.phamn.learningtoeic.Model.Question_Part1;
+import com.example.phamn.learningtoeic.Model.Part1OnPhone;
 import com.example.phamn.learningtoeic.R;
 import com.example.phamn.learningtoeic.ViewModel.Part1ViewModel;
 import com.example.phamn.learningtoeic.databinding.FragmentPart1Binding;
