@@ -4,7 +4,6 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
-import android.widget.Toast;
 
 import com.example.phamn.learningtoeic.Model.Part2OnPhone;
 import com.example.phamn.learningtoeic.Model.QuestionPart2;
@@ -27,12 +26,12 @@ public class Part2ViewModel extends AndroidViewModel {
     public MutableLiveData<Integer> currentIndex = new MutableLiveData<>();
     public MutableLiveData<List<String>> listAnswerChosen = new MutableLiveData<>();
     public List<String> stringList = new ArrayList<>();
+    public MutableLiveData<String> titleName = new MutableLiveData<>();
 
 
     public Part2ViewModel(@NonNull Application application) {
         super(application);
         currentIndex.setValue(0);
-        getAllQuestion();
         for (int i = 0; i < list.size(); i++){
             stringList.add("A");
         }
@@ -41,7 +40,7 @@ public class Part2ViewModel extends AndroidViewModel {
 
     public void getAllQuestion() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://myhost2018.000webhostapp.com/Test1/Part2/")
+                .baseUrl("https://myhost2018.000webhostapp.com/" + titleName.getValue() + "/Part2/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         APIService apiService = retrofit.create(APIService.class);
@@ -81,20 +80,30 @@ public class Part2ViewModel extends AndroidViewModel {
         if (currentIndex.getValue() < (listQuestion.getValue().size() - 1)) {
             currentIndex.setValue(currentIndex.getValue() + 1);
             question.setValue(listQuestion.getValue().get(currentIndex.getValue()));
-        } else
-            Toast.makeText(getApplication(), "đây là câu cuối", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void previousQuestion() {
         if (currentIndex.getValue() > 0) {
             currentIndex.setValue(currentIndex.getValue() - 1);
             question.setValue(listQuestion.getValue().get(currentIndex.getValue()));
-        } else
-            Toast.makeText(getApplication(), "đây là câu đầu", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void changeAnswer(String answer) {
         listQuestion.getValue().get(currentIndex.getValue()).setAnswerChosen(answer);
+    }
+
+    public MutableLiveData<String> getTitleName() {
+        return titleName;
+    }
+
+    public void setTitleName(String titleName) {
+        if(titleName != null)
+            this.titleName.setValue(titleName);
+        else
+            this.titleName.setValue("Test1");
+        getAllQuestion();
     }
 
     public MutableLiveData<Part2OnPhone> getQuestion() {

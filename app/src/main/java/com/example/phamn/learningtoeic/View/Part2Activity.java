@@ -45,11 +45,11 @@ public class Part2Activity extends AppCompatActivity {
     @BindView(R.id.button_back) Button btnBack;
     @BindView(R.id.button_pause) Button btnPause;
     @BindView(R.id.button_submit) Button btnSubmit;
+    @BindView(R.id.tv_question_content) TextView tvQuestionContent;
     @BindView(R.id.radio_group) RadioGroup radioGroup;
     @BindView(R.id.radioButton_A) RadioButton radioButtonA;
     @BindView(R.id.radioButton_B) RadioButton radioButtonB;
     @BindView(R.id.radioButton_C) RadioButton radioButtonC;
-    @BindView(R.id.tv_number) TextView tvNumber;
     @BindView(R.id.seekbar_time) SeekBar seekBar;
     @BindView(R.id.tv_current_time) TextView tvCurrentTime;
     @BindView(R.id.tv_total_time) TextView tvTotalTime;
@@ -64,11 +64,15 @@ public class Part2Activity extends AppCompatActivity {
         setContentView(R.layout.activity_part2);
         ButterKnife.bind(this);
 
+        Intent intent = getIntent();
+        String titleName = intent.getStringExtra("titleName");
+
         part2ViewModel = ViewModelProviders.of(this).get(Part2ViewModel.class);
+        part2ViewModel.setTitleName(titleName);
         liveDataListener();
 
         // show dialog Loading
-        showLoadingDialog();
+        showLoadingDialog(false);
         //
         initAudio();
 
@@ -92,10 +96,9 @@ public class Part2Activity extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mediaPlayer.stop();
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-                finish();
+                mediaPlayer.pause();
+                btnPause.setText("Continue");
+                showNoticeDialog("Are you sure want to back?");
             }
         });
 
@@ -175,18 +178,39 @@ public class Part2Activity extends AppCompatActivity {
         });
     }
 
-    public void showLoadingDialog(){
-        dialogLoading = new Dialog(this);
-        dialogLoading.setContentView(R.layout.loading_layout);
-        dialogLoading.show();
-        dialogLoading.setCanceledOnTouchOutside(false);
-        Animation animRotate = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate);
-        ImageView ivLoading = dialogLoading.findViewById(R.id.iv_loading);
-        ivLoading.startAnimation(animRotate);
+    public void showLoadingDialog(boolean successful){
+        if(successful == false) { // đang tải
+            dialogLoading = new Dialog(this, R.style.AppTheme);
+            //dialogLoading.setTitle("LearningToeic");
+            dialogLoading.setContentView(R.layout.loading_layout);
+            dialogLoading.show();
+            dialogLoading.setCanceledOnTouchOutside(false);
+            Animation animRotate = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate);
+            ImageView ivLoading = dialogLoading.findViewById(R.id.iv_loading);
+            ivLoading.startAnimation(animRotate);
+            Button btnStart = dialogLoading.findViewById(R.id.btn_start);
+            btnStart.setVisibility(View.INVISIBLE);
+        }
+        else {  // tải thành công
+            ImageView ivLoading = dialogLoading.findViewById(R.id.iv_loading);
+            ivLoading.clearAnimation();
+            ivLoading.setImageResource(R.drawable.success);
+            TextView tvLoading = dialogLoading.findViewById(R.id.tv_loading);
+            tvLoading.setText("Load Successfully!");
+            Button btnStart = dialogLoading.findViewById(R.id.btn_start);
+            btnStart.setVisibility(View.VISIBLE);
+            btnStart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startProgressBarTime();
+                    dialogLoading.hide();
+                }
+            });
+        }
     }
 
     public void initAudio(){
-        String url = "https://myhost2018.000webhostapp.com/Test1/Audio/Test1_Part1.m4a";
+        String url = "https://myhost2018.000webhostapp.com/Test1/Audio/Test1_Part2.m4a";
 //       String url = "https://myhost2018.000webhostapp.com/Test1/Audio/TestAudio.mp3";
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         try {
@@ -201,9 +225,8 @@ public class Part2Activity extends AppCompatActivity {
                 //Toast.makeText(Part1Activity.this, "" + mediaPlayer.getDuration(), Toast.LENGTH_SHORT).show();
                 //mp.start();
                 tvTotalTime.setText(new SimpleDateFormat("mm:ss").format(mediaPlayer.getDuration()));
-                startProgressBarTime();
-                if(dialogLoading.isShowing())
-                    dialogLoading.hide();
+                seekBar.setMax(mediaPlayer.getDuration());
+                showLoadingDialog(true);
             }
         });
         mediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
@@ -216,10 +239,10 @@ public class Part2Activity extends AppCompatActivity {
 
     public void startProgressBarTime(){
         tvCurrentTime.setText("00:00");
+        btnPause.setText("Pause");
         mediaPlayer.start();
         mediaPlayer.seekTo(0);
         seekBar.setProgress(0);
-        seekBar.setMax(mediaPlayer.getDuration());
 
         updateTime();
     }
@@ -349,8 +372,34 @@ public class Part2Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mediaPlayer.pause();
+                btnPause.setText("Continue");
                 dialogNotice.hide();
                 showScoreDialog();
+            }
+        });
+    }
+
+    public void showNoticeDialog(String content) {
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.notice_layout);
+        dialog.show();
+        dialog.setCanceledOnTouchOutside(false);
+        TextView tvNotice = (TextView)dialog.findViewById(R.id.tv_notice);
+        tvNotice.setText(content);
+        Button btnYes = (Button)dialog.findViewById(R.id.btn_yes);
+        Button btnNo = (Button)dialog.findViewById(R.id.btn_no);
+        btnYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        btnNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.hide();
             }
         });
     }
@@ -359,9 +408,9 @@ public class Part2Activity extends AppCompatActivity {
         final Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.score_layout);
         dialog.show();
-        dialog.setCanceledOnTouchOutside(true);
+        dialog.setCanceledOnTouchOutside(false);
         TextView tvScore = (TextView)dialog.findViewById(R.id.textview_score);
-        tvScore.setText(result());
+        tvScore.setText(getResult());
         Button btnHome = (Button)dialog.findViewById(R.id.button_home);
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -375,6 +424,7 @@ public class Part2Activity extends AppCompatActivity {
         btnReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btnSubmit.setVisibility(View.INVISIBLE);
                 isTesting = false;
                 part2ViewModel.updateQuestion(0);   // the first question
                 startProgressBarTime();
@@ -387,13 +437,8 @@ public class Part2Activity extends AppCompatActivity {
         part2ViewModel.getQuestion().observe(this, new Observer<Part2OnPhone>() {
             @Override
             public void onChanged(@Nullable Part2OnPhone questionPart2) {
-                tvNumber.setText("" + questionPart2.getQuestionNumber());
-                radioButtonA.setText("A. " + questionPart2.getAnswerA());
-                radioButtonB.setText("B. " + questionPart2.getAnswerB());
-                radioButtonC.setText("C. " + questionPart2.getAnswerC());
-
+                tvQuestionContent.setText("" + questionPart2.getQuestionNumber()+".");
                 if (!questionPart2.getAnswerChosen().equals("")) {
-                    //Toast.makeText(Part1Activity.this, "" + questionPart1.getAnswerChosen(), Toast.LENGTH_SHORT).show();
                     switch (questionPart2.getAnswerChosen()) {
                         case "A":
                             radioButtonA.setChecked(true);
@@ -405,29 +450,31 @@ public class Part2Activity extends AppCompatActivity {
                             radioButtonC.setChecked(true);
                             break;
                     }
-                } else {
-                    //Toast.makeText(Part1Activity.this, "chưa chọn", Toast.LENGTH_SHORT).show();
                 }
 
                 if (!isTesting) {    // is reviewing
+                    tvQuestionContent.setText("" + questionPart2.getQuestionNumber() + ". " + questionPart2.getQuestionContent());
+                    radioButtonA.setText("A. " + questionPart2.getAnswerA());
+                    radioButtonB.setText("B. " + questionPart2.getAnswerB());
+                    radioButtonC.setText("C. " + questionPart2.getAnswerC());
                     radioButtonA.setTextColor(Color.parseColor("#000000"));
                     radioButtonA.setEnabled(false);
                     radioButtonB.setTextColor(Color.parseColor("#000000"));
                     radioButtonB.setEnabled(false);
                     radioButtonC.setTextColor(Color.parseColor("#000000"));
                     radioButtonC.setEnabled(false);
-//                    if (!questionPart2.getAnswerChosen().trim().equals("")){
-//                        if (questionPart2.getAnswerChosen().equals(questionPart2.getCorrectAnswer())) {
-//                            getRadioButton(questionPart2.getAnswerChosen()).setTextColor(Color.parseColor("#00EE00"));
-//                        } else {
-//                            if (!questionPart2.getAnswerChosen().equals(questionPart2.getCorrectAnswer())) {
-//                                getRadioButton(questionPart2.getAnswerChosen()).setTextColor(Color.parseColor("#FF0000"));
-//                                getRadioButton(questionPart2.getCorrectAnswer()).setTextColor(Color.parseColor("#00FF00"));
-//                            }
-//                        }
-//                    }
-//                    else
-//                        getRadioButton(questionPart2.getCorrectAnswer()).setTextColor(Color.parseColor("#00FF00"));
+                    if (!questionPart2.getAnswerChosen().trim().equals("")){
+                        if (questionPart2.getAnswerChosen().equals(questionPart2.getCorrectAnswer())) {
+                            getRadioButton(questionPart2.getAnswerChosen()).setTextColor(Color.parseColor("#00EE00"));
+                        } else {
+                            if (!questionPart2.getAnswerChosen().equals(questionPart2.getCorrectAnswer())) {
+                                getRadioButton(questionPart2.getAnswerChosen()).setTextColor(Color.parseColor("#FF0000"));
+                                getRadioButton(questionPart2.getCorrectAnswer()).setTextColor(Color.parseColor("#00FF00"));
+                            }
+                        }
+                    }
+                    else
+                        getRadioButton(questionPart2.getCorrectAnswer()).setTextColor(Color.parseColor("#00FF00"));
                 }
             }
         });
@@ -461,7 +508,7 @@ public class Part2Activity extends AppCompatActivity {
         });
     }
 
-    public String result(){
+    public String getResult(){
         int score = 0;
         for (int i = 0; i < part2ViewModel.getListQuestion().getValue().size(); i++){
             if(part2ViewModel.getListQuestion().getValue().get(i).getAnswerChosen().trim().equals(

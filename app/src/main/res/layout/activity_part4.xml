@@ -1,9 +1,344 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".View.Part4Activity">
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.phamn.learningtoeic.ViewModel.Part4ViewModel"/>
+    </data>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-</android.support.constraint.ConstraintLayout>
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="1dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="1dp"
+            android:text="Part 4"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/button_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:text="Submit" />
+
+        <Button
+            android:id="@+id/button_back"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginRight="5dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:text="Back"
+            android:layout_alignParentRight="true" />
+
+        <SeekBar
+            android:id="@+id/seekbar_time"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_alignParentLeft="true" />
+
+
+        <TextView
+            android:id="@+id/tv_current_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/seekbar_time"
+            android:layout_marginLeft="5dp"
+            android:text="0"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_total_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="5dp"
+            android:layout_below="@+id/seekbar_time"
+            android:text="0"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_alignParentRight="true" />
+
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:id="@+id/linear_layout_media"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/tv_current_time"
+            android:background="#00DD00"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_alignParentLeft="true">
+
+            <Button
+                android:id="@+id/button_previous"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:text="Pre"
+                android:textSize="15dp" />
+
+            <Button
+                android:id="@+id/button_pause"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:text="Pause"
+                android:textSize="15dp" />
+
+            <Button
+                android:id="@+id/button_next"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:text="Nex"
+                android:textSize="15dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:id="@+id/linear_layout_control"
+            android:layout_below="@+id/linear_layout_media"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_alignParentLeft="true">
+
+            <Button
+                android:id="@+id/button_previous_question"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:text="Previous"
+                android:textSize="15dp" />
+
+            <Button
+                android:layout_marginLeft="20dp"
+                android:id="@+id/button_next_question"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:text="Next"
+                android:textSize="15dp" />
+        </LinearLayout>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/scroll_view"
+            android:layout_weight="1"
+            android:fillViewport="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_below="@+id/linear_layout_control"
+            android:layout_alignParentLeft="true">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1. "
+                    android:textColor="@android:color/black"
+                    android:id="@+id/tv_question_content_1"
+                    android:textSize="20dp"/>
+                <RadioGroup
+                    android:id="@+id/radio_group_1"
+                    android:layout_width="393dp"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:id="@+id/radio_button_a_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="A"
+                        android:textSize="20dp" />
+
+                    <RadioButton
+                        android:id="@+id/radio_button_b_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="B"
+                        android:textSize="20dp" />
+
+                    <RadioButton
+                        android:id="@+id/radio_button_c_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="C"
+                        android:textSize="20dp" />
+
+                    <RadioButton
+                        android:id="@+id/radio_button_d_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="D"
+                        android:textSize="20dp" />
+                </RadioGroup>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2. "
+                    android:textColor="@android:color/black"
+                    android:id="@+id/tv_question_content_2"
+                    android:textSize="20dp"/>
+
+                <RadioGroup
+                    android:id="@+id/radio_group_2"
+                    android:layout_width="393dp"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:id="@+id/radio_button_a_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="A"
+                        android:textSize="20dp" />
+
+                    <RadioButton
+                        android:id="@+id/radio_button_b_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="B"
+                        android:textSize="20dp" />
+
+                    <RadioButton
+                        android:id="@+id/radio_button_c_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="C"
+                        android:textSize="20dp" />
+
+                    <RadioButton
+                        android:id="@+id/radio_button_d_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="D"
+                        android:textSize="20dp" />
+                </RadioGroup>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3. "
+                    android:textColor="@android:color/black"
+                    android:id="@+id/tv_question_content_3"
+                    android:textSize="20dp"/>
+
+                <RadioGroup
+                    android:id="@+id/radio_group_3"
+                    android:layout_width="393dp"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:id="@+id/radio_button_a_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="A"
+                        android:textSize="20dp" />
+
+                    <RadioButton
+                        android:id="@+id/radio_button_b_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="B"
+                        android:textSize="20dp" />
+
+                    <RadioButton
+                        android:id="@+id/radio_button_c_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="C"
+                        android:textSize="20dp" />
+
+                    <RadioButton
+                        android:id="@+id/radio_button_d_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="D"
+                        android:textSize="20dp" />
+                </RadioGroup>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4. "
+                    android:textColor="@android:color/black"
+                    android:id="@+id/tv_question_content_4"
+                    android:textSize="20dp"/>
+
+                <RadioGroup
+                    android:id="@+id/radio_group_4"
+                    android:layout_width="393dp"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:id="@+id/radio_button_a_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="A"
+                        android:textSize="20dp" />
+
+                    <RadioButton
+                        android:id="@+id/radio_button_b_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="B"
+                        android:textSize="20dp" />
+
+                    <RadioButton
+                        android:id="@+id/radio_button_c_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="C"
+                        android:textSize="20dp" />
+
+                    <RadioButton
+                        android:id="@+id/radio_button_d_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="D"
+                        android:textSize="20dp" />
+                </RadioGroup>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:paddingBottom="5dp"
+                    android:background="#EEEEEE"
+                    android:id="@+id/tv_note"
+                    android:textSize="20dp"
+                    android:textColor="@android:color/black"/>
+            </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
+</layout>

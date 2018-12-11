@@ -20,7 +20,11 @@ public class QuestionPart3 {
     @SerializedName("note")
     private String note;
 
-    public QuestionPart3(int number, String questionContent, String answerA, String answerB, String answerC, String answerD, String correctAnswer, String note) {
+    @SerializedName("questionInGroup")
+    private int questionInGroup;
+
+    public QuestionPart3(int number, String questionContent, String answerA, String answerB,
+                         String answerC, String answerD, String correctAnswer, String note, int questionInGroup) {
         this.number = number;
         this.questionContent = questionContent;
         this.answerA = answerA;
@@ -29,6 +33,7 @@ public class QuestionPart3 {
         this.answerD = answerD;
         this.correctAnswer = correctAnswer;
         this.note = note;
+        this.questionInGroup = questionInGroup;
     }
 
     public int getNumber() {
@@ -93,5 +98,13 @@ public class QuestionPart3 {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public int getQuestionInGroup() {
+        return questionInGroup;
+    }
+
+    public void setQuestionInGroup(int questionInGroup) {
+        this.questionInGroup = questionInGroup;
     }
 }

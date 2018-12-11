@@ -6,6 +6,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
 
+import com.example.phamn.learningtoeic.Model.Part3OnPhone;
 import com.example.phamn.learningtoeic.Model.Part4OnPhone;
 import com.example.phamn.learningtoeic.Model.QuestionPart4;
 import com.example.phamn.learningtoeic.Service.APIService;
@@ -20,25 +21,22 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Part4ViewModel extends AndroidViewModel{
-    public List<Part4OnPhone> list = new ArrayList<>();
+    public List<Part4OnPhone> list1 = new ArrayList<>();
+    public List<Part4OnPhone> list2 = new ArrayList<>();
 
-    public MutableLiveData<Part4OnPhone> question = new MutableLiveData<>();
-    public MutableLiveData<List<Part4OnPhone>> listQuestion = new MutableLiveData<>();
+    public MutableLiveData<List<Part4OnPhone>> listAllQuestion = new MutableLiveData<>();
+
+    public MutableLiveData<List<Part4OnPhone>> listCurrentQuestion = new MutableLiveData<>();
     public MutableLiveData<Integer> currentIndex = new MutableLiveData<>();
-    public MutableLiveData<List<String>> listAnswerChosen = new MutableLiveData<>();
-    public List<String> stringList = new ArrayList<>();
+    public MutableLiveData<String> titleName = new MutableLiveData<>();
     
     public Part4ViewModel(@NonNull Application application) {
         super(application);
-        getAllQuestion();
-        for (int i = 0; i < list.size(); i++){
-            stringList.add("A");
-        }
-        listAnswerChosen.setValue(stringList);
     }
+
     public void getAllQuestion() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://myhost2018.000webhostapp.com/Test1/Part4/")
+                .baseUrl("https://myhost2018.000webhostapp.com/" + titleName.getValue() + "/Part4/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         APIService apiService = retrofit.create(APIService.class);
@@ -58,10 +56,15 @@ public class Part4ViewModel extends AndroidViewModel{
                     q.setAnswerChosen("");
                     q.setCorrectAnswer(questionPart4List.get(i).getCorrectAnswer());
                     q.setNote(questionPart4List.get(i).getNote());
-                    list.add(q);
+                    q.setQuestionInGroup(questionPart4List.get(i).getQuestionInGroup());
+                    list1.add(q);
                 }
-                listQuestion.setValue(list);
-                question.setValue(listQuestion.getValue().get(0));
+                listAllQuestion.setValue(list1);
+                for(int i = 0; i < listAllQuestion.getValue().get(0).getQuestionInGroup(); i++){
+                    list2.add(listAllQuestion.getValue().get(i));
+                }
+                currentIndex.setValue(0);
+                listCurrentQuestion.setValue(list2);
             }
 
             @Override
@@ -72,43 +75,71 @@ public class Part4ViewModel extends AndroidViewModel{
     }
 
     public void updateQuestion(int index) {
-        question.setValue(listQuestion.getValue().get(index));
+        list2.clear();
+        if(listAllQuestion.getValue().get(index).getQuestionInGroup() == 1){
+            int i = 0;
+            do {
+                i++;
+            } while (listAllQuestion.getValue().get(index - i).getQuestionInGroup() == 1);
+            index -= i;
+        }
+        for(int i = index; i < index + listAllQuestion.getValue().get(index).getQuestionInGroup(); i++)
+            list2.add(listAllQuestion.getValue().get(i));
+        listCurrentQuestion.setValue(list2);
         currentIndex.setValue(index);
     }
 
     public void nextQuestion() {
-        if (currentIndex.getValue() < (listQuestion.getValue().size() - 1)) {
-            currentIndex.setValue(currentIndex.getValue() + 1);
-            question.setValue(listQuestion.getValue().get(currentIndex.getValue()));
-        } else
-            Toast.makeText(getApplication(), "đây là câu cuối", Toast.LENGTH_SHORT).show();
+        int t = currentIndex.getValue()     // lấy vị trí hiện tại
+                + listAllQuestion.getValue().get(currentIndex.getValue()).getQuestionInGroup(); // cộng thêm cho số câu hỏi trong nhóm
+        if (t <= listAllQuestion.getValue().size()) {   // kiểm tra xem t có vượt quá phạm vi của danh sách hay không
+            currentIndex.setValue(t);
+            list2.clear();
+            for(int i = 0; i < listAllQuestion.getValue().get(t).getQuestionInGroup(); i++)
+                list2.add(listAllQuestion.getValue().get(t + i));
+            listCurrentQuestion.setValue(list2);
+        }
     }
 
     public void previousQuestion() {
-        if (currentIndex.getValue() > 0) {
-            currentIndex.setValue(currentIndex.getValue() - 1);
-            question.setValue(listQuestion.getValue().get(currentIndex.getValue()));
-        } else
-            Toast.makeText(getApplication(), "đây là câu đầu", Toast.LENGTH_SHORT).show();
+        if(currentIndex.getValue() > 0){
+            int i = 0;
+            do {
+                i += 1;
+            } while (listAllQuestion.getValue().get(currentIndex.getValue() - i).getQuestionInGroup() == 1);
+            list2.clear();
+            currentIndex.setValue(currentIndex.getValue() - i);
+            for(int j = 0; j < listAllQuestion.getValue().get(currentIndex.getValue()).getQuestionInGroup(); j++)
+                list2.add(listAllQuestion.getValue().get(currentIndex.getValue() + j));
+            listCurrentQuestion.setValue(list2);
+        }
     }
 
-    public void changeAnswer(String answer) {
-        listQuestion.getValue().get(currentIndex.getValue()).setAnswerChosen(answer);
+    public void changeAnswer(String answer, int number) {   // listAnswer là 1 chuỗi các đáp án liền nhau
+        listAllQuestion.getValue().get(currentIndex.getValue() + number).setAnswerChosen(answer);
     }
 
-    public MutableLiveData<Part4OnPhone> getQuestion() {
-        return question;
+    public MutableLiveData<String> getTitleName() {
+        return titleName;
     }
 
-    public MutableLiveData<List<Part4OnPhone>> getListQuestion() {
-        return listQuestion;
+    public void setTitleName(String titleName) {
+        if(titleName != null)
+            this.titleName.setValue(titleName);
+        else
+            this.titleName.setValue("Test1");
+        getAllQuestion();
+    }
+
+    public MutableLiveData<List<Part4OnPhone>> getListAllQuestion() {
+        return listAllQuestion;
+    }
+
+    public MutableLiveData<List<Part4OnPhone>> getListCurrentQuestion() {
+        return listCurrentQuestion;
     }
 
     public MutableLiveData<Integer> getCurrentIndex() {
         return currentIndex;
-    }
-
-    public MutableLiveData<List<String>> getListAnswerChosen() {
-        return listAnswerChosen;
     }
 }

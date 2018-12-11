@@ -79,25 +79,17 @@ public class Part1Activity extends AppCompatActivity {
 //                WindowManager.LayoutParams.FLAG_FULLSCREEN);    // set fullscreen
         setContentView(R.layout.activity_part1);
         ButterKnife.bind(this);
-//        FragmentManager fragmentManager = getFragmentManager();
-//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//        FragmentPart1 fragmentPart1 = new FragmentPart1();
-//        fragmentTransaction.add(R.id.frame_part1, fragmentPart1);
-//        fragmentTransaction.commit();
-//        ActivityPart1Binding activityPart1Binding = DataBindingUtil.setContentView(this, R.layout.activity_part1);
-        //Question_Part1 question_part1 = new Question_Part1();
-//        part1ViewModel = ViewModelProviders.of(this).get(Part1ViewModel.class);
-//        part1ViewModel.init();
-//        activityPart1Binding.setViewModel(part1ViewModel);
-        //part1ViewModel.getQuestionPart1();
 
+        Intent intent = getIntent();
+        String titleName = intent.getStringExtra("titleName");
 
         //dùng livedata
         part1ViewModel = ViewModelProviders.of(this).get(Part1ViewModel.class);
+        part1ViewModel.setTitleName(titleName);
         liveDataListener();
 
         // show dialog Loading
-        showDialogLoading();
+        showLoadingDialog(false);
 
         initAudio();
 
@@ -121,10 +113,9 @@ public class Part1Activity extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mediaPlayer.stop();
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-                finish();
+                mediaPlayer.pause();
+                btnPause.setText("Continue");
+                showNoticeDialog("Are you sure want to back?");
             }
         });
 
@@ -206,14 +197,35 @@ public class Part1Activity extends AppCompatActivity {
         });
     }
 
-    public void showDialogLoading(){
-        dialogLoading = new Dialog(this);
-        dialogLoading.setContentView(R.layout.loading_layout);
-        dialogLoading.show();
-        dialogLoading.setCanceledOnTouchOutside(false);
-        Animation animRotate = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate);
-        ImageView ivLoading = dialogLoading.findViewById(R.id.iv_loading);
-        ivLoading.startAnimation(animRotate);
+    public void showLoadingDialog(boolean successful){
+        if(successful == false) { // đang tải
+            dialogLoading = new Dialog(this, R.style.AppTheme);
+            //dialogLoading.setTitle("LearningToeic");
+            dialogLoading.setContentView(R.layout.loading_layout);
+            dialogLoading.show();
+            dialogLoading.setCanceledOnTouchOutside(false);
+            Animation animRotate = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate);
+            ImageView ivLoading = dialogLoading.findViewById(R.id.iv_loading);
+            ivLoading.startAnimation(animRotate);
+            Button btnStart = dialogLoading.findViewById(R.id.btn_start);
+            btnStart.setVisibility(View.INVISIBLE);
+        }
+        else {  // tải thành công
+            ImageView ivLoading = dialogLoading.findViewById(R.id.iv_loading);
+            ivLoading.clearAnimation();
+            ivLoading.setImageResource(R.drawable.success);
+            TextView tvLoading = dialogLoading.findViewById(R.id.tv_loading);
+            tvLoading.setText("Load Successfully!");
+            Button btnStart = dialogLoading.findViewById(R.id.btn_start);
+            btnStart.setVisibility(View.VISIBLE);
+            btnStart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startProgressBarTime();
+                    dialogLoading.hide();
+                }
+            });
+        }
     }
 
     public void initAudio(){
@@ -232,9 +244,8 @@ public class Part1Activity extends AppCompatActivity {
                 //Toast.makeText(Part1Activity.this, "" + mediaPlayer.getDuration(), Toast.LENGTH_SHORT).show();
                 //mp.start();
                 tvTotalTime.setText(new SimpleDateFormat("mm:ss").format(mediaPlayer.getDuration()));
-                startProgressBarTime();
-                if(dialogLoading.isShowing())
-                    dialogLoading.hide();
+                seekBar.setMax(mediaPlayer.getDuration());
+                showLoadingDialog(true);
             }
         });
         mediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
@@ -247,10 +258,10 @@ public class Part1Activity extends AppCompatActivity {
 
     public void startProgressBarTime(){
         tvCurrentTime.setText("00:00");
+        btnPause.setText("Pause");
         mediaPlayer.start();
         mediaPlayer.seekTo(0);
         seekBar.setProgress(0);
-        seekBar.setMax(mediaPlayer.getDuration());
 
         updateTime();
     }
@@ -318,6 +329,7 @@ public class Part1Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mediaPlayer.pause();
+                btnPause.setText("Continue");
                 dialogNotice.hide();
                 showScoreDialog();
             }
@@ -328,9 +340,9 @@ public class Part1Activity extends AppCompatActivity {
         final Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.score_layout);
         dialog.show();
-        dialog.setCanceledOnTouchOutside(true);
+        dialog.setCanceledOnTouchOutside(false);
         TextView tvScore = (TextView)dialog.findViewById(R.id.textview_score);
-        tvScore.setText(result());
+        tvScore.setText(getResult());
         Button btnHome = (Button)dialog.findViewById(R.id.button_home);
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -344,9 +356,35 @@ public class Part1Activity extends AppCompatActivity {
         btnReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btnSubmit.setVisibility(View.INVISIBLE);
                 isTesting = false;
                 part1ViewModel.updateQuestion(0);   // the first question
                 startProgressBarTime();
+                dialog.hide();
+            }
+        });
+    }
+
+    public void showNoticeDialog(String content) {
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.notice_layout);
+        dialog.show();
+        dialog.setCanceledOnTouchOutside(false);
+        TextView tvNotice = (TextView)dialog.findViewById(R.id.tv_notice);
+        tvNotice.setText(content);
+        Button btnYes = (Button)dialog.findViewById(R.id.btn_yes);
+        Button btnNo = (Button)dialog.findViewById(R.id.btn_no);
+        btnYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        btnNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 dialog.hide();
             }
         });
@@ -436,16 +474,9 @@ public class Part1Activity extends AppCompatActivity {
                     btnNextQuestion.setEnabled(true);
             }
         });
-
-        part1ViewModel.getListAnswerChosen().observe(this, new Observer<List<String>>() {
-            @Override
-            public void onChanged(@Nullable List<String> strings) {
-
-            }
-        });
     }
 
-    public String result(){
+    public String getResult(){
         int score = 0;
         for (int i = 0; i < part1ViewModel.getListQuestion().getValue().size(); i++){
             if(part1ViewModel.getListQuestion().getValue().get(i).getAnswerChosen().trim().equals(

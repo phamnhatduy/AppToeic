@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Test 1"
-        android:textSize="30dp"
+        android:textSize="35dp"
         android:id="@+id/tv_TitleName"/>
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,7 +34,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="5:00"/>
+                android:text="5:00"
+                android:id="@+id/tv_time_1"/>
         </LinearLayout>
         <LinearLayout
             android:layout_marginLeft="10dp"
@@ -49,7 +50,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="10"/>
+                android:text="10"
+                android:id="@+id/tv_number_1"/>
         </LinearLayout>
         <Button
             android:layout_marginLeft="10dp"
@@ -80,7 +82,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="5:00"/>
+                android:text="5:00"
+                android:id="@+id/tv_time_2"/>
         </LinearLayout>
         <LinearLayout
             android:layout_marginLeft="10dp"
@@ -95,7 +98,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="20"/>
+                android:text="20"
+                android:id="@+id/tv_number_2"/>
         </LinearLayout>
         <Button
             android:layout_marginLeft="10dp"
@@ -126,7 +130,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="5:00"/>
+                android:text="5:00"
+                android:id="@+id/tv_time_3"/>
         </LinearLayout>
         <LinearLayout
             android:layout_marginLeft="10dp"
@@ -141,7 +146,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="20"/>
+                android:text="20"
+                android:id="@+id/tv_number_3"/>
         </LinearLayout>
         <Button
             android:layout_marginLeft="10dp"
@@ -153,7 +159,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#dada">
+        android:background="#dada"
+        android:layout_marginBottom="5dp">
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -172,7 +179,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="5:00"/>
+                android:text="5:00"
+                android:id="@+id/tv_time_4"/>
         </LinearLayout>
         <LinearLayout
             android:layout_marginLeft="10dp"
@@ -187,7 +195,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="20"/>
+                android:text="20"
+                android:id="@+id/tv_number_4"/>
         </LinearLayout>
         <Button
             android:layout_marginLeft="10dp"

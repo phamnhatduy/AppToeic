@@ -10,11 +10,12 @@ public class Part4OnPhone {
     private String correctAnswer;
     private String note;
     private String answerChosen;
+    private int questionInGroup;
 
     public Part4OnPhone() {
     }
 
-    public Part4OnPhone(int questionNumber, String questionContent, String answerA, String answerB, String answerC, String answerD, String correctAnswer, String note, String answerChosen) {
+    public Part4OnPhone(int questionNumber, String questionContent, String answerA, String answerB, String answerC, String answerD, String correctAnswer, String note, String answerChosen, int questionInGroup) {
         this.questionNumber = questionNumber;
         this.questionContent = questionContent;
         this.answerA = answerA;
@@ -24,6 +25,7 @@ public class Part4OnPhone {
         this.correctAnswer = correctAnswer;
         this.note = note;
         this.answerChosen = answerChosen;
+        this.questionInGroup = questionInGroup;
     }
 
     public int getQuestionNumber() {
@@ -96,5 +98,13 @@ public class Part4OnPhone {
 
     public void setAnswerChosen(String answerChosen) {
         this.answerChosen = answerChosen;
+    }
+
+    public int getQuestionInGroup() {
+        return questionInGroup;
+    }
+
+    public void setQuestionInGroup(int questionInGroup) {
+        this.questionInGroup = questionInGroup;
     }
 }

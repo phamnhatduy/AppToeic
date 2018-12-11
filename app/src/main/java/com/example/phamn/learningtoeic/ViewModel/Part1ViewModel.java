@@ -31,22 +31,17 @@ public class Part1ViewModel extends AndroidViewModel{
     public MutableLiveData<Part1OnPhone> question = new MutableLiveData<>();
     public MutableLiveData<List<Part1OnPhone>> listQuestion = new MutableLiveData<>();
     public MutableLiveData<Integer> currentIndex = new MutableLiveData<>();
-    public MutableLiveData<List<String>> listAnswerChosen = new MutableLiveData<>();
-    public List<String> stringList = new ArrayList<>();
+    public MutableLiveData<String> titleName = new MutableLiveData<>();
 
     public Part1ViewModel(@NonNull Application application) {
         super(application);
         currentIndex.setValue(0);
-        getAllQuestion();
-        for (int i = 0; i < list.size(); i++){
-            stringList.add("A");
-        }
-        listAnswerChosen.setValue(stringList);
     }
 
     public void getAllQuestion() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://myhost2018.000webhostapp.com/Test1/Part1/")
+                //.baseUrl("http://pnd2018.atwebpages.com/Toeic/Test1/Part1/")
+                .baseUrl("https://myhost2018.000webhostapp.com/" + titleName.getValue() + "/Part1/")
                 //.baseUrl("http://www.myhost2018.byethost31.com/Toeic/Test1/Part1/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -57,7 +52,6 @@ public class Part1ViewModel extends AndroidViewModel{
             public void onResponse(Call<List<QuestionPart1>> call, Response<List<QuestionPart1>> response) {
                 List<QuestionPart1> questionPart1List = response.body();
                 for (int i = 0; i < questionPart1List.size() ; i++) {
-                    //list.add(questionPart1List.get(i));
                     Part1OnPhone q = new Part1OnPhone();
                     q.setQuestionNumber(questionPart1List.get(i).getNumber());
                     q.setAnswerA(questionPart1List.get(i).getAnswerA());
@@ -78,21 +72,6 @@ public class Part1ViewModel extends AndroidViewModel{
                 //Log.e(Tag, "onFailure: " + t.getMessage());
             }
         });
-    }
-
-    public static Bitmap getBitmapFromURL(String src) {
-        try {
-            URL url = new URL(src);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setDoInput(true);
-            connection.connect();
-            InputStream input = connection.getInputStream();
-            Bitmap myBitmap = BitmapFactory.decodeStream(input);
-            return myBitmap;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 
     public void updateQuestion(int index){
@@ -122,6 +101,18 @@ public class Part1ViewModel extends AndroidViewModel{
         listQuestion.getValue().get(currentIndex.getValue()).setAnswerChosen(answer);
     }
 
+    public MutableLiveData<String> getTitleName() {
+        return titleName;
+    }
+
+    public void setTitleName(String titleName) {
+        if(titleName != null)
+            this.titleName.setValue(titleName);
+        else
+            this.titleName.setValue("Test1");
+        getAllQuestion();
+    }
+
     public MutableLiveData<Part1OnPhone> getQuestion() {
         return question;
     }
@@ -132,9 +123,5 @@ public class Part1ViewModel extends AndroidViewModel{
 
     public MutableLiveData<Integer> getCurrentIndex() {
         return currentIndex;
-    }
-
-    public MutableLiveData<List<String>> getListAnswerChosen() {
-        return listAnswerChosen;
     }
 }
