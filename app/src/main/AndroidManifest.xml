@@ -12,16 +12,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".View.MainActivity">
+
+        </activity>
+        <activity android:name=".View.Part1Activity" />
+        <activity android:name=".View.Part2Activity" />
+        <activity android:name=".View.Part3Activity" />
+        <activity android:name=".View.Part4Activity" />
+        <activity
+            android:name=".View.NavigationActivity"
+            android:label="@string/title_activity_navigation"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".View.Part1Activity" />
-        <activity android:name=".View.Part2Activity" />
-        <activity android:name=".View.Part3Activity" />
-        <activity android:name=".View.Part4Activity"></activity>
     </application>
 
 </manifest>

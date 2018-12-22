@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center">
+
+    <SeekBar
+        android:layout_marginTop="5dp"
+        android:id="@+id/seekbar_time"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+
+    <TextView
+        android:id="@+id/tv_current_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:text="0"
+        android:textSize="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/seekbar_time" />
+
+    <TextView
+        android:id="@+id/tv_total_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="0"
+        android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/seekbar_time" />
+
+    <LinearLayout
+        android:id="@+id/linear_layout_media"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#0050da"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/tv_current_time">
+
+        <Button
+            android:id="@+id/button_previous"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:text="Pre"
+            android:textSize="15dp" />
+
+        <Button
+            android:id="@+id/button_pause"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:text="Pause"
+            android:textSize="15dp" />
+
+        <Button
+            android:id="@+id/button_next"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:text="Nex"
+            android:textSize="15dp" />
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

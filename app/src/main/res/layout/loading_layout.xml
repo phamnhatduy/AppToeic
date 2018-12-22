@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Loading..."
-        android:textSize="20dp"
+        android:textSize="25dp"
         android:id="@+id/tv_loading"
         android:layout_marginBottom="15dp"/>
     <ImageView
@@ -17,10 +17,25 @@
         android:layout_height="100dp"
         android:background="@drawable/loading2"
         android:id="@+id/iv_loading"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="Number of question: 10"
+            android:id="@+id/tv_question"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="Time: 5:00"
+            android:id="@+id/tv_time"/>
     <Button
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:id="@+id/btn_start"
-        android:text="Start Exam"/>
+        android:text="Start Exam"
+        android:background="@drawable/border_button1"/>
 </LinearLayout>

@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:orientation="vertical"
-    android:background="#EEEEEE">
+    android:background="@drawable/border_dialog1">
     <LinearLayout
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
@@ -303,7 +303,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/button_submit"
-            android:background="@drawable/question_chosen"
+            android:background="@drawable/border_button1"
             android:textSize="20dp"
             android:text="Submit"/>
     </LinearLayout>

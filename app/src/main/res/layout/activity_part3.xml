@@ -22,13 +22,15 @@
             android:layout_marginStart="4dp"
             android:layout_marginTop="1dp"
             android:text="Part 3"
-            android:textSize="25dp"
-            android:textStyle="bold" />
+            android:textSize="30dp"
+            android:textStyle="italic" />
 
         <Button
             android:id="@+id/button_submit"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
+            android:background="@drawable/border_button1"
+            android:layout_marginTop="5dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:text="Submit" />
@@ -37,17 +39,19 @@
             android:id="@+id/button_back"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
+            android:background="@drawable/border_button1"
+            android:layout_marginTop="5dp"
             android:layout_marginRight="5dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
             android:text="Back"
             android:layout_alignParentRight="true" />
 
-        <SeekBar
-            android:id="@+id/seekbar_time"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        <include
+            android:id="@+id/time_layout"
+            layout="@layout/time_layout"
             android:layout_width="match_parent"
-            android:layout_height="10dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginTop="50dp"
@@ -57,74 +61,12 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_alignParentLeft="true" />
 
-
-        <TextView
-            android:id="@+id/tv_current_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/seekbar_time"
-            android:layout_marginLeft="5dp"
-            android:text="0"
-            android:textSize="15dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_total_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="5dp"
-            android:layout_below="@+id/seekbar_time"
-            android:text="0"
-            android:textSize="15dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_alignParentRight="true" />
-
-        <LinearLayout
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:id="@+id/linear_layout_media"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/tv_current_time"
-            android:background="#00DD00"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:layout_alignParentLeft="true">
-
-            <Button
-                android:id="@+id/button_previous"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:text="Pre"
-                android:textSize="15dp" />
-
-            <Button
-                android:id="@+id/button_pause"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:text="Pause"
-                android:textSize="15dp" />
-
-            <Button
-                android:id="@+id/button_next"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:text="Nex"
-                android:textSize="15dp" />
-        </LinearLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:id="@+id/linear_layout_control"
-            android:layout_below="@+id/linear_layout_media"
+            android:layout_below="@+id/time_layout"
             android:gravity="center"
             android:orientation="horizontal"
             android:layout_alignParentLeft="true">

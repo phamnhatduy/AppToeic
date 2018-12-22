@@ -5,8 +5,10 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 
+import com.example.phamn.learningtoeic.Model.History;
 import com.example.phamn.learningtoeic.Model.Title;
 import com.example.phamn.learningtoeic.Model.TitleOnPhone;
+import com.example.phamn.learningtoeic.Repository.HistoryRepository;
 import com.example.phamn.learningtoeic.Service.APIService;
 
 import java.util.ArrayList;
@@ -20,9 +22,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainViewModel extends AndroidViewModel {
     public List<TitleOnPhone> list = new ArrayList<>();
+    //private List<History> listH = new ArrayList<>();
 
-    public MutableLiveData<List<TitleOnPhone>> listAllTitle = new MutableLiveData<>();
+    private MutableLiveData<List<TitleOnPhone>> listAllTitle = new MutableLiveData<>();
+    private MutableLiveData<List<History>> listHistory = new MutableLiveData<>();
 
+    private HistoryRepository historyRepository;
     public MainViewModel(@NonNull Application application) {
         super(application);
         getAllTitle();
@@ -43,6 +48,7 @@ public class MainViewModel extends AndroidViewModel {
                     if(i % 4 == 0) {
                         TitleOnPhone t = new TitleOnPhone();
                         t.setTitleName(titles.get(i).getTitleName());
+                        t.setPartID(titles.get(i).getPartID());
                         t.setTime1(titles.get(i).getTime());
                         t.setTime2(titles.get(i + 1).getTime());
                         t.setTime3(titles.get(i + 2).getTime());
@@ -51,7 +57,8 @@ public class MainViewModel extends AndroidViewModel {
                         t.setNumberOfQuestions2(titles.get(i + 1).getNumberOfQuestions());
                         t.setNumberOfQuestions3(titles.get(i + 2).getNumberOfQuestions());
                         t.setNumberOfQuestions4(titles.get(i + 3).getNumberOfQuestions());
-
+                        //t.setListHistory(getHistory(getApplication(), titles.get(i).getPartID()));
+                        t.setListHistory(null);
                         list.add(t);
                     }
                 }
@@ -67,5 +74,9 @@ public class MainViewModel extends AndroidViewModel {
 
     public MutableLiveData<List<TitleOnPhone>> getListAllTitle() {
         return listAllTitle;
+    }
+
+    public MutableLiveData<List<History>> getListHistory() {
+        return listHistory;
     }
 }

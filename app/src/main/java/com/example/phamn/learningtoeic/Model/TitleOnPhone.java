@@ -1,7 +1,11 @@
 package com.example.phamn.learningtoeic.Model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TitleOnPhone {
     private String titleName;
+    private int partID;
     private String time1;
     private String time2;
     private String time3;
@@ -10,10 +14,12 @@ public class TitleOnPhone {
     private int numberOfQuestions2;
     private int numberOfQuestions3;
     private int numberOfQuestions4;
+    private List<History> listHistory = new ArrayList<>();
 
-    public TitleOnPhone(String titleName, String time1, String time2, String time3, String time4,
-                        int numberOfQuestions1, int numberOfQuestions2, int numberOfQuestions3, int numberOfQuestions4) {
+    public TitleOnPhone(String titleName, int partID, String time1, String time2, String time3, String time4,
+                        int numberOfQuestions1, int numberOfQuestions2, int numberOfQuestions3, int numberOfQuestions4, List<History> listHistory) {
         this.titleName = titleName;
+        this.partID = partID;
         this.time1 = time1;
         this.time2 = time2;
         this.time3 = time3;
@@ -22,6 +28,7 @@ public class TitleOnPhone {
         this.numberOfQuestions2 = numberOfQuestions2;
         this.numberOfQuestions3 = numberOfQuestions3;
         this.numberOfQuestions4 = numberOfQuestions4;
+        this.listHistory = listHistory;
     }
 
     public TitleOnPhone() {
@@ -34,6 +41,14 @@ public class TitleOnPhone {
 
     public void setTitleName(String titleName) {
         this.titleName = titleName;
+    }
+
+    public int getPartID() {
+        return partID;
+    }
+
+    public void setPartID(int partID) {
+        this.partID = partID;
     }
 
     public String getTime1() {
@@ -98,5 +113,13 @@ public class TitleOnPhone {
 
     public void setNumberOfQuestions4(int numberOfQuestions4) {
         this.numberOfQuestions4 = numberOfQuestions4;
+    }
+
+    public List<History> getListHistory() {
+        return listHistory;
+    }
+
+    public void setListHistory(List<History> listHistory) {
+        this.listHistory = listHistory;
     }
 }

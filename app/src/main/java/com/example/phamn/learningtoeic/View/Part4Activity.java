@@ -80,6 +80,8 @@ public class Part4Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();   // hide title bar
+
         setContentView(R.layout.activity_part4);
         ButterKnife.bind(this);
 
@@ -91,6 +93,9 @@ public class Part4Activity extends AppCompatActivity {
         liveDataListener();
 
         // show dialog Loading
+        dialogLoading = new Dialog(this, R.style.AppTheme);
+        dialogLoading.setContentView(R.layout.loading_layout);
+        dialogLoading.setCanceledOnTouchOutside(false);
         showLoadingDialog(false);
         //
         initAudio();
@@ -272,26 +277,31 @@ public class Part4Activity extends AppCompatActivity {
     }
 
     public void showLoadingDialog(boolean successful){
+        TextView tvNumberOfQuestion = dialogLoading.findViewById(R.id.tv_question);
+        TextView tvTime = dialogLoading.findViewById(R.id.tv_time);
+        ImageView ivLoading = dialogLoading.findViewById(R.id.iv_loading);
+        Button btnStart = dialogLoading.findViewById(R.id.btn_start);
+
         if(successful == false) { // đang tải
-            dialogLoading = new Dialog(this, R.style.AppTheme);
-            //dialogLoading.setTitle("LearningToeic");
-            dialogLoading.setContentView(R.layout.loading_layout);
-            dialogLoading.show();
-            dialogLoading.setCanceledOnTouchOutside(false);
             Animation animRotate = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate);
-            ImageView ivLoading = dialogLoading.findViewById(R.id.iv_loading);
             ivLoading.startAnimation(animRotate);
-            Button btnStart = dialogLoading.findViewById(R.id.btn_start);
             btnStart.setVisibility(View.INVISIBLE);
+            tvNumberOfQuestion.setVisibility(View.INVISIBLE);
+            tvTime.setVisibility(View.INVISIBLE);
+            dialogLoading.show();
         }
         else {  // tải thành công
-            ImageView ivLoading = dialogLoading.findViewById(R.id.iv_loading);
             ivLoading.clearAnimation();
             ivLoading.setImageResource(R.drawable.success);
             TextView tvLoading = dialogLoading.findViewById(R.id.tv_loading);
             tvLoading.setText("Load Successfully!");
-            Button btnStart = dialogLoading.findViewById(R.id.btn_start);
             btnStart.setVisibility(View.VISIBLE);
+            tvNumberOfQuestion.setVisibility(View.VISIBLE);
+            tvTime.setVisibility(View.VISIBLE);
+
+            tvNumberOfQuestion.setText("Number of question: "+ getIntent().getIntExtra("numberOfQuestion", 10));
+            tvTime.setText("Time: " + getIntent().getStringExtra("time"));
+
             btnStart.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -352,8 +362,10 @@ public class Part4Activity extends AppCompatActivity {
                     mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                         @Override
                         public void onCompletion(MediaPlayer mp) {
-                            showSubmitDialog();
-                            //finish();
+                            if(isTesting)
+                                showSubmitDialog();
+                            else
+                                showScoreDialog();
                         }
                     });
                 }
@@ -411,7 +423,7 @@ public class Part4Activity extends AppCompatActivity {
         btnYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), NavigationActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -435,7 +447,7 @@ public class Part4Activity extends AppCompatActivity {
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), NavigationActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -499,21 +511,21 @@ public class Part4Activity extends AppCompatActivity {
                             // đáp án chọn là đúng
                             if (listCurrentQuestion.get(i).getAnswerChosen().equals(listCurrentQuestion.get(i).getCorrectAnswer())) {
                                 getRadioButton(i + 1 + listCurrentQuestion.get(i).getAnswerChosen())
-                                        .setTextColor(Color.parseColor("#00EE00"));
+                                        .setTextColor(Color.parseColor("#FF01D71A"));
                             }
                             // đáp án chọn là sai
                             else {
                                 if (!listCurrentQuestion.get(i).getAnswerChosen().equals(listCurrentQuestion.get(i).getCorrectAnswer())) {
                                     getRadioButton(i + 1 + listCurrentQuestion.get(i).getAnswerChosen())
-                                            .setTextColor(Color.parseColor("#FF0000"));
+                                            .setTextColor(Color.parseColor("#FFF90000"));
                                     getRadioButton(i + 1 + listCurrentQuestion.get(i).getCorrectAnswer())
-                                            .setTextColor(Color.parseColor("#00FF00"));
+                                            .setTextColor(Color.parseColor("#FF01D71A"));
                                 }
                             }
                         }
                         else
                             getRadioButton(i + 1 + listCurrentQuestion.get(i).getCorrectAnswer())
-                                    .setTextColor(Color.parseColor("#00FF00"));
+                                    .setTextColor(Color.parseColor("#FF01D71A"));
 
                         tvNote.setText(listCurrentQuestion.get(0).getNote());
                     }

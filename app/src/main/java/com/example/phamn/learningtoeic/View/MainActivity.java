@@ -54,7 +54,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 //        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 //                WindowManager.LayoutParams.FLAG_FULLSCREEN);    // set fullscreen
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE); // xóa tiêu đề
+
+        getSupportActionBar().hide();   // hide title bar
+        //this.requestWindowFeature(Window.FEATURE_NO_TITLE); // xóa tiêu đề
         setContentView(R.layout.activity_main);
 
         mapping();
@@ -151,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
                 for (int i = 0; i < titles.size(); i++) {
                     TitleOnPhone title = new TitleOnPhone(
                             titles.get(i).getTitleName(),
+                            titles.get(i).getPartID(),
                             titles.get(i).getTime1(),
                             titles.get(i).getTime2(),
                             titles.get(i).getTime3(),
@@ -158,8 +161,8 @@ public class MainActivity extends AppCompatActivity {
                             titles.get(i).getNumberOfQuestions1(),
                             titles.get(i).getNumberOfQuestions2(),
                             titles.get(i).getNumberOfQuestions3(),
-                            titles.get(i).getNumberOfQuestions4());
-
+                            titles.get(i).getNumberOfQuestions4(),
+                            titles.get(i).getListHistory());
 //                    TitleOnPhone title = new TitleOnPhone();
 //                    title.setTitleName(titles.get(i).getTitleName());
 //                    title.setTime1(titles.get(i).getTime1());
