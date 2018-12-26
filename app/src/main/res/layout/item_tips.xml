@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="4dp"
+    android:gravity="center_vertical">
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/tips"
+        android:id="@+id/iv_tips"
+        />
+    <TextView
+        android:layout_marginLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:id="@+id/tv_topic_tips"
+        android:text="tips 1"
+        android:textColor="@color/tv_title_name"/>
+</LinearLayout>

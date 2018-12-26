@@ -11,9 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".View.MainActivity">
-
-        </activity>
+        <activity android:name=".View.MainActivity" />
         <activity android:name=".View.Part1Activity" />
         <activity android:name=".View.Part2Activity" />
         <activity android:name=".View.Part3Activity" />
@@ -28,6 +26,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".View.VocabularyActivity" />
+        <activity android:name=".View.IdiomActivity" />
+        <activity android:name=".View.TopicVocabularyActivity" />
+        <activity android:name=".View.TipsActivity" />
+        <activity android:name=".View.TopicTipsActivity"></activity>
     </application>
 
 </manifest>

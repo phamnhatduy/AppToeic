@@ -2,8 +2,11 @@ package com.example.phamn.learningtoeic.ViewModel;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.Observer;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.example.phamn.learningtoeic.Model.History;
 import com.example.phamn.learningtoeic.Model.Title;
@@ -21,19 +24,31 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainViewModel extends AndroidViewModel {
-    public List<TitleOnPhone> list = new ArrayList<>();
-    //private List<History> listH = new ArrayList<>();
+    private List<TitleOnPhone> list = new ArrayList<>();
 
     private MutableLiveData<List<TitleOnPhone>> listAllTitle = new MutableLiveData<>();
-    private MutableLiveData<List<History>> listHistory = new MutableLiveData<>();
+
+    HistoryRepository repo;
+    private LiveData<List<History>> listHistory = new MutableLiveData<>();
+    List<Title> titleOnline = new ArrayList<>();
 
     private HistoryRepository historyRepository;
     public MainViewModel(@NonNull Application application) {
         super(application);
-        getAllTitle();
+        repo = new HistoryRepository(application);
+//        repo.insert(new History(1, "11/11", "11"));
+//        repo.insert(new History(2, "22/22", "22"));
+//        repo.insert(new History(3, "3/3", "33"));
+//        repo.insert(new History(4, "4/4", "44"));
+//        repo.insert(new History(5, "55/55", "55"));
+//        repo.insert(new History(6, "66/66", "66"));
+//        repo.insert(new History(7, "7/7", "77"));
+//        repo.insert(new History(8, "8/8", "88"));
+        listHistory = repo.getListAllHistory();
+        getAllTitle(application);
     }
 
-    public void getAllTitle() {
+    public void getAllTitle(final Application application) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://myhost2018.000webhostapp.com/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -43,26 +58,8 @@ public class MainViewModel extends AndroidViewModel {
         call.enqueue(new Callback<List<Title>>() {
             @Override
             public void onResponse(Call<List<Title>> call, Response<List<Title>> response) {
-                List<Title> titles = response.body();
-                for (int i = 0; i < titles.size() ; i++) {
-                    if(i % 4 == 0) {
-                        TitleOnPhone t = new TitleOnPhone();
-                        t.setTitleName(titles.get(i).getTitleName());
-                        t.setPartID(titles.get(i).getPartID());
-                        t.setTime1(titles.get(i).getTime());
-                        t.setTime2(titles.get(i + 1).getTime());
-                        t.setTime3(titles.get(i + 2).getTime());
-                        t.setTime4(titles.get(i + 3).getTime());
-                        t.setNumberOfQuestions1(titles.get(i).getNumberOfQuestions());
-                        t.setNumberOfQuestions2(titles.get(i + 1).getNumberOfQuestions());
-                        t.setNumberOfQuestions3(titles.get(i + 2).getNumberOfQuestions());
-                        t.setNumberOfQuestions4(titles.get(i + 3).getNumberOfQuestions());
-                        //t.setListHistory(getHistory(getApplication(), titles.get(i).getPartID()));
-                        t.setListHistory(null);
-                        list.add(t);
-                    }
-                }
-                listAllTitle.setValue(list);
+                titleOnline = response.body();
+                updateTitle();
             }
 
             @Override
@@ -72,11 +69,34 @@ public class MainViewModel extends AndroidViewModel {
         });
     }
 
+    public void updateTitle(){
+        for (int i = 0; i < titleOnline.size() ; i++) {
+            if(i % 4 == 0) {
+                TitleOnPhone t = new TitleOnPhone();
+                t.setTitleName(titleOnline.get(i).getTitleName());
+                t.setPart1ID(titleOnline.get(i).getPartID());
+                t.setPart2ID(titleOnline.get(i + 1).getPartID());
+                t.setPart3ID(titleOnline.get(i + 2).getPartID());
+                t.setPart4ID(titleOnline.get(i + 3).getPartID());
+                t.setTime1(titleOnline.get(i).getTime());
+                t.setTime2(titleOnline.get(i + 1).getTime());
+                t.setTime3(titleOnline.get(i + 2).getTime());
+                t.setTime4(titleOnline.get(i + 3).getTime());
+                t.setNumberOfQuestions1(titleOnline.get(i).getNumberOfQuestions());
+                t.setNumberOfQuestions2(titleOnline.get(i + 1).getNumberOfQuestions());
+                t.setNumberOfQuestions3(titleOnline.get(i + 2).getNumberOfQuestions());
+                t.setNumberOfQuestions4(titleOnline.get(i + 3).getNumberOfQuestions());
+                list.add(t);
+            }
+        }
+        listAllTitle.setValue(list);
+    }
+
     public MutableLiveData<List<TitleOnPhone>> getListAllTitle() {
         return listAllTitle;
     }
 
-    public MutableLiveData<List<History>> getListHistory() {
+    public LiveData<List<History>> getListHistory() {
         return listHistory;
     }
 }

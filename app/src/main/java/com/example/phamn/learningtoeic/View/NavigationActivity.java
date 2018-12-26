@@ -3,6 +3,7 @@ package com.example.phamn.learningtoeic.View;
 import android.app.Dialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -25,6 +26,7 @@ import com.example.phamn.learningtoeic.Adapter.TitleAdapter;
 import com.example.phamn.learningtoeic.Model.History;
 import com.example.phamn.learningtoeic.Model.TitleOnPhone;
 import com.example.phamn.learningtoeic.R;
+import com.example.phamn.learningtoeic.Repository.HistoryRepository;
 import com.example.phamn.learningtoeic.ViewModel.HistoryViewModel;
 import com.example.phamn.learningtoeic.ViewModel.MainViewModel;
 
@@ -38,7 +40,7 @@ public class NavigationActivity extends AppCompatActivity
     Button btnPart1;
     Button btnPart2, btnPart3, btnPart4, btnHistory1, btnHistory2, btnHistory3, btnHistory4;
     TextView tvPartName;
-    Dialog dialogLoading;
+    Dialog dialogLoading, dialogStarting;
     ListView lvTitle, lvHistory;
     TitleAdapter titleAdapter;
     List<TitleOnPhone> listTitle;
@@ -48,6 +50,9 @@ public class NavigationActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
+
+        showStartDialog();
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -63,6 +68,7 @@ public class NavigationActivity extends AppCompatActivity
         //////////////////////////////////////////////////////////////////////////////////////////////
         mapping();
 
+        //Toast.makeText(this, repo.getDate(), Toast.LENGTH_SHORT);
 
         //showLoadingDialog(false);
 //        Intent intent = getIntent();
@@ -70,15 +76,7 @@ public class NavigationActivity extends AppCompatActivity
 
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         liveDataListener();
-        historyViewModel = ViewModelProviders.of(this).get(HistoryViewModel.class);
-        historyViewModel.getListAllHistory().observe(this, new Observer<List<History>>() {
-            @Override
-            public void onChanged(@Nullable List<History> histories) {
-                for(int i = 0; i < histories.size(); i++){
 
-                }
-            }
-        });
     }
 
     @Override
@@ -120,25 +118,39 @@ public class NavigationActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
-        if (id == R.id.nav_series_1) {
-
-        } else if (id == R.id.nav_setting) {
-
-        } else if (id == R.id.nav_support) {
-
-        } else if (id == R.id.nav_about) {
-            final Dialog dialog = new Dialog(this);
-            dialog.setContentView(R.layout.about_layout);
-            dialog.setCanceledOnTouchOutside(false);
-            dialog.show();
-            Button btnClose = (Button) dialog.findViewById(R.id.button_close);
-            btnClose.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.hide();
-                }
-            });
+        switch (id){
+            case R.id.nav_series_1:
+                break;
+            case R.id.nav_vacabulary:
+                Intent intent = new Intent(this, TopicVocabularyActivity.class);
+                this.startActivity(intent);
+                break;
+            case R.id.nav_tips:
+                Intent intent1 = new Intent(this, TopicTipsActivity.class);
+                this.startActivity(intent1);
+                break;
+            case R.id.nav_idiom:
+                Intent intent2 = new Intent(this, IdiomActivity.class);
+                this.startActivity(intent2);
+                break;
+            case R.id.nav_clear_history:
+                HistoryRepository repo = new HistoryRepository(getApplication());
+                repo.deleteAllHistory();
+                break;
+            case R.id.nav_support:
+                break;
+            case R.id.nav_about:final Dialog dialog = new Dialog(this);
+                dialog.setContentView(R.layout.about_layout);
+                dialog.setCanceledOnTouchOutside(false);
+                dialog.show();
+                Button btnClose = (Button) dialog.findViewById(R.id.button_close);
+                btnClose.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.hide();
+                    }
+                });
+                break;
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -171,54 +183,121 @@ public class NavigationActivity extends AppCompatActivity
                 }
 //                if(!dialogLoading.isShowing())
 //                    showLoadingDialog(true);
-                for (int i = 0; i < titles.size(); i++) {
-                    TitleOnPhone title = new TitleOnPhone(
-                            titles.get(i).getTitleName(),
-                            titles.get(i).getPartID(),
-                            titles.get(i).getTime1(),
-                            titles.get(i).getTime2(),
-                            titles.get(i).getTime3(),
-                            titles.get(i).getTime4(),
-                            titles.get(i).getNumberOfQuestions1(),
-                            titles.get(i).getNumberOfQuestions2(),
-                            titles.get(i).getNumberOfQuestions3(),
-                            titles.get(i).getNumberOfQuestions4(),
-                            titles.get(i).getListHistory());
-//                    TitleOnPhone title = new TitleOnPhone();
-//                    title.setTitleName(titles.get(i).getTitleName());
-//                    title.setTime1(titles.get(i).getTime1());
-//                    title.setTime2(titles.get(i).getTime2());
-//                    title.setTime3(titles.get(i).getTime3());
-//                    title.setTime4(titles.get(i).getTime4());
-//                    title.setNumberOfQuestions1(titles.get(i).getNumberOfQuestions1());
-//                    title.setNumberOfQuestions2(titles.get(i).getNumberOfQuestions2());
-//                    title.setNumberOfQuestions3(titles.get(i).getNumberOfQuestions3());
-//                    title.setNumberOfQuestions4(titles.get(i).getNumberOfQuestions4());
 
-//                    TitleOnPhone title = new TitleOnPhone();
-//                    title.setTitleName("đây là test");
-//                    title.setTime1("1:00");
-//                    title.setTime2("2:00");
-//                    title.setTime3("3:00");
-//                    title.setTime4("4:00");
-//                    title.setNumberOfQuestions1(1);
-//                    title.setNumberOfQuestions2(2);
-//                    title.setNumberOfQuestions3(3);
-//                    title.setNumberOfQuestions4(4);
-//
-//                    listTitle.add(title);
+                for (int i = 0; i < titles.size(); i++) {
+                    //HistoryRepository historyRepository = new HistoryRepository(getApplication(), titles.get(i).getPartID());
+                    TitleOnPhone title = new TitleOnPhone();
+                    title.setTitleName(titles.get(i).getTitleName());
+                    title.setPart1ID(titles.get(i).getPart1ID());
+                    title.setPart2ID(titles.get(i).getPart2ID());
+                    title.setPart3ID(titles.get(i).getPart3ID());
+                    title.setPart4ID(titles.get(i).getPart4ID());
+                    title.setTime1(titles.get(i).getTime1());
+                    title.setTime2(titles.get(i).getTime2());
+                    title.setTime3(titles.get(i).getTime3());
+                    title.setTime4(titles.get(i).getTime4());
+                    title.setNumberOfQuestions1(titles.get(i).getNumberOfQuestions1());
+                    title.setNumberOfQuestions2(titles.get(i).getNumberOfQuestions2());
+                    title.setNumberOfQuestions3(titles.get(i).getNumberOfQuestions3());
+                    title.setNumberOfQuestions4(titles.get(i).getNumberOfQuestions4());
+                    title.setHistory1(new History(title.getPart1ID(), "--/--", "--/--"));
+                    title.setHistory2(new History(title.getPart2ID(), "--/--", "--/--"));
+                    title.setHistory3(new History(title.getPart3ID(), "--/--", "--/--"));
+                    title.setHistory4(new History(title.getPart4ID(), "--/--", "--/--"));
+                    if(listHistory != null && listHistory.size() > 0){
+                        for (int j = 0; j < listHistory.size(); j++){
+                            if(listHistory.get(j).getPartID() == titles.get(i).getPart1ID()){
+                                title.setHistory1(listHistory.get(j));
+                                continue;
+                            }
+                            if(listHistory.get(j).getPartID() == titles.get(i).getPart2ID()){
+                                title.setHistory2(listHistory.get(j));
+                                continue;
+                            }
+                            if(listHistory.get(j).getPartID() == titles.get(i).getPart3ID()){
+                                title.setHistory3(listHistory.get(j));
+                                continue;
+                            }
+                            if(listHistory.get(j).getPartID() == titles.get(i).getPart4ID()){
+                                title.setHistory4(listHistory.get(j));
+                                continue;
+                            }
+                        }
+                    }
+
                     listTitle.add(title);
                 }
                 titleAdapter.notifyDataSetChanged();
+
+                if(dialogStarting.isShowing())
+                    dialogStarting.hide();
             }
         });
 
         mainViewModel.getListHistory().observe(this, new Observer<List<History>>() {
             @Override
             public void onChanged(@Nullable List<History> histories) {
-
+//                String s = "";
+//                for (int i = 0; i < histories.size(); i++)
+//                    s += histories.get(i).getPartID() + " ";
+//                Toast.makeText(NavigationActivity.this, "" + s, Toast.LENGTH_LONG).show();
+                listHistory = histories;
+                List<TitleOnPhone> list = mainViewModel.getListAllTitle().getValue();
+                if (list != null) {
+                    listTitle.clear();
+                    for (int i = 0; i < list.size(); i++) {
+                        TitleOnPhone title = new TitleOnPhone();
+                        title.setTitleName(list.get(i).getTitleName());
+                        title.setPart1ID(list.get(i).getPart1ID());
+                        title.setPart2ID(list.get(i).getPart2ID());
+                        title.setPart3ID(list.get(i).getPart3ID());
+                        title.setPart4ID(list.get(i).getPart4ID());
+                        title.setTime1(list.get(i).getTime1());
+                        title.setTime2(list.get(i).getTime2());
+                        title.setTime3(list.get(i).getTime3());
+                        title.setTime4(list.get(i).getTime4());
+                        title.setNumberOfQuestions1(list.get(i).getNumberOfQuestions1());
+                        title.setNumberOfQuestions2(list.get(i).getNumberOfQuestions2());
+                        title.setNumberOfQuestions3(list.get(i).getNumberOfQuestions3());
+                        title.setNumberOfQuestions4(list.get(i).getNumberOfQuestions4());
+                        title.setHistory1(new History(title.getPart1ID(), "--/--", "--/--"));
+                        title.setHistory2(new History(title.getPart2ID(), "--/--", "--/--"));
+                        title.setHistory3(new History(title.getPart3ID(), "--/--", "--/--"));
+                        title.setHistory4(new History(title.getPart4ID(), "--/--", "--/--"));
+                        if (listHistory != null && listHistory.size() > 0) {
+                            for (int j = 0; j < listHistory.size(); j++) {
+                                if (listHistory.get(j).getPartID() == list.get(i).getPart1ID()) {
+                                    title.setHistory1(listHistory.get(j));
+                                    continue;
+                                }
+                                if (listHistory.get(j).getPartID() == list.get(i).getPart2ID()) {
+                                    title.setHistory2(listHistory.get(j));
+                                    continue;
+                                }
+                                if (listHistory.get(j).getPartID() == list.get(i).getPart3ID()) {
+                                    title.setHistory3(listHistory.get(j));
+                                    continue;
+                                }
+                                if (listHistory.get(j).getPartID() == list.get(i).getPart4ID()) {
+                                    title.setHistory4(listHistory.get(j));
+                                    continue;
+                                }
+                            }
+                        }
+                        listTitle.add(title);
+                    }
+                    titleAdapter.notifyDataSetChanged();
+                }
             }
         });
+    }
+
+    public void showStartDialog(){
+        dialogStarting = new Dialog(this, R.style.AppTheme);
+        dialogStarting.getWindow().getAttributes().windowAnimations = R.style.DialogTheme;
+        dialogStarting.setContentView(R.layout.start_layout);
+        dialogStarting.show();
+        dialogStarting.setCanceledOnTouchOutside(false);
     }
 
     public void showLoadingDialog(boolean successful){

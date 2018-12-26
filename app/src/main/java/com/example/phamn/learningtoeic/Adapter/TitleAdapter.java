@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.example.phamn.learningtoeic.Model.History;
 import com.example.phamn.learningtoeic.Model.TitleOnPhone;
 import com.example.phamn.learningtoeic.R;
+import com.example.phamn.learningtoeic.Repository.HistoryRepository;
 import com.example.phamn.learningtoeic.View.NavigationActivity;
 import com.example.phamn.learningtoeic.View.Part1Activity;
 import com.example.phamn.learningtoeic.View.Part2Activity;
@@ -65,6 +66,14 @@ public class TitleAdapter extends ArrayAdapter<TitleOnPhone> {
             viewHolder.btnPart4 = (Button) convertView.findViewById(R.id.button_part4);
 
             viewHolder.tvScore1 = (TextView) convertView.findViewById(R.id.tv_score1);
+            viewHolder.tvScore2 = (TextView) convertView.findViewById(R.id.tv_score2);
+            viewHolder.tvScore3 = (TextView) convertView.findViewById(R.id.tv_score3);
+            viewHolder.tvScore4 = (TextView) convertView.findViewById(R.id.tv_score4);
+
+            viewHolder.tvDate1 = (TextView) convertView.findViewById(R.id.tv_date_time1);
+            viewHolder.tvDate2 = (TextView) convertView.findViewById(R.id.tv_date_time2);
+            viewHolder.tvDate3 = (TextView) convertView.findViewById(R.id.tv_date_time3);
+            viewHolder.tvDate4 = (TextView) convertView.findViewById(R.id.tv_date_time4);
 
             viewHolder.btnPart1.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -73,6 +82,7 @@ public class TitleAdapter extends ArrayAdapter<TitleOnPhone> {
                     intent.putExtra("titleName", "Test" + (position + 1));
                     intent.putExtra("time", "" + listTitle.get(position).getTime1());
                     intent.putExtra("numberOfQuestion", listTitle.get(position).getNumberOfQuestions1());
+                    intent.putExtra("partID", listTitle.get(position).getPart1ID());
                     getContext().startActivity(intent);
                 }
             });
@@ -83,6 +93,7 @@ public class TitleAdapter extends ArrayAdapter<TitleOnPhone> {
                     intent.putExtra("titleName", "Test" + (position + 1));
                     intent.putExtra("time", "" + listTitle.get(position).getTime2());
                     intent.putExtra("numberOfQuestion", listTitle.get(position).getNumberOfQuestions2());
+                    intent.putExtra("partID", listTitle.get(position).getPart2ID());
                     getContext().startActivity(intent);
                 }
             });
@@ -93,6 +104,7 @@ public class TitleAdapter extends ArrayAdapter<TitleOnPhone> {
                     intent.putExtra("titleName", "Test" + (position + 1));
                     intent.putExtra("time", "" + listTitle.get(position).getTime3());
                     intent.putExtra("numberOfQuestion", listTitle.get(position).getNumberOfQuestions3());
+                    intent.putExtra("partID", listTitle.get(position).getPart3ID());
                     getContext().startActivity(intent);
                 }
             });
@@ -103,10 +115,10 @@ public class TitleAdapter extends ArrayAdapter<TitleOnPhone> {
                     intent.putExtra("titleName", "Test" + (position + 1));
                     intent.putExtra("time", "" + listTitle.get(position).getTime4());
                     intent.putExtra("numberOfQuestion", listTitle.get(position).getNumberOfQuestions4());
+                    intent.putExtra("partID", listTitle.get(position).getPart4ID());
                     getContext().startActivity(intent);
                 }
             });
-
 
             convertView.setTag(viewHolder);
         }
@@ -117,6 +129,19 @@ public class TitleAdapter extends ArrayAdapter<TitleOnPhone> {
         TitleOnPhone title = listTitle.get(position);
 
         viewHolder.tvTitleName.setText(title.getTitleName());
+
+        viewHolder.tvScore1.setText(title.getHistory1().getScore());
+        viewHolder.tvDate1.setText(title.getHistory1().getDate());
+
+        viewHolder.tvScore2.setText(title.getHistory2().getScore());
+        viewHolder.tvDate2.setText(title.getHistory2().getDate());
+
+        viewHolder.tvScore3.setText(title.getHistory3().getScore());
+        viewHolder.tvDate3.setText(title.getHistory3().getDate());
+
+        viewHolder.tvScore4.setText(title.getHistory4().getScore());
+        viewHolder.tvDate4.setText(title.getHistory4().getDate());
+
 //        viewHolder.tvTime1.setText(title.getTime1());
 //        viewHolder.tvTime2.setText(title.getTime2());
 //        viewHolder.tvTime3.setText(title.getTime3());
@@ -125,7 +150,7 @@ public class TitleAdapter extends ArrayAdapter<TitleOnPhone> {
 //        viewHolder.tvNumberOfQuestions2.setText("" + title.getNumberOfQuestions2());
 //        viewHolder.tvNumberOfQuestions3.setText("" + title.getNumberOfQuestions3());
 //        viewHolder.tvNumberOfQuestions4.setText("" + title.getNumberOfQuestions4());
-
+        //viewHolder.tvScore1.setText(title.getScore1());
         return convertView;
     }
 

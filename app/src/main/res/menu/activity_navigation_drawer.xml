@@ -7,23 +7,38 @@
         <item
             android:id="@+id/nav_series_1"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Series 1" />
+            android:title="Bộ đề 1" />
     </group>
-
-    <item android:title="Setting">
+    <item android:title="Học tập">
         <menu>
             <item
-                android:id="@+id/nav_setting"
+                android:id="@+id/nav_vacabulary"
                 android:icon="@drawable/ic_menu_manage"
-                android:title="Setting" />
+                android:title="Từ vựng" />
+            <item
+                android:id="@+id/nav_tips"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Mẹo làm bài" />
+            <item
+                android:id="@+id/nav_idiom"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Thành ngữ" />
+        </menu>
+    </item>
+    <item android:title="Thông tin">
+        <menu>
+            <item
+                android:id="@+id/nav_clear_history"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="Xóa lịch sử" />
             <item
                 android:id="@+id/nav_support"
                 android:icon="@drawable/ic_menu_share"
-                android:title="Support" />
+                android:title="Trợ giúp" />
             <item
                 android:id="@+id/nav_about"
                 android:icon="@drawable/ic_menu_send"
-                android:title="About" />
+                android:title="Thông tin sản phẩm" />
         </menu>
     </item>
 

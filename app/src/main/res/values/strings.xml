@@ -4,7 +4,16 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Toeic Listening</string>
-    <string name="nav_header_subtitle">Learning any where</string>
+    <string name="nav_header_subtitle">Học mọi lúc mọi nơi</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+    <string name="btn_back">Quay lại</string>
+    <string name="btn_submit">Nộp bài</string>
+    <string name="btn_next_question">Câu sau</string>
+    <string name="btn_previous_question">Câu trước</string>
+    <string name="tv_score">Điểm</string>
+    <string name="tv_date">Ngày</string>
+    <string name="btn_review">Xem đáp án</string>
+    <string name="btn_home">Trở về</string>
+    <string name="btn_pause">Tạm dừng</string>
 </resources>

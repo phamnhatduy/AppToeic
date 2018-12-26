@@ -33,7 +33,7 @@
             android:layout_marginTop="5dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:text="Submit" />
+            android:text="@string/btn_submit" />
 
         <Button
             android:id="@+id/button_back"
@@ -44,7 +44,7 @@
             android:layout_marginRight="5dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
-            android:text="Back"
+            android:text="@string/btn_back"
             android:layout_alignParentRight="true" />
 
         <include
@@ -75,7 +75,7 @@
                 android:id="@+id/button_previous_question"
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
-                android:text="Previous"
+                android:text="@string/btn_previous_question"
                 android:textSize="15dp" />
 
             <Button
@@ -83,7 +83,7 @@
                 android:id="@+id/button_next_question"
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
-                android:text="Next"
+                android:text="@string/btn_next_question"
                 android:textSize="15dp" />
         </LinearLayout>
         <ScrollView

@@ -1,6 +1,7 @@
 package com.example.phamn.learningtoeic.DAO;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
@@ -25,9 +26,15 @@ public interface HistoryDAO {
     @Query("delete from table_history")
     void deleteAllHistories();
 
-    @Query("select * from table_history where PartID = :partID order by ID asc")
-    LiveData<List<History>> getListHistory(int partID);
+    @Query("delete from table_history where partID = :partID")
+    void deleteHistory(Integer partID);
 
-    @Query("select * from table_history order by ID asc")
+    @Query("select * from table_history where partID = :partID order by ID asc")
+    History getHistory(int partID);
+
+    @Query("select * from table_history order by id asc")
     LiveData<List<History>> getListAllHistory();
+
+    @Query("select date from table_history where partID = 1")
+    String getDate();
 }

@@ -16,8 +16,8 @@ public class HistoryViewModel extends AndroidViewModel {
 
     public HistoryViewModel(@NonNull Application application) {
         super(application);
-        repository = new HistoryRepository(application);
-        listAllHistory = repository.getListAllHistory();
+//        repository = new HistoryRepository(application);
+//        listAllHistory = repository.getListAllHistory();
     }
 
     public  void insert(History history)
@@ -30,10 +30,10 @@ public class HistoryViewModel extends AndroidViewModel {
         repository.update(history);
     }
 
-    public  void delete(History history)
-    {
-        repository.delete(history);
-    }
+//    public  void delete(History history)
+//    {
+//        repository.delete(history);
+//    }
 
     public void deleteAllHistory(History history)
     {

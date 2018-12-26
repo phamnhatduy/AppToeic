@@ -22,12 +22,15 @@ import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.example.phamn.learningtoeic.Model.History;
 import com.example.phamn.learningtoeic.Model.Part4OnPhone;
 import com.example.phamn.learningtoeic.R;
+import com.example.phamn.learningtoeic.Repository.HistoryRepository;
 import com.example.phamn.learningtoeic.ViewModel.Part4ViewModel;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
@@ -76,6 +79,7 @@ public class Part4Activity extends AppCompatActivity {
     MediaPlayer mediaPlayer = new MediaPlayer();
     Dialog dialogLoading;
     boolean isTesting = true; // reviewing -> isTesting = false
+    HistoryRepository historyRepository = new HistoryRepository(getApplication());
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,8 +124,8 @@ public class Part4Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mediaPlayer.pause();
-                btnPause.setText("Continue");
-                showNoticeDialog("Are you sure want to back?");
+                btnPause.setText("Tiếp tục");
+                showNoticeDialog("Bạn có muốn thoát?");
             }
         });
 
@@ -130,11 +134,11 @@ public class Part4Activity extends AppCompatActivity {
             public void onClick(View v) {
                 if(mediaPlayer.isPlaying()) {
                     mediaPlayer.pause();
-                    btnPause.setText("Continue");
+                    btnPause.setText("Tiếp tục");
                 }
                 else {
                     mediaPlayer.start();
-                    btnPause.setText("Pause");
+                    btnPause.setText("Tạm dừng");
                 }
             }
         });
@@ -294,13 +298,13 @@ public class Part4Activity extends AppCompatActivity {
             ivLoading.clearAnimation();
             ivLoading.setImageResource(R.drawable.success);
             TextView tvLoading = dialogLoading.findViewById(R.id.tv_loading);
-            tvLoading.setText("Load Successfully!");
+            tvLoading.setText("Lấy dữ liệu hoàn tất!");
             btnStart.setVisibility(View.VISIBLE);
             tvNumberOfQuestion.setVisibility(View.VISIBLE);
             tvTime.setVisibility(View.VISIBLE);
 
-            tvNumberOfQuestion.setText("Number of question: "+ getIntent().getIntExtra("numberOfQuestion", 10));
-            tvTime.setText("Time: " + getIntent().getStringExtra("time"));
+            tvNumberOfQuestion.setText("Số câu hỏi: "+ getIntent().getIntExtra("numberOfQuestion", 10));
+            tvTime.setText("Thời gian: " + getIntent().getStringExtra("time"));
 
             btnStart.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -342,7 +346,7 @@ public class Part4Activity extends AppCompatActivity {
 
     public void startProgressBarTime(){
         tvCurrentTime.setText("00:00");
-        btnPause.setText("Pause");
+        btnPause.setText("Tạm dừng");
         mediaPlayer.start();
         mediaPlayer.seekTo(0);
         seekBar.setProgress(0);
@@ -379,32 +383,27 @@ public class Part4Activity extends AppCompatActivity {
         dialogNotice.setContentView(R.layout.end_part2_layout);
         dialogNotice.show();
         dialogNotice.setCanceledOnTouchOutside(true);
-        //int i = dialogNotice.getContext().getResources().getIdentifier("button_11", "id", dialogNotice.getContext().getPackageName());
+
         for (int i = 11; i <= 40; i++) {
             String s = i + "";
-            Button btn = new Button(dialogNotice.getContext());
+            Button btn;
             btn = (Button)dialogNotice.findViewById(
                     dialogNotice.getContext().getResources().getIdentifier(
                             "button_" + String.valueOf(i).trim(),
                             "id",
                             getApplicationContext().getPackageName()));
-            //btn.setId(i);
 
             btn.setText("" + (60 + i));
             if(!part4ViewModel.getListAllQuestion().getValue().get(i - 11).getAnswerChosen().equals(""))
                 btn.setBackgroundResource(R.drawable.question_chosen);
         }
-//        Button btn11 = (Button)dialogNotice.findViewById(R.id.button_11);
-//        if(!part4ViewModel.getListAllQuestion().getValue().get(0).getAnswerChosen().equals(""))
-//            btn11.setBackgroundResource(R.drawable.question_chosen);
-
 
         Button btnSubmit = (Button)dialogNotice.findViewById(R.id.button_submit);
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mediaPlayer.pause();
-                btnPause.setText("Continue");
+                btnPause.setText("Tiếp tục");
                 dialogNotice.hide();
                 showScoreDialog();
             }
@@ -423,8 +422,6 @@ public class Part4Activity extends AppCompatActivity {
         btnYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), NavigationActivity.class);
-                startActivity(intent);
                 finish();
             }
         });
@@ -442,13 +439,21 @@ public class Part4Activity extends AppCompatActivity {
         dialog.show();
         dialog.setCanceledOnTouchOutside(false);
         TextView tvScore = (TextView)dialog.findViewById(R.id.textview_score);
-        tvScore.setText(getResult());
+
+        String result = getResult();
+        tvScore.setText(result);
+        Intent intent = getIntent();
+        int partID = intent.getIntExtra("partID", 0);
+        historyRepository.deleteHistory(partID);
+        historyRepository.insert(new History(partID,
+                Calendar.getInstance().get(Calendar.DAY_OF_MONTH) + "/" + Calendar.getInstance().get(Calendar.MONTH),
+                result)); // add to history
+        tvScore.setText(result);
+
         Button btnHome = (Button)dialog.findViewById(R.id.button_home);
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), NavigationActivity.class);
-                startActivity(intent);
                 finish();
             }
         });

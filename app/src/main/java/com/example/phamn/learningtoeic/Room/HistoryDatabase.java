@@ -43,8 +43,6 @@ public abstract class HistoryDatabase extends RoomDatabase {
         }
         @Override
         protected Void doInBackground(Void... voids) {
-            historyDAO.insert(new History(1,"20/12/2018","100"));
-            historyDAO.insert(new History(2,"20/12/2018","100"));
             return null;
         }
     }

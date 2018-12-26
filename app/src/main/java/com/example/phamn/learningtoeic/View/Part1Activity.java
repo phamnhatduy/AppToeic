@@ -33,16 +33,15 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.example.phamn.learningtoeic.Model.QuestionPart1;
+import com.example.phamn.learningtoeic.Model.History;
 import com.example.phamn.learningtoeic.Model.Part1OnPhone;
 import com.example.phamn.learningtoeic.R;
+import com.example.phamn.learningtoeic.Repository.HistoryRepository;
 import com.example.phamn.learningtoeic.ViewModel.Part1ViewModel;
-import com.example.phamn.learningtoeic.databinding.ActivityPart1Binding;
-import com.example.phamn.learningtoeic.databinding.FragmentPart1Binding;
-import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
@@ -71,6 +70,7 @@ public class Part1Activity extends AppCompatActivity {
     MediaPlayer mediaPlayer = new MediaPlayer();
     Dialog dialogLoading;
     boolean isTesting = true; // reviewing -> isTesting = false
+    HistoryRepository historyRepository = new HistoryRepository(getApplication());
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,7 +90,6 @@ public class Part1Activity extends AppCompatActivity {
 
         // show dialog Loading
         dialogLoading = new Dialog(this, R.style.AppTheme);
-        //dialogLoading.setTitle("LearningToeic");
         dialogLoading.setContentView(R.layout.loading_layout);
         dialogLoading.setCanceledOnTouchOutside(false);
         showLoadingDialog(false);
@@ -118,8 +117,8 @@ public class Part1Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mediaPlayer.pause();
-                btnPause.setText("Continue");
-                showNoticeDialog("Are you sure want to back?");
+                btnPause.setText("Tiếp tục");
+                showNoticeDialog("Bạn có muốn thoát?");
             }
         });
 
@@ -128,11 +127,11 @@ public class Part1Activity extends AppCompatActivity {
             public void onClick(View v) {
                 if(mediaPlayer.isPlaying()) {
                     mediaPlayer.pause();
-                    btnPause.setText("Continue");
+                    btnPause.setText("Tiếp tục");
                 }
                 else {
                     mediaPlayer.start();
-                    btnPause.setText("Pause");
+                    btnPause.setText("Tạm dừng");
                 }
             }
         });
@@ -179,7 +178,6 @@ public class Part1Activity extends AppCompatActivity {
                 switch (radioGroup.getCheckedRadioButtonId()){
                     case R.id.radioButton_A:
                         part1ViewModel.changeAnswer("A");
-                        //Toast.makeText(Part1Activity.this, ""+ R.id.radioButton_A, Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.radioButton_B:
                         part1ViewModel.changeAnswer("B");
@@ -219,13 +217,13 @@ public class Part1Activity extends AppCompatActivity {
             ivLoading.clearAnimation();
             ivLoading.setImageResource(R.drawable.success);
             TextView tvLoading = dialogLoading.findViewById(R.id.tv_loading);
-            tvLoading.setText("Load Successfully!");
+            tvLoading.setText("Lấy dữ liệu hoàn tất!");
             btnStart.setVisibility(View.VISIBLE);
             tvNumberOfQuestion.setVisibility(View.VISIBLE);
             tvTime.setVisibility(View.VISIBLE);
 
-            tvNumberOfQuestion.setText("Number of question: "+ getIntent().getIntExtra("numberOfQuestion", 10));
-            tvTime.setText("Time: " + getIntent().getStringExtra("time"));
+            tvNumberOfQuestion.setText("Số câu hỏi: "+ getIntent().getIntExtra("numberOfQuestion", 10));
+            tvTime.setText("Thời gian: " + getIntent().getStringExtra("time"));
 
             btnStart.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -239,7 +237,6 @@ public class Part1Activity extends AppCompatActivity {
 
     public void initAudio(){
         String url = "https://myhost2018.000webhostapp.com/Test1/Audio/Test1_Part1.m4a";
-//        String url = "http://myhost2018.byethost31.com/Toeic/Test1/Part1/Audio/Test1_Part1.m4a";
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         try {
             mediaPlayer.setDataSource(url);
@@ -250,8 +247,6 @@ public class Part1Activity extends AppCompatActivity {
         mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
-                //Toast.makeText(Part1Activity.this, "" + mediaPlayer.getDuration(), Toast.LENGTH_SHORT).show();
-                //mp.start();
                 tvTotalTime.setText(new SimpleDateFormat("mm:ss").format(mediaPlayer.getDuration()));
                 seekBar.setMax(mediaPlayer.getDuration());
                 showLoadingDialog(true);
@@ -267,7 +262,6 @@ public class Part1Activity extends AppCompatActivity {
 
     public void startProgressBarTime(){
         tvCurrentTime.setText("00:00");
-        btnPause.setText("Pause");
         mediaPlayer.start();
         mediaPlayer.seekTo(0);
         seekBar.setProgress(0);
@@ -291,7 +285,6 @@ public class Part1Activity extends AppCompatActivity {
                                 showSubmitDialog();
                             else
                                 showScoreDialog();
-                            //finish();
                         }
                     });
                 }
@@ -305,43 +298,25 @@ public class Part1Activity extends AppCompatActivity {
         dialogNotice.setContentView(R.layout.end_part1_layout);
         dialogNotice.show();
         dialogNotice.setCanceledOnTouchOutside(true);
-        Button btn1 = (Button)dialogNotice.findViewById(R.id.button_1);
-        if(!part1ViewModel.getListQuestion().getValue().get(0).getAnswerChosen().equals(""))
-            btn1.setBackgroundResource(R.drawable.question_chosen);
-        Button btn2 = (Button)dialogNotice.findViewById(R.id.button_2);
-        if(!part1ViewModel.getListQuestion().getValue().get(1).getAnswerChosen().equals(""))
-            btn2.setBackgroundResource(R.drawable.question_chosen);
-        Button btn3 = (Button)dialogNotice.findViewById(R.id.button_3);
-        if(!part1ViewModel.getListQuestion().getValue().get(2).getAnswerChosen().equals(""))
-            btn3.setBackgroundResource(R.drawable.question_chosen);
-        Button btn4 = (Button)dialogNotice.findViewById(R.id.button_4);
-        if(!part1ViewModel.getListQuestion().getValue().get(3).getAnswerChosen().equals(""))
-            btn4.setBackgroundResource(R.drawable.question_chosen);
-        Button btn5 = (Button)dialogNotice.findViewById(R.id.button_5);
-        if(!part1ViewModel.getListQuestion().getValue().get(4).getAnswerChosen().equals(""))
-            btn5.setBackgroundResource(R.drawable.question_chosen);
-        Button btn6 = (Button)dialogNotice.findViewById(R.id.button_6);
-        if(!part1ViewModel.getListQuestion().getValue().get(5).getAnswerChosen().equals(""))
-            btn6.setBackgroundResource(R.drawable.question_chosen);
-        Button btn7 = (Button)dialogNotice.findViewById(R.id.button_7);
-        if(!part1ViewModel.getListQuestion().getValue().get(6).getAnswerChosen().equals(""))
-            btn7.setBackgroundResource(R.drawable.question_chosen);
-        Button btn8 = (Button)dialogNotice.findViewById(R.id.button_8);
-        if(!part1ViewModel.getListQuestion().getValue().get(7).getAnswerChosen().equals(""))
-            btn8.setBackgroundResource(R.drawable.question_chosen);
-        Button btn9 = (Button)dialogNotice.findViewById(R.id.button_9);
-        if(!part1ViewModel.getListQuestion().getValue().get(8).getAnswerChosen().equals(""))
-            btn9.setBackgroundResource(R.drawable.question_chosen);
-        Button btn10 = (Button)dialogNotice.findViewById(R.id.button_10);
-        if(!part1ViewModel.getListQuestion().getValue().get(9).getAnswerChosen().equals(""))
-            btn10.setBackgroundResource(R.drawable.question_chosen);
+
+        for (int i = 1; i <= 10; i++) {
+            Button btn;
+            btn = (Button)dialogNotice.findViewById(
+                    dialogNotice.getContext().getResources().getIdentifier(
+                            "button_" + String.valueOf(i).trim(),
+                            "id",
+                            getApplicationContext().getPackageName()));
+
+            if(!part1ViewModel.getListQuestion().getValue().get(i - 1).getAnswerChosen().equals(""))
+                btn.setBackgroundResource(R.drawable.question_chosen);
+        }
 
         Button btnSubmit = (Button)dialogNotice.findViewById(R.id.button_submit);
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mediaPlayer.pause();
-                btnPause.setText("Continue");
+                btnPause.setText("Tiếp tục");
                 dialogNotice.hide();
                 showScoreDialog();
             }
@@ -354,13 +329,20 @@ public class Part1Activity extends AppCompatActivity {
         dialog.show();
         dialog.setCanceledOnTouchOutside(false);
         TextView tvScore = (TextView)dialog.findViewById(R.id.textview_score);
-        tvScore.setText(getResult());
+
+        String result = getResult();
+        tvScore.setText(result);
+        Intent intent = getIntent();
+        int partID = intent.getIntExtra("partID", 0);
+        historyRepository.deleteHistory(partID);
+        historyRepository.insert(new History(partID,
+                Calendar.getInstance().get(Calendar.DAY_OF_MONTH) + "/" + (Calendar.getInstance().get(Calendar.MONTH) + 1),
+                result)); // add to history
+
         Button btnHome = (Button)dialog.findViewById(R.id.button_home);
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), NavigationActivity.class);
-                startActivity(intent);
                 finish();
             }
         });
@@ -389,8 +371,8 @@ public class Part1Activity extends AppCompatActivity {
         btnYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), NavigationActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(getApplicationContext(), NavigationActivity.class);
+//                startActivity(intent);
                 finish();
             }
         });

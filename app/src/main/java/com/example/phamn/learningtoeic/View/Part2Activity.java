@@ -23,14 +23,17 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.phamn.learningtoeic.Model.History;
 import com.example.phamn.learningtoeic.Model.Part2OnPhone;
 import com.example.phamn.learningtoeic.Model.Part1OnPhone;
 import com.example.phamn.learningtoeic.R;
+import com.example.phamn.learningtoeic.Repository.HistoryRepository;
 import com.example.phamn.learningtoeic.View.MainActivity;
 import com.example.phamn.learningtoeic.ViewModel.Part2ViewModel;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
@@ -57,6 +60,7 @@ public class Part2Activity extends AppCompatActivity {
     MediaPlayer mediaPlayer = new MediaPlayer();
     Dialog dialogLoading;
     boolean isTesting = true; // reviewing -> isTesting = false
+    HistoryRepository historyRepository = new HistoryRepository(getApplication());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,8 +106,8 @@ public class Part2Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mediaPlayer.pause();
-                btnPause.setText("Continue");
-                showNoticeDialog("Are you sure want to back?");
+                btnPause.setText("Tiếp tục");
+                showNoticeDialog("Bạn có muốn thoát?");
             }
         });
 
@@ -112,11 +116,11 @@ public class Part2Activity extends AppCompatActivity {
             public void onClick(View v) {
                 if(mediaPlayer.isPlaying()) {
                     mediaPlayer.pause();
-                    btnPause.setText("Continue");
+                    btnPause.setText("Tiếp tục");
                 }
                 else {
                     mediaPlayer.start();
-                    btnPause.setText("Pause");
+                    btnPause.setText("Tạm dừng");
                 }
             }
         });
@@ -201,13 +205,13 @@ public class Part2Activity extends AppCompatActivity {
             ivLoading.clearAnimation();
             ivLoading.setImageResource(R.drawable.success);
             TextView tvLoading = dialogLoading.findViewById(R.id.tv_loading);
-            tvLoading.setText("Load Successfully!");
+            tvLoading.setText("Lấy dữ liệu hoàn tất!");
             btnStart.setVisibility(View.VISIBLE);
             tvNumberOfQuestion.setVisibility(View.VISIBLE);
             tvTime.setVisibility(View.VISIBLE);
 
-            tvNumberOfQuestion.setText("Number of question: "+ getIntent().getIntExtra("numberOfQuestion", 10));
-            tvTime.setText("Time: " + getIntent().getStringExtra("time"));
+            tvNumberOfQuestion.setText("Số câu hỏi: "+ getIntent().getIntExtra("numberOfQuestion", 10));
+            tvTime.setText("Thời gian: " + getIntent().getStringExtra("time"));
 
             btnStart.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -249,7 +253,7 @@ public class Part2Activity extends AppCompatActivity {
 
     public void startProgressBarTime(){
         tvCurrentTime.setText("00:00");
-        btnPause.setText("Pause");
+        btnPause.setText("Tạm dừng");
         mediaPlayer.start();
         mediaPlayer.seekTo(0);
         seekBar.setProgress(0);
@@ -286,105 +290,25 @@ public class Part2Activity extends AppCompatActivity {
         dialogNotice.setContentView(R.layout.end_part2_layout);
         dialogNotice.show();
         dialogNotice.setCanceledOnTouchOutside(true);
-        Button btn11 = (Button)dialogNotice.findViewById(R.id.button_11);
-        if(!part2ViewModel.getListQuestion().getValue().get(0).getAnswerChosen().equals(""))
-            btn11.setBackgroundResource(R.drawable.question_chosen);
-        Button btn12 = (Button)dialogNotice.findViewById(R.id.button_12);
-        if(!part2ViewModel.getListQuestion().getValue().get(1).getAnswerChosen().equals(""))
-            btn12.setBackgroundResource(R.drawable.question_chosen);
-        Button btn13 = (Button)dialogNotice.findViewById(R.id.button_13);
-        if(!part2ViewModel.getListQuestion().getValue().get(2).getAnswerChosen().equals(""))
-            btn13.setBackgroundResource(R.drawable.question_chosen);
-        Button btn14 = (Button)dialogNotice.findViewById(R.id.button_14);
-        if(!part2ViewModel.getListQuestion().getValue().get(3).getAnswerChosen().equals(""))
-            btn14.setBackgroundResource(R.drawable.question_chosen);
-        Button btn15 = (Button)dialogNotice.findViewById(R.id.button_15);
-        if(!part2ViewModel.getListQuestion().getValue().get(4).getAnswerChosen().equals(""))
-            btn15.setBackgroundResource(R.drawable.question_chosen);
-        Button btn16 = (Button)dialogNotice.findViewById(R.id.button_16);
-        if(!part2ViewModel.getListQuestion().getValue().get(5).getAnswerChosen().equals(""))
-            btn16.setBackgroundResource(R.drawable.question_chosen);
-        Button btn17 = (Button)dialogNotice.findViewById(R.id.button_17);
-        if(!part2ViewModel.getListQuestion().getValue().get(6).getAnswerChosen().equals(""))
-            btn17.setBackgroundResource(R.drawable.question_chosen);
-        Button btn8 = (Button)dialogNotice.findViewById(R.id.button_18);
-        if(!part2ViewModel.getListQuestion().getValue().get(7).getAnswerChosen().equals(""))
-            btn8.setBackgroundResource(R.drawable.question_chosen);
-        Button btn19 = (Button)dialogNotice.findViewById(R.id.button_19);
-        if(!part2ViewModel.getListQuestion().getValue().get(8).getAnswerChosen().equals(""))
-            btn19.setBackgroundResource(R.drawable.question_chosen);
-        Button btn20 = (Button)dialogNotice.findViewById(R.id.button_20);
-        if(!part2ViewModel.getListQuestion().getValue().get(9).getAnswerChosen().equals(""))
-            btn20.setBackgroundResource(R.drawable.question_chosen);
 
-        Button btn21 = (Button)dialogNotice.findViewById(R.id.button_21);
-        if(!part2ViewModel.getListQuestion().getValue().get(10).getAnswerChosen().equals(""))
-            btn21.setBackgroundResource(R.drawable.question_chosen);
-        Button btn22 = (Button)dialogNotice.findViewById(R.id.button_22);
-        if(!part2ViewModel.getListQuestion().getValue().get(11).getAnswerChosen().equals(""))
-            btn22.setBackgroundResource(R.drawable.question_chosen);
-        Button btn23 = (Button)dialogNotice.findViewById(R.id.button_23);
-        if(!part2ViewModel.getListQuestion().getValue().get(12).getAnswerChosen().equals(""))
-            btn23.setBackgroundResource(R.drawable.question_chosen);
-        Button btn24 = (Button)dialogNotice.findViewById(R.id.button_24);
-        if(!part2ViewModel.getListQuestion().getValue().get(13).getAnswerChosen().equals(""))
-            btn24.setBackgroundResource(R.drawable.question_chosen);
-        Button btn25 = (Button)dialogNotice.findViewById(R.id.button_25);
-        if(!part2ViewModel.getListQuestion().getValue().get(14).getAnswerChosen().equals(""))
-            btn25.setBackgroundResource(R.drawable.question_chosen);
-        Button btn26 = (Button)dialogNotice.findViewById(R.id.button_26);
-        if(!part2ViewModel.getListQuestion().getValue().get(15).getAnswerChosen().equals(""))
-            btn26.setBackgroundResource(R.drawable.question_chosen);
-        Button btn27 = (Button)dialogNotice.findViewById(R.id.button_27);
-        if(!part2ViewModel.getListQuestion().getValue().get(16).getAnswerChosen().equals(""))
-            btn27.setBackgroundResource(R.drawable.question_chosen);
-        Button btn28 = (Button)dialogNotice.findViewById(R.id.button_28);
-        if(!part2ViewModel.getListQuestion().getValue().get(17).getAnswerChosen().equals(""))
-            btn28.setBackgroundResource(R.drawable.question_chosen);
-        Button btn29 = (Button)dialogNotice.findViewById(R.id.button_29);
-        if(!part2ViewModel.getListQuestion().getValue().get(18).getAnswerChosen().equals(""))
-            btn29.setBackgroundResource(R.drawable.question_chosen);
-        Button btn30 = (Button)dialogNotice.findViewById(R.id.button_30);
-        if(!part2ViewModel.getListQuestion().getValue().get(19).getAnswerChosen().equals(""))
-            btn30.setBackgroundResource(R.drawable.question_chosen);
+        for (int i = 11; i <= 40; i++) {
+            Button btn;
+            btn = (Button)dialogNotice.findViewById(
+                    dialogNotice.getContext().getResources().getIdentifier(
+                            "button_" + String.valueOf(i).trim(),
+                            "id",
+                            getApplicationContext().getPackageName()));
 
-        Button btn31 = (Button)dialogNotice.findViewById(R.id.button_31);
-        if(!part2ViewModel.getListQuestion().getValue().get(20).getAnswerChosen().equals(""))
-            btn31.setBackgroundResource(R.drawable.question_chosen);
-        Button btn32 = (Button)dialogNotice.findViewById(R.id.button_32);
-        if(!part2ViewModel.getListQuestion().getValue().get(21).getAnswerChosen().equals(""))
-            btn32.setBackgroundResource(R.drawable.question_chosen);
-        Button btn33 = (Button)dialogNotice.findViewById(R.id.button_33);
-        if(!part2ViewModel.getListQuestion().getValue().get(22).getAnswerChosen().equals(""))
-            btn33.setBackgroundResource(R.drawable.question_chosen);
-        Button btn34 = (Button)dialogNotice.findViewById(R.id.button_34);
-        if(!part2ViewModel.getListQuestion().getValue().get(23).getAnswerChosen().equals(""))
-            btn34.setBackgroundResource(R.drawable.question_chosen);
-        Button btn35 = (Button)dialogNotice.findViewById(R.id.button_35);
-        if(!part2ViewModel.getListQuestion().getValue().get(24).getAnswerChosen().equals(""))
-            btn35.setBackgroundResource(R.drawable.question_chosen);
-        Button btn36 = (Button)dialogNotice.findViewById(R.id.button_36);
-        if(!part2ViewModel.getListQuestion().getValue().get(25).getAnswerChosen().equals(""))
-            btn36.setBackgroundResource(R.drawable.question_chosen);
-        Button btn37 = (Button)dialogNotice.findViewById(R.id.button_37);
-        if(!part2ViewModel.getListQuestion().getValue().get(26).getAnswerChosen().equals(""))
-            btn37.setBackgroundResource(R.drawable.question_chosen);
-        Button btn38 = (Button)dialogNotice.findViewById(R.id.button_38);
-        if(!part2ViewModel.getListQuestion().getValue().get(27).getAnswerChosen().equals(""))
-            btn38.setBackgroundResource(R.drawable.question_chosen);
-        Button btn39 = (Button)dialogNotice.findViewById(R.id.button_39);
-        if(!part2ViewModel.getListQuestion().getValue().get(28).getAnswerChosen().equals(""))
-            btn39.setBackgroundResource(R.drawable.question_chosen);
-        Button btn40 = (Button)dialogNotice.findViewById(R.id.button_40);
-        if(!part2ViewModel.getListQuestion().getValue().get(29).getAnswerChosen().equals(""))
-            btn40.setBackgroundResource(R.drawable.question_chosen);
+            if(!part2ViewModel.getListQuestion().getValue().get(i - 11).getAnswerChosen().equals(""))
+                btn.setBackgroundResource(R.drawable.question_chosen);
+        }
 
         Button btnSubmit = (Button)dialogNotice.findViewById(R.id.button_submit);
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mediaPlayer.pause();
-                btnPause.setText("Continue");
+                btnPause.setText("Tiếp tục");
                 dialogNotice.hide();
                 showScoreDialog();
             }
@@ -403,8 +327,6 @@ public class Part2Activity extends AppCompatActivity {
         btnYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), NavigationActivity.class);
-                startActivity(intent);
                 finish();
             }
         });
@@ -422,13 +344,21 @@ public class Part2Activity extends AppCompatActivity {
         dialog.show();
         dialog.setCanceledOnTouchOutside(false);
         TextView tvScore = (TextView)dialog.findViewById(R.id.textview_score);
-        tvScore.setText(getResult());
+
+        String result = getResult();
+        tvScore.setText(result);
+        Intent intent = getIntent();
+        int partID = intent.getIntExtra("partID", 0);
+        historyRepository.deleteHistory(partID);
+        historyRepository.insert(new History(partID,
+                Calendar.getInstance().get(Calendar.DAY_OF_MONTH) + "/" + Calendar.getInstance().get(Calendar.MONTH),
+                result)); // add to history
+        tvScore.setText(result);
+
         Button btnHome = (Button)dialog.findViewById(R.id.button_home);
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), NavigationActivity.class);
-                startActivity(intent);
                 finish();
             }
         });

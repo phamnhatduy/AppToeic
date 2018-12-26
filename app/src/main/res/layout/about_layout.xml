@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="Version 1.0.0"
+        android:text="Phiên bản 1.0.0"
         android:textSize="20dp"
         android:textStyle="bold"/>
     <LinearLayout
@@ -33,7 +33,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="30dp"
             android:layout_marginBottom="10dp"
-            android:text="Close"
+            android:text="Đóng"
             android:id="@+id/button_close"
             android:textSize="10dp"/>
     </LinearLayout>

@@ -150,44 +150,44 @@ public class MainActivity extends AppCompatActivity {
             public void onChanged(@Nullable List<TitleOnPhone> titles) {
 //                if(!dialogLoading.isShowing())
 //                    showLoadingDialog(true);
-                for (int i = 0; i < titles.size(); i++) {
-                    TitleOnPhone title = new TitleOnPhone(
-                            titles.get(i).getTitleName(),
-                            titles.get(i).getPartID(),
-                            titles.get(i).getTime1(),
-                            titles.get(i).getTime2(),
-                            titles.get(i).getTime3(),
-                            titles.get(i).getTime4(),
-                            titles.get(i).getNumberOfQuestions1(),
-                            titles.get(i).getNumberOfQuestions2(),
-                            titles.get(i).getNumberOfQuestions3(),
-                            titles.get(i).getNumberOfQuestions4(),
-                            titles.get(i).getListHistory());
-//                    TitleOnPhone title = new TitleOnPhone();
-//                    title.setTitleName(titles.get(i).getTitleName());
-//                    title.setTime1(titles.get(i).getTime1());
-//                    title.setTime2(titles.get(i).getTime2());
-//                    title.setTime3(titles.get(i).getTime3());
-//                    title.setTime4(titles.get(i).getTime4());
-//                    title.setNumberOfQuestions1(titles.get(i).getNumberOfQuestions1());
-//                    title.setNumberOfQuestions2(titles.get(i).getNumberOfQuestions2());
-//                    title.setNumberOfQuestions3(titles.get(i).getNumberOfQuestions3());
-//                    title.setNumberOfQuestions4(titles.get(i).getNumberOfQuestions4());
-
-//                    TitleOnPhone title = new TitleOnPhone();
-//                    title.setTitleName("đây là test");
-//                    title.setTime1("1:00");
-//                    title.setTime2("2:00");
-//                    title.setTime3("3:00");
-//                    title.setTime4("4:00");
-//                    title.setNumberOfQuestions1(1);
-//                    title.setNumberOfQuestions2(2);
-//                    title.setNumberOfQuestions3(3);
-//                    title.setNumberOfQuestions4(4);
+//                for (int i = 0; i < titles.size(); i++) {
+//                    TitleOnPhone title = new TitleOnPhone(
+//                            titles.get(i).getTitleName(),
+//                            titles.get(i).getPartID(),
+//                            titles.get(i).getTime1(),
+//                            titles.get(i).getTime2(),
+//                            titles.get(i).getTime3(),
+//                            titles.get(i).getTime4(),
+//                            titles.get(i).getNumberOfQuestions1(),
+//                            titles.get(i).getNumberOfQuestions2(),
+//                            titles.get(i).getNumberOfQuestions3(),
+//                            titles.get(i).getNumberOfQuestions4(),
+//                            titles.get(i).getListHistory());
+////                    TitleOnPhone title = new TitleOnPhone();
+////                    title.setTitleName(titles.get(i).getTitleName());
+////                    title.setTime1(titles.get(i).getTime1());
+////                    title.setTime2(titles.get(i).getTime2());
+////                    title.setTime3(titles.get(i).getTime3());
+////                    title.setTime4(titles.get(i).getTime4());
+////                    title.setNumberOfQuestions1(titles.get(i).getNumberOfQuestions1());
+////                    title.setNumberOfQuestions2(titles.get(i).getNumberOfQuestions2());
+////                    title.setNumberOfQuestions3(titles.get(i).getNumberOfQuestions3());
+////                    title.setNumberOfQuestions4(titles.get(i).getNumberOfQuestions4());
 //
+////                    TitleOnPhone title = new TitleOnPhone();
+////                    title.setTitleName("đây là test");
+////                    title.setTime1("1:00");
+////                    title.setTime2("2:00");
+////                    title.setTime3("3:00");
+////                    title.setTime4("4:00");
+////                    title.setNumberOfQuestions1(1);
+////                    title.setNumberOfQuestions2(2);
+////                    title.setNumberOfQuestions3(3);
+////                    title.setNumberOfQuestions4(4);
+////
+////                    listTitle.add(title);
 //                    listTitle.add(title);
-                    listTitle.add(title);
-                }
+//                }
                 titleAdapter.notifyDataSetChanged();
             }
         });

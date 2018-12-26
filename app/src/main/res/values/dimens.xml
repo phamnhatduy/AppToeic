@@ -5,4 +5,7 @@
     <dimen name="nav_header_vertical_spacing">8dp</dimen>
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <color name="tv_score">#464646</color>
+    <color name="tv_date">#464646</color>
+    <color name="tv_title_name">#464646</color>
 </resources>
