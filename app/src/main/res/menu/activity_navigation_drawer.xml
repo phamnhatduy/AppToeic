@@ -6,22 +6,23 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_series_1"
-            android:icon="@drawable/ic_menu_gallery"
+            android:checked="true"
+            android:icon="@drawable/ic_folder"
             android:title="Bộ đề 1" />
     </group>
     <item android:title="Học tập">
         <menu>
             <item
                 android:id="@+id/nav_vacabulary"
-                android:icon="@drawable/ic_menu_manage"
+                android:icon="@drawable/ic_font_download"
                 android:title="Từ vựng" />
             <item
                 android:id="@+id/nav_tips"
-                android:icon="@drawable/ic_menu_share"
+                android:icon="@drawable/ic_lightbulb_outline"
                 android:title="Mẹo làm bài" />
             <item
                 android:id="@+id/nav_idiom"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/ic_format_color_text"
                 android:title="Thành ngữ" />
         </menu>
     </item>
@@ -29,15 +30,15 @@
         <menu>
             <item
                 android:id="@+id/nav_clear_history"
-                android:icon="@drawable/ic_menu_manage"
+                android:icon="@drawable/ic_delete"
                 android:title="Xóa lịch sử" />
             <item
                 android:id="@+id/nav_support"
-                android:icon="@drawable/ic_menu_share"
+                android:icon="@drawable/ic_help"
                 android:title="Trợ giúp" />
             <item
                 android:id="@+id/nav_about"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/ic_error"
                 android:title="Thông tin sản phẩm" />
         </menu>
     </item>

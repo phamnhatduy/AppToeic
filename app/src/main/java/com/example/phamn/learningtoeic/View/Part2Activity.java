@@ -20,6 +20,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -61,7 +62,9 @@ public class Part2Activity extends AppCompatActivity {
     Dialog dialogLoading;
     boolean isTesting = true; // reviewing -> isTesting = false
     HistoryRepository historyRepository = new HistoryRepository(getApplication());
-
+    String serial = "Serial1";
+    String title = "Test1";
+    String audio = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,10 +74,12 @@ public class Part2Activity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         Intent intent = getIntent();
-        String titleName = intent.getStringExtra("titleName");
+        title = intent.getStringExtra("titleName");
+        serial = "Serial" + intent.getIntExtra("serialID", 1);
+        audio = intent.getStringExtra("audio");
 
         part2ViewModel = ViewModelProviders.of(this).get(Part2ViewModel.class);
-        part2ViewModel.setTitleName(titleName);
+        part2ViewModel.setTitleName(serial, title);
         liveDataListener();
 
         // show dialog Loading
@@ -106,7 +111,7 @@ public class Part2Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mediaPlayer.pause();
-                btnPause.setText("Tiếp tục");
+                btnPause.setBackgroundResource(R.drawable.ic_play_arrow);
                 showNoticeDialog("Bạn có muốn thoát?");
             }
         });
@@ -116,17 +121,14 @@ public class Part2Activity extends AppCompatActivity {
             public void onClick(View v) {
                 if(mediaPlayer.isPlaying()) {
                     mediaPlayer.pause();
-                    btnPause.setText("Tiếp tục");
+                    btnPause.setBackgroundResource(R.drawable.ic_play_arrow);
                 }
                 else {
                     mediaPlayer.start();
-                    btnPause.setText("Tạm dừng");
+                    btnPause.setBackgroundResource(R.drawable.ic_pause);
                 }
             }
         });
-
-        btnPreviousTime.setText("<<");
-        btnNextTime.setText(">>");
 
         btnPreviousTime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -217,15 +219,15 @@ public class Part2Activity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     startProgressBarTime();
-                    dialogLoading.hide();
+                    dialogLoading.cancel();
                 }
             });
         }
     }
 
     public void initAudio(){
-        String url = "https://myhost2018.000webhostapp.com/Test1/Audio/Test1_Part2.m4a";
-//       String url = "https://myhost2018.000webhostapp.com/Test1/Audio/TestAudio.mp3";
+        String url = "https://myhost2018.000webhostapp.com/Serial1/" + title + "/Audio/" + title + "_Part2.m4a";
+        //String url = "https://myhost2018.000webhostapp.com/Serial1/Test1/Audio/Test1_Part2.m4a";
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         try {
             mediaPlayer.setDataSource(url);
@@ -253,7 +255,7 @@ public class Part2Activity extends AppCompatActivity {
 
     public void startProgressBarTime(){
         tvCurrentTime.setText("00:00");
-        btnPause.setText("Tạm dừng");
+        btnPause.setBackgroundResource(R.drawable.ic_pause);
         mediaPlayer.start();
         mediaPlayer.seekTo(0);
         seekBar.setProgress(0);
@@ -308,8 +310,8 @@ public class Part2Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mediaPlayer.pause();
-                btnPause.setText("Tiếp tục");
-                dialogNotice.hide();
+                btnPause.setBackgroundResource(R.drawable.ic_play_arrow);
+                dialogNotice.cancel();
                 showScoreDialog();
             }
         });
@@ -333,7 +335,7 @@ public class Part2Activity extends AppCompatActivity {
         btnNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.hide();
+                dialog.cancel();
             }
         });
     }
@@ -351,7 +353,7 @@ public class Part2Activity extends AppCompatActivity {
         int partID = intent.getIntExtra("partID", 0);
         historyRepository.deleteHistory(partID);
         historyRepository.insert(new History(partID,
-                Calendar.getInstance().get(Calendar.DAY_OF_MONTH) + "/" + Calendar.getInstance().get(Calendar.MONTH),
+                Calendar.getInstance().get(Calendar.DAY_OF_MONTH) + "/" + (Calendar.getInstance().get(Calendar.MONTH) + 1),
                 result)); // add to history
         tvScore.setText(result);
 
@@ -366,11 +368,12 @@ public class Part2Activity extends AppCompatActivity {
         btnReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btnPause.setBackgroundResource(R.drawable.ic_pause);
                 btnSubmit.setVisibility(View.INVISIBLE);
                 isTesting = false;
                 part2ViewModel.updateQuestion(0);   // the first question
                 startProgressBarTime();
-                dialog.hide();
+                dialog.cancel();
             }
         });
     }

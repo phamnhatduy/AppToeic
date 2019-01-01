@@ -17,12 +17,12 @@ public abstract class HistoryDatabase extends RoomDatabase {
     private static HistoryDatabase instance;
     public abstract HistoryDAO historyDAO();
 
-    public static  synchronized HistoryDatabase getInstance(Context context)
+    public static synchronized HistoryDatabase getInstance(Context context)
     {
         if(instance==null)
         {
             instance = Room.databaseBuilder(context.getApplicationContext()
-                    ,HistoryDatabase.class,"history_database").fallbackToDestructiveMigration().addCallback(rommCallback   ).build();
+                    ,HistoryDatabase.class,"history_database").fallbackToDestructiveMigration().addCallback(rommCallback).build();
         }
         return instance;
     }

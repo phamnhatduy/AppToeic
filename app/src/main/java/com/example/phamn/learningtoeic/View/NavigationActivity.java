@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.Group;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,13 +18,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.phamn.learningtoeic.Adapter.TitleAdapter;
 import com.example.phamn.learningtoeic.Model.History;
+import com.example.phamn.learningtoeic.Model.Serial;
 import com.example.phamn.learningtoeic.Model.TitleOnPhone;
 import com.example.phamn.learningtoeic.R;
 import com.example.phamn.learningtoeic.Repository.HistoryRepository;
@@ -41,10 +45,11 @@ public class NavigationActivity extends AppCompatActivity
     Button btnPart2, btnPart3, btnPart4, btnHistory1, btnHistory2, btnHistory3, btnHistory4;
     TextView tvPartName;
     Dialog dialogLoading, dialogStarting;
-    ListView lvTitle, lvHistory;
+    ListView lvTitle;
     TitleAdapter titleAdapter;
     List<TitleOnPhone> listTitle;
     List<History> listHistory;
+    int serialID = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,20 +70,13 @@ public class NavigationActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        //////////////////////////////////////////////////////////////////////////////////////////////
         mapping();
 
-        //Toast.makeText(this, repo.getDate(), Toast.LENGTH_SHORT);
-
-        //showLoadingDialog(false);
-//        Intent intent = getIntent();
-//        int partID = intent.getIntExtra("partID", 1);
 
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         liveDataListener();
 
     }
-
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -120,6 +118,7 @@ public class NavigationActivity extends AppCompatActivity
         int id = item.getItemId();
         switch (id){
             case R.id.nav_series_1:
+                serialID = 1;
                 break;
             case R.id.nav_vacabulary:
                 Intent intent = new Intent(this, TopicVocabularyActivity.class);
@@ -138,16 +137,29 @@ public class NavigationActivity extends AppCompatActivity
                 repo.deleteAllHistory();
                 break;
             case R.id.nav_support:
-                break;
-            case R.id.nav_about:final Dialog dialog = new Dialog(this);
-                dialog.setContentView(R.layout.about_layout);
-                dialog.setCanceledOnTouchOutside(false);
-                dialog.show();
-                Button btnClose = (Button) dialog.findViewById(R.id.button_close);
+                final Dialog dialogHelp = new Dialog(this);
+                dialogHelp.setContentView(R.layout.support_layout);
+                dialogHelp.setCanceledOnTouchOutside(false);
+                dialogHelp.show();
+                Button btnClose = (Button) dialogHelp.findViewById(R.id.button_close);
                 btnClose.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        dialog.hide();
+                        dialogHelp.cancel();
+                    }
+                });
+
+                break;
+            case R.id.nav_about:
+                final Dialog dialog = new Dialog(this);
+                dialog.setContentView(R.layout.about_layout);
+                dialog.setCanceledOnTouchOutside(false);
+                dialog.show();
+                Button btnClose2 = (Button) dialog.findViewById(R.id.button_close);
+                btnClose2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
                     }
                 });
                 break;
@@ -159,35 +171,38 @@ public class NavigationActivity extends AppCompatActivity
 
     public void mapping(){
         lvTitle = (ListView) findViewById(R.id.lv_title);
-        lvHistory = (ListView) findViewById(R.id.lv_history);
-//        tvPartName = (TextView) findViewById(R.id.tv_TitleName);
-//        btnPart1 = (Button)findViewById(R.id.button_part1);
-//        btnPart2 = (Button)findViewById(R.id.button_part2);
-//        btnPart3 = (Button)findViewById(R.id.button_part3);
-//        btnPart4 = (Button)findViewById(R.id.button_part4);
-//
-//        btnHistory1 = (Button)findViewById(R.id.button_history1);
-//        btnHistory2 = (Button)findViewById(R.id.button_history2);
-//        btnHistory3 = (Button)findViewById(R.id.button_history3);
-//        btnHistory4 = (Button)findViewById(R.id.button_history4);
     }
 
     public void liveDataListener(){
+        mainViewModel.getListAllSerial().observe(this, new Observer<List<Serial>>() {
+            @Override
+            public void onChanged(@Nullable List<Serial> serials) {
+
+            }
+        });
+        mainViewModel.getListTitleOfSerial().observe(this, new Observer<List<TitleOnPhone>>() {
+            @Override
+            public void onChanged(@Nullable List<TitleOnPhone> titles) {
+
+            }
+        });
         mainViewModel.getListAllTitle().observe(this, new Observer<List<TitleOnPhone>>() {
             @Override
             public void onChanged(@Nullable List<TitleOnPhone> titles) {
-                if(listTitle == null) {
+                if (listTitle == null) {
                     listTitle = new ArrayList<>();
                     titleAdapter = new TitleAdapter(getApplication(), R.layout.item_title_listview, listTitle);
                     lvTitle.setAdapter(titleAdapter);
                 }
-//                if(!dialogLoading.isShowing())
-//                    showLoadingDialog(true);
 
                 for (int i = 0; i < titles.size(); i++) {
-                    //HistoryRepository historyRepository = new HistoryRepository(getApplication(), titles.get(i).getPartID());
                     TitleOnPhone title = new TitleOnPhone();
+                    title.setSerialID(titles.get(i).getSerialID());
                     title.setTitleName(titles.get(i).getTitleName());
+                    title.setPart1Audio(titles.get(i).getPart1Audio());
+                    title.setPart2Audio(titles.get(i).getPart2Audio());
+                    title.setPart3Audio(titles.get(i).getPart3Audio());
+                    title.setPart4Audio(titles.get(i).getPart4Audio());
                     title.setPart1ID(titles.get(i).getPart1ID());
                     title.setPart2ID(titles.get(i).getPart2ID());
                     title.setPart3ID(titles.get(i).getPart3ID());
@@ -204,21 +219,21 @@ public class NavigationActivity extends AppCompatActivity
                     title.setHistory2(new History(title.getPart2ID(), "--/--", "--/--"));
                     title.setHistory3(new History(title.getPart3ID(), "--/--", "--/--"));
                     title.setHistory4(new History(title.getPart4ID(), "--/--", "--/--"));
-                    if(listHistory != null && listHistory.size() > 0){
-                        for (int j = 0; j < listHistory.size(); j++){
-                            if(listHistory.get(j).getPartID() == titles.get(i).getPart1ID()){
+                    if (listHistory != null && listHistory.size() > 0) {
+                        for (int j = 0; j < listHistory.size(); j++) {
+                            if (listHistory.get(j).getPartID() == titles.get(i).getPart1ID()) {
                                 title.setHistory1(listHistory.get(j));
                                 continue;
                             }
-                            if(listHistory.get(j).getPartID() == titles.get(i).getPart2ID()){
+                            if (listHistory.get(j).getPartID() == titles.get(i).getPart2ID()) {
                                 title.setHistory2(listHistory.get(j));
                                 continue;
                             }
-                            if(listHistory.get(j).getPartID() == titles.get(i).getPart3ID()){
+                            if (listHistory.get(j).getPartID() == titles.get(i).getPart3ID()) {
                                 title.setHistory3(listHistory.get(j));
                                 continue;
                             }
-                            if(listHistory.get(j).getPartID() == titles.get(i).getPart4ID()){
+                            if (listHistory.get(j).getPartID() == titles.get(i).getPart4ID()) {
                                 title.setHistory4(listHistory.get(j));
                                 continue;
                             }
@@ -226,21 +241,18 @@ public class NavigationActivity extends AppCompatActivity
                     }
 
                     listTitle.add(title);
+
                 }
                 titleAdapter.notifyDataSetChanged();
 
                 if(dialogStarting.isShowing())
-                    dialogStarting.hide();
+                    dialogStarting.cancel();
             }
         });
 
         mainViewModel.getListHistory().observe(this, new Observer<List<History>>() {
             @Override
             public void onChanged(@Nullable List<History> histories) {
-//                String s = "";
-//                for (int i = 0; i < histories.size(); i++)
-//                    s += histories.get(i).getPartID() + " ";
-//                Toast.makeText(NavigationActivity.this, "" + s, Toast.LENGTH_LONG).show();
                 listHistory = histories;
                 List<TitleOnPhone> list = mainViewModel.getListAllTitle().getValue();
                 if (list != null) {
@@ -324,7 +336,7 @@ public class NavigationActivity extends AppCompatActivity
             btnStart.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    dialogLoading.hide();
+                    dialogLoading.cancel();
                 }
             });
         }

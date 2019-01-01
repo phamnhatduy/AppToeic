@@ -31,7 +31,8 @@ public class Part1ViewModel extends AndroidViewModel{
     public MutableLiveData<Part1OnPhone> question = new MutableLiveData<>();
     public MutableLiveData<List<Part1OnPhone>> listQuestion = new MutableLiveData<>();
     public MutableLiveData<Integer> currentIndex = new MutableLiveData<>();
-    public MutableLiveData<String> titleName = new MutableLiveData<>();
+    public MutableLiveData<String> title = new MutableLiveData<>();
+    public MutableLiveData<String> serial = new MutableLiveData<>();
 
     public Part1ViewModel(@NonNull Application application) {
         super(application);
@@ -40,9 +41,7 @@ public class Part1ViewModel extends AndroidViewModel{
 
     public void getAllQuestion() {
         Retrofit retrofit = new Retrofit.Builder()
-                //.baseUrl("http://pnd2018.atwebpages.com/Toeic/Test1/Part1/")
-                .baseUrl("https://myhost2018.000webhostapp.com/" + titleName.getValue() + "/Part1/")
-                //.baseUrl("http://www.myhost2018.byethost31.com/Toeic/Test1/Part1/")
+                .baseUrl("https://myhost2018.000webhostapp.com/Serial1/" + title.getValue() + "/Part1/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         APIService apiService = retrofit.create(APIService.class);
@@ -101,15 +100,19 @@ public class Part1ViewModel extends AndroidViewModel{
         listQuestion.getValue().get(currentIndex.getValue()).setAnswerChosen(answer);
     }
 
-    public MutableLiveData<String> getTitleName() {
-        return titleName;
+    public MutableLiveData<String> getTitle() {
+        return title;
     }
 
-    public void setTitleName(String titleName) {
-        if(titleName != null)
-            this.titleName.setValue(titleName);
+    public void setTitleName(String serial, String title) {
+        if(title != null)
+            this.title.setValue(title);
         else
-            this.titleName.setValue("Test1");
+            this.title.setValue("Test1");
+        if(serial != null)
+            this.serial.setValue(serial);
+        else
+            this.serial.setValue("Serial1");
         getAllQuestion();
     }
 

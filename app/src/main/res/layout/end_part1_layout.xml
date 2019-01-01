@@ -113,7 +113,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/button_submit"
-            android:background="@drawable/question_chosen"
+            android:background="@drawable/border_button1"
             android:textSize="20dp"
             android:text="@string/btn_submit"/>
     </LinearLayout>

@@ -201,6 +201,156 @@ public class VocabularyActivity extends AppCompatActivity {
         list.add(new Vocabulary("variety", "/və'raiəti/", "(n): đa dạng, nhiều thứ/loại/vẻ khác nhau", "There's a variety of standard terms that you'll find in warranties"));
         listTopic.add(list);
 
+        list = new ArrayList<>();
+        list.add(new Vocabulary("address", "/ə'dres/", "(n,v): (n) địa chỉ, diễn văn, bài nói chuyện, tác phong nói chuyện, sự khôn khéo; (v) trình bày", "Marco's business plan addresses the needs of small business owners"));
+        list.add(new Vocabulary("avoidavoid", "/ə'vɔid/", "(v): tránh, tránh khỏi; hủy bỏ, bác bỏ", "To avoid going out of business, owners should prepare a proper business plan"));
+        list.add(new Vocabulary("demonstratedemonstrate", "/'demənstreit/", "(v): bày tỏ, biểu lộ, cho thấy; chứng minh, giải thích", "The professor demonstrated through a case study that a business plan can impress a lender"));
+        list.add(new Vocabulary("developdevelop", "/di'veləp/", "(v): phát triển, tiến triển, triển khai, mở rộng", "Lily developed her ideas into a business plan by taking a class at the community college"));
+        list.add(new Vocabulary("evaluateevaluate", "/i'væljueit/", "(v): đánh giá, định giá; ước lượng", "It's important to evaluate your competition when making a business plan"));
+        list.add(new Vocabulary("gather", "/'gæðə/", "(v): tập hợp, tụ thập, thu thập; kết luận, suy ra", "We gathered information for our plan from many sources"));
+        list.add(new Vocabulary("offer", "/'ɔfə/", "(n,v): (n) đề xuất, đề nghị, chào mời, chào hàng, dạm, hỏi, ướm; (v) đề nghị", "Devon accepted our offer to write the business plan"));
+        list.add(new Vocabulary("primarily", "/'praimərili/", "(adv): trước hết, đầu tiên; chính, chủ yếu, quan trọng nhất", "The developers are thinking primarily of how to enter the South American market"));
+        list.add(new Vocabulary("risk", "/rɪsk/", "(n): nguy cơ, sự nguy hiểm, sự rủi ro", "The primary risk for most start-up businesses is insufficient capital"));
+        list.add(new Vocabulary("strategy", "/ˈstrætədʒi/", "(n): chiến lược, sự vạch kế hoạch hành động", "A business plan is a strategy for running a business and avoiding problems"));
+        list.add(new Vocabulary("strong", "/strɔɳ/", "(adj): khỏe, mạnh, tốt, bền, kiên cố; đanh thép, kiên quyết; sôi nổi, nhiệt tình...", "The professor made a strong argument for the value of a good business plan"));
+        list.add(new Vocabulary("substitution", "/,sʌbsti'tju:ʃn/", "(n): sự đổi, sự thay thế", "Your substitution of fake names for real ones makes the document seem insincere"));
+        listTopic.add(list);
+
+        list = new ArrayList<>();
+        list.add(new Vocabulary("accommodate", "/ə'kɔmədeit/", "(v): điều tiết, điều chỉnh, thu xếp, làm cho phù hợp", "The meeting room was large enough to accommodate the various needs of the groups using it"));
+        list.add(new Vocabulary("arrangement", "/ə'reindʤmənt/", "(n): ‹sự› thu xếp, dàn xếp, sắp xếp, sắp đặt", "The travel arrangements were taken care of by Sara, Mr. Billing's capable assistant"));
+        list.add(new Vocabulary("association", "/ə,sousi'eiʃn/", "(n): hội, hội liên hiệp, đoàn thể; ‹sự› kết hợp, liên kết, liên hợp", "Local telephone companies formed an association to serve common goals, meet their common needs, and improve efficiency"));
+        list.add(new Vocabulary("attend", "/ə'tend/", "(v): tham dự, có mặt; chăm sóc, phục vụ; đi theo, đi kèm, hộ tống", "We expect more than 100 members to attend the annual meeting"));
+        list.add(new Vocabulary("get in touch", "N/A", "(v): liên lạc với, tiếp xúc với, giữ quan hệ với, có dính líu đến", "As soon as we arrive at the hotel, we will get in touch with the manager about the unexpected guests"));
+        list.add(new Vocabulary("hold", "/hould/", "(v): cầm, nắm, giữ; chứa, đựng; tổ chức, tiến hành", "This meeting room holds at least 80 people comfortably"));
+        list.add(new Vocabulary("location", "/lou'keiʃn/", "(n): vị trí, khu đất, hiện trường", "The location of the meeting was changed from the Red Room to the Green Room"));
+        list.add(new Vocabulary("overcrowded", "/əʊvəˈkraʊdɪd/", "(adj): chật ních, đông nghịt", "Too many poor people are living in overcrowded conditions"));
+        list.add(new Vocabulary("register", "/'redʤistə/", "(n, v): (n) danh sách, sổ, sổ sách; (v) đăng ký", "According to the register, more than 250 people attended the afternoon seminar"));
+        list.add(new Vocabulary("select", "/si'lekt/", "(v): chọn lựa, chọn lọc, tuyển chọn", "The winners were a select group"));
+        list.add(new Vocabulary("session", "/'seʃn/", "(n): phiên, kỳ, buổi (họp, học)", "The morning sessions tend to fill up first, so sign up early"));
+        list.add(new Vocabulary("take part in", "N/A", "(v): tham dự, tham gia", "We could not get enough people to take part in the meeting, so we canceled it"));
+        listTopic.add(list);
+
+        list = new ArrayList<>();
+        list.add(new Vocabulary("access", "/ˈækses/", "(n, v): (n) lối vào, đường vào, sự/quyền truy cập; (v) truy cập", "You can't gain access to the files unless you know the password"));
+        list.add(new Vocabulary("allocate", "/ˈæləkeɪt/", "(v): cấp cho, phân phối, phân phát, chia phần; chỉ định, định rõ vị trí", "The office manager did not allocate enough money to purchase software"));
+        list.add(new Vocabulary("compatible", "/kəm'pætəbl/", "(adj): tương thích, tương hợp, hợp nhau, có thể dùng được với nhau", "This operating system is not compatible with this model computer"));
+        list.add(new Vocabulary("delete", "/di'li:t/", "(v): xóa đi, bỏ đi, gạch đi (to remove, to erase)", "The technicians deleted all the data on the disk accidentally"));
+        list.add(new Vocabulary("display", "/dis'plei/", "(v) hiển thị, biểu lộ, phô bày, trình bày, trưng bày; (n) sự trưng bày", "The accounting program displays a current balance when opened."));
+        list.add(new Vocabulary("duplicate", "/'dju:plikit/", "(v): sao lại, làm thành 2 bản, gấp đôi, nhân đôi", "I think the new word processing program will duplicate the success of the one introduced last year"));
+        list.add(new Vocabulary("failure", "/'feiljə/", "(n): hỏng, thiếu, yếu, trượt, thất bại, bất thành", "Your failure to inform us about the changed password cost the company a day's work"));
+        list.add(new Vocabulary("figure out", "/ˈfɪɡə/ /aʊt/", "(v): tìm hiểu, đoán ra, tính toán ra, giải ra", "By examining all of the errors, the technicians figured out how to fix the problem"));
+        list.add(new Vocabulary("ignore", "/ig'nɔ:/", "(v): bỏ qua, phớt lờ, không để ý tới", "He ignored all the 'No Smoking' signs and lit up a cigarette"));
+        list.add(new Vocabulary("search", "/sə:tʃ/", "(n, v): (n) tìm kiếm, tìm hiểu; điều tra, thăm dò; (v) tìm", "Our search of the database produced very little information"));
+        list.add(new Vocabulary("shut down", "/ʃʌt/ /daʊn/", "(v): đóng lại, ngừng lại; tắt máy, ngừng hoạt động, chấm dứt", "Please shut down the computer before you leave"));
+        list.add(new Vocabulary("warning", "/'wɔ:niɳ/", "(n): ‹sự/lời› cảnh báo, báo trước (có nguy hiểm hoặc gặp vấn đề rắc rối)", "The red flashing light gives a warning to users that the battery is low"));
+        listTopic.add(list);
+
+        list = new ArrayList<>();
+        list.add(new Vocabulary("affordable", "/əˈfɔːd/", "(adj): có đủ khả năng, có đủ điều kiện (sức lực/thời gian/tiền bạc)", "The company's first priority was to find an affordable phone system"));
+        list.add(new Vocabulary("as needed", "N/A", "(adv): khi cần, lúc cần, cần thiết", "The service contract states that repairs will be made on an as-needed basis"));
+        list.add(new Vocabulary("be in charge of", "N/A", "(v): chịu trách nhiệm về; đang điều khiển, đang chỉ huy", "He appointed someone to be in charge of maintaining a supply of paper in the fax machine"));
+        list.add(new Vocabulary("capacity", "/kə'pæsiti/", "(n): sức chứa, dung tích, khả năng chứa đựng; khả năng, năng lực", "The new conference room is much larger and has a capacity of one hundred people"));
+        list.add(new Vocabulary("durable", "/ˈdjʊərəbl/", "(adj): bền, lâu, lâu bền", "These chairs are more durable than the first ones we looked at"));
+        list.add(new Vocabulary("initiative", "/i'niʃiətiv/", "(n): bắt đầu, khởi đầu, khởi xướng", "Employees are encouraged to take the initiative and share their ideas with management."));
+        list.add(new Vocabulary("physically", "/ˈfɪzɪkli/", "(adv): về thân thể/cơ thể/thể chất; theo quy luật tự nhiên, một cách vật lý", "The computer screen is making her physically sick."));
+        list.add(new Vocabulary("provider", "/provider/", "(n): người cung cấp, nhà cung cấp (supplier)", "The deparment was extremely pleased with the service they received from the phone provide."));
+        list.add(new Vocabulary("recur", "/ri'kə:/", "(v): lặp lại, diễn lại, tái diễn, tái phát; lặp đi lặp lại", "The managers did not want that particular error to recur"));
+        list.add(new Vocabulary("reduction", "/ri'dʌkʃn/", "(n): ‹sự› giảm, hạ, thu nhỏ, hạ thấp (lessening, decrease)", "The outlet store gave a 20 percent reduction in the price of the shelves and bookcases"));
+        list.add(new Vocabulary("stay on top of", "N/A", "(v): nắm bắt tình hình (đang xảy ra), hiểu biết thông tin mới nhất", "In this industry, you must stay on top of current developments"));
+        list.add(new Vocabulary("stock", "/stɒk/", "(v, n): kho/hàng dự trữ; vốn, cổ phần", "The employees stocked the shelves on a weekly basis"));
+        listTopic.add(list);
+
+        list = new ArrayList<>();
+        list.add(new Vocabulary("appreciation", "/ə,pri:ʃi'eiʃn/", "(n): ‹sự› đánh giá, nhận thức (đúng/cao/sâu sắc); sự cảm kích", "In appreciation of your hard work on the Castcon project, the department will hold a casual lunch party on November third"));
+        list.add(new Vocabulary("be made of", "N/A", "(v): làm bằng (cái gì), gồm có (cái gì)", "This job will really test what you are made of"));
+        list.add(new Vocabulary("bring in", "N/A", "(v): Thuê, mướn, tuyển dụng, dẫn tới, mang tới", "The company brought in new team of project planners"));
+        list.add(new Vocabulary("casually", "/ˈkæʒuəli/", "(adv): bình thường, tự nhiên, không trịnh trọng, thân mật (informally)", "On Fridays, most employees dress casually"));
+        list.add(new Vocabulary("code", "/koud/", "(n): quy định, quy tắc, luật lệ, đạo lý", "Even the most traditional companies are changing their dress code to something less formal"));
+        list.add(new Vocabulary("expose", "/iks'pouz/", "(v): phơi bày, bộc lộ, phô ra, trưng bày", "He did not want to expose his fears and insecurity to anyone."));
+        list.add(new Vocabulary("glimpse", "/glimps/", "(n): nhìn lướt qua, thoáng qua", "The secretary caught a glimpse of her new boss as she was leaving the office."));
+        list.add(new Vocabulary("out of", "N/A", "(adj): hết, mất, không còn", "The presenter ran out of time before he reached his conclusion"));
+        list.add(new Vocabulary("outdated", "/aut'deitid/", "(adj): hết hạn; lỗi thời, lạc hậu, cổ, hiện nay không còn dùng (obsolete)", "Before you do a mailing, make sure that none of the addresses is outdated."));
+        list.add(new Vocabulary("practice", "/'præktis/", "(n, v): (n) sự thực hành; (v) thực hành, rèn luyện, tập luyện; thói quen, thủ tục", "Bill practiced answering the telephone until he was satisfied"));
+        list.add(new Vocabulary("reinforce", "/,ri:in'fɔ:s/", "(v): tăng cường, củng cố, gia cố", "Employees reinforced their learning with practice in the workplace"));
+        list.add(new Vocabulary("verbally", "/'və:bəli/", "(adv): bằng miệng, bằng lời nói", "The guarantee was made only verbally"));
+        listTopic.add(list);
+
+        list = new ArrayList<>();
+        list.add(new Vocabulary("disk", "/disk/", "(n): đĩa (vi tính, thể thao, đĩa hát...)", "Rewritable compact disks are more expensive than read-only CDs"));
+        list.add(new Vocabulary("facilitate", "/fə'siliteit/", "(v): làm cho dễ dàng, làm cho thuận tiện", "The computer program facilitated the scheduling of appointments"));
+        list.add(new Vocabulary("network", "/'netwə:k/", "(v, n): (v) kết nối, liên kết; (n) mạng lưới, hệ thống", "We set up a new network in my office to share files"));
+        list.add(new Vocabulary("popularity", "/,pɔpju'læriti/", "(n): ‹tính/sự› đại chúng, phổ biến, nổi tiếng, được yêu mến", "This brand of computers is extremely popular among college students"));
+        list.add(new Vocabulary("process", "/ˈprəʊses/", "(v, n): (v) xử lý; (n) quá trình, sự tiến triển, sự tiến hành; phương pháp, cách thức, quy trình", "There is a process for determining why your computer is malfunctioning"));
+        list.add(new Vocabulary("replace", "/ri'pleis/", "(v): thay thế; đặt vào lại chỗ cũ", "I've replaced the hard drive that was malfunctioning"));
+        list.add(new Vocabulary("revolution", "/,revə'lu:ʃn/", "(n): vòng, tua, sự xoay vòng; cuộc cách mạng", "We see a revolution in the computer field almost every day"));
+        list.add(new Vocabulary("sharp", "/ʃɑ:p/", "(adj): sắc, bén, rõ rệt, sắc nét; thông minh, láu lỉnh; thình lình, đột ngột", "The new employee proved how sharp she was when she mastered the new program in a few days"));
+        list.add(new Vocabulary("skill", "/skil/", "(n): kỹ năng, kỹ xảo; sự khéo léo, sự tinh xảo", "The software developer has excellent technical skills and would be an asset to our software programming team"));
+        list.add(new Vocabulary("software", "/ˈsɒftweə(r)/", "(n): phần mềm, chương trình máy tính", "Many computers come pre-loaded with software"));
+        list.add(new Vocabulary("store", "/stɔ:/", "(v): cửa hàng, cửa hiệu, kho hàng", "You can store more data on a zip drive"));
+        list.add(new Vocabulary("technically", "/ˈteknɪkli/", "(adv): nói đến/nói về mặt kỹ thuật; một cách chuyên môn/nghiêm túc", "Technically speaking, the virus infected only script files"));
+        listTopic.add(list);
+
+        list = new ArrayList<>();
+        list.add(new Vocabulary("assemble", "/ə'sembl/", "(v): thu thập, lắp ráp, tập hợp", "All the students were asked to assemble in the main hall"));
+        list.add(new Vocabulary("beforehand", "/bi'fɔ:hænd/", "(adv): sẵn, có sẵn, trước, sớm", "To speed up the mailing, we should prepare the labels beforehand"));
+        list.add(new Vocabulary("complication", "/ˌkɑːmplɪˈkeɪʃn/", "(n): sự phức tạp, sự rắc rối", "She will have to spend two more days in the hospital due to complications during the surgery."));
+        list.add(new Vocabulary("courier", "/'kuriə/", "(n): người đưa tin, người đưa thư, người chuyển phát", "We hired a courier to deliver the package"));
+        list.add(new Vocabulary("express", "/iks'pres/", "(adj): nhanh, hỏa tốc, tốc hành.", "It's important that this document be there tomorrow, so please send it express mail."));
+        list.add(new Vocabulary("fold", "/fould/", "(v): nếp gấp, gấp lại", "Fold the letter into three parts before stuffing it into the envelope"));
+        list.add(new Vocabulary("layout", "/ˈleɪaʊt/", "(n): sự bổ trí trang giấy", "There is no single correct layout for business letters"));
+        list.add(new Vocabulary("mention", "/'menʃn/", "(n, v): (n) sự đề cập; (v) nói đến, đề cập đếm, đề xuất", "You should mention in the letter that we can arrange for mailing the brochures as well as printing them"));
+        list.add(new Vocabulary("petition", "/pi'tiʃn/", "(n, v): (n) ‹sự/đơn› cầu xin, đơn kiến nghị, đơn thỉnh cầu; (v) cầu xin, kiến nghị", "The petition was photocopied and distributed to workers who will collect the neccessary signatures"));
+        list.add(new Vocabulary("proof", "/proof/", "(n): bằng chứng, chứng cớ", "This letter was not proofed very carefully; it is full of typing mistakes"));
+        list.add(new Vocabulary("register", "/'redʤistə/", "(v): đăng ký, sổ, sổ sách, công- tơ", "You can register this mail for an additional $2.2"));
+        list.add(new Vocabulary("revise", "/ri'vaiz/", "(v): đọc lại, xem lại, duyệt lại, sửa lại (bản in thử, đạo luật...)", "The brochure was revised several times before it was sent to the printer"));
+        listTopic.add(list);
+
+        list = new ArrayList<>();
+        list.add(new Vocabulary("", "", "", ""));
+        list.add(new Vocabulary("", "", "", ""));
+        list.add(new Vocabulary("", "", "", ""));
+        list.add(new Vocabulary("", "", "", ""));
+        list.add(new Vocabulary("", "", "", ""));
+        list.add(new Vocabulary("", "", "", ""));
+        list.add(new Vocabulary("", "", "", ""));
+        list.add(new Vocabulary("", "", "", ""));
+        list.add(new Vocabulary("", "", "", ""));
+        list.add(new Vocabulary("", "", "", ""));
+        list.add(new Vocabulary("", "", "", ""));
+        list.add(new Vocabulary("", "", "", ""));
+        listTopic.add(list);
+
+        list = new ArrayList<>();
+        list.add(new Vocabulary("", "", "", ""));
+        list.add(new Vocabulary("", "", "", ""));
+        list.add(new Vocabulary("", "", "", ""));
+        list.add(new Vocabulary("", "", "", ""));
+        list.add(new Vocabulary("", "", "", ""));
+        list.add(new Vocabulary("", "", "", ""));
+        list.add(new Vocabulary("", "", "", ""));
+        list.add(new Vocabulary("", "", "", ""));
+        list.add(new Vocabulary("", "", "", ""));
+        list.add(new Vocabulary("", "", "", ""));
+        list.add(new Vocabulary("", "", "", ""));
+        list.add(new Vocabulary("", "", "", ""));
+        listTopic.add(list);
+
+        list = new ArrayList<>();
+        list.add(new Vocabulary("", "", "", ""));
+        list.add(new Vocabulary("", "", "", ""));
+        list.add(new Vocabulary("", "", "", ""));
+        list.add(new Vocabulary("", "", "", ""));
+        list.add(new Vocabulary("", "", "", ""));
+        list.add(new Vocabulary("", "", "", ""));
+        list.add(new Vocabulary("", "", "", ""));
+        list.add(new Vocabulary("", "", "", ""));
+        list.add(new Vocabulary("", "", "", ""));
+        list.add(new Vocabulary("", "", "", ""));
+        list.add(new Vocabulary("", "", "", ""));
+        list.add(new Vocabulary("", "", "", ""));
+        listTopic.add(list);
+
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

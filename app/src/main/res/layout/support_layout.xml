@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
     android:orientation="vertical"
     android:gravity="center"
     android:background="@drawable/border_dialog3">
@@ -12,16 +14,26 @@
         android:layout_marginTop="20dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:text="Toeic Listening"
-        android:textSize="30dp"
-        android:textColor="#444444"
+        android:text="Dịch vụ hổ trợ"
+        android:textSize="28dp"
+        android:textStyle="bold"
+        android:textColor="#444444"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="10dp"
+        android:text="Email: phamnhatduy1997@gmail.com"
+        android:textSize="18dp"
+        android:textColor="#555555"
         android:textStyle="bold"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="Phiên bản 1.0.0"
-        android:textSize="20dp"
+        android:text="Sđt: 0123456789"
+        android:textSize="18dp"
         android:textColor="#555555"
         android:textStyle="bold"/>
     <LinearLayout
@@ -36,6 +48,7 @@
             android:layout_marginRight="30dp"
             android:layout_marginBottom="10dp"
             android:text="Đóng"
+            android:textColor="#333333"
             android:id="@+id/button_close"
             android:textSize="10dp"/>
     </LinearLayout>

@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.example.phamn.learningtoeic.Model.History;
+import com.example.phamn.learningtoeic.Model.Serial;
 import com.example.phamn.learningtoeic.Model.Title;
 import com.example.phamn.learningtoeic.Model.TitleOnPhone;
 import com.example.phamn.learningtoeic.Repository.HistoryRepository;
@@ -26,11 +27,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainViewModel extends AndroidViewModel {
     private List<TitleOnPhone> list = new ArrayList<>();
 
+    private MutableLiveData<List<Serial>> listAllSerial = new MutableLiveData<>();
     private MutableLiveData<List<TitleOnPhone>> listAllTitle = new MutableLiveData<>();
+    private MutableLiveData<List<TitleOnPhone>> listTitleOfSerial = new MutableLiveData<>();
 
     HistoryRepository repo;
     private LiveData<List<History>> listHistory = new MutableLiveData<>();
     List<Title> titleOnline = new ArrayList<>();
+
 
     private HistoryRepository historyRepository;
     public MainViewModel(@NonNull Application application) {
@@ -45,7 +49,28 @@ public class MainViewModel extends AndroidViewModel {
 //        repo.insert(new History(7, "7/7", "77"));
 //        repo.insert(new History(8, "8/8", "88"));
         listHistory = repo.getListAllHistory();
+//        getAllSerial(application);
         getAllTitle(application);
+    }
+
+    public void getAllSerial(final Application application) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://myhost2018.000webhostapp.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        APIService apiService = retrofit.create(APIService.class);
+        Call<List<Serial>> call = apiService.getAllSerial();
+        call.enqueue(new Callback<List<Serial>>() {
+            @Override
+            public void onResponse(Call<List<Serial>> call, Response<List<Serial>> response) {
+                listAllSerial.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<Serial>> call, Throwable t) {
+                //Log.e(Tag, "onFailure: " + t.getMessage());
+            }
+        });
     }
 
     public void getAllTitle(final Application application) {
@@ -59,7 +84,7 @@ public class MainViewModel extends AndroidViewModel {
             @Override
             public void onResponse(Call<List<Title>> call, Response<List<Title>> response) {
                 titleOnline = response.body();
-                updateTitle();
+                convertTitle();
             }
 
             @Override
@@ -69,11 +94,16 @@ public class MainViewModel extends AndroidViewModel {
         });
     }
 
-    public void updateTitle(){
+    public void convertTitle(){
         for (int i = 0; i < titleOnline.size() ; i++) {
             if(i % 4 == 0) {
                 TitleOnPhone t = new TitleOnPhone();
+                t.setSerialID(titleOnline.get(i).getSerialID());
                 t.setTitleName(titleOnline.get(i).getTitleName());
+                t.setPart1Audio(titleOnline.get(i).getAudio());
+                t.setPart2Audio(titleOnline.get(i + 1).getAudio());
+                t.setPart3Audio(titleOnline.get(i + 2).getAudio());
+                t.setPart4Audio(titleOnline.get(i + 3).getAudio());
                 t.setPart1ID(titleOnline.get(i).getPartID());
                 t.setPart2ID(titleOnline.get(i + 1).getPartID());
                 t.setPart3ID(titleOnline.get(i + 2).getPartID());
@@ -90,13 +120,31 @@ public class MainViewModel extends AndroidViewModel {
             }
         }
         listAllTitle.setValue(list);
+        //updateTitle(1);
     }
 
+    public void updateTitle(int serialID){
+        List<TitleOnPhone> list = new ArrayList<>();
+        for(int i = 0; i < listAllTitle.getValue().size(); i++){
+            if(listAllTitle.getValue().get(i).getSerialID() == serialID) {
+                list.add(listAllTitle.getValue().get(i));
+            }
+        }
+        listTitleOfSerial.setValue(list);
+    }
     public MutableLiveData<List<TitleOnPhone>> getListAllTitle() {
         return listAllTitle;
     }
 
     public LiveData<List<History>> getListHistory() {
         return listHistory;
+    }
+
+    public MutableLiveData<List<TitleOnPhone>> getListTitleOfSerial() {
+        return listTitleOfSerial;
+    }
+
+    public MutableLiveData<List<Serial>> getListAllSerial() {
+        return listAllSerial;
     }
 }

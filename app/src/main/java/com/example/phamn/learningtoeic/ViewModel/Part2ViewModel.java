@@ -27,6 +27,7 @@ public class Part2ViewModel extends AndroidViewModel {
     public MutableLiveData<List<String>> listAnswerChosen = new MutableLiveData<>();
     public List<String> stringList = new ArrayList<>();
     public MutableLiveData<String> titleName = new MutableLiveData<>();
+    public MutableLiveData<String> serialID = new MutableLiveData<>();
 
 
     public Part2ViewModel(@NonNull Application application) {
@@ -40,7 +41,7 @@ public class Part2ViewModel extends AndroidViewModel {
 
     public void getAllQuestion() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://myhost2018.000webhostapp.com/" + titleName.getValue() + "/Part2/")
+                .baseUrl("https://myhost2018.000webhostapp.com/Serial1/" + titleName.getValue() + "/Part2/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         APIService apiService = retrofit.create(APIService.class);
@@ -98,11 +99,15 @@ public class Part2ViewModel extends AndroidViewModel {
         return titleName;
     }
 
-    public void setTitleName(String titleName) {
+    public void setTitleName(String serialID, String titleName) {
         if(titleName != null)
             this.titleName.setValue(titleName);
         else
             this.titleName.setValue("Test1");
+        if(serialID != null)
+            this.serialID.setValue(serialID);
+        else
+            this.serialID.setValue("Serial1");
         getAllQuestion();
     }
 

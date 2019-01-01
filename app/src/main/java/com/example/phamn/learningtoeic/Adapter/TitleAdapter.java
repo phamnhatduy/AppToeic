@@ -52,14 +52,7 @@ public class TitleAdapter extends ArrayAdapter<TitleOnPhone> {
             viewHolder = new ViewHolder();
             convertView = LayoutInflater.from(context).inflate(R.layout.item_title_listview, parent, false);
             viewHolder.tvTitleName = (TextView) convertView.findViewById(R.id.tv_TitleName);
-//            viewHolder.tvTime1 = (TextView) convertView.findViewById(R.id.tv_time_1);
-//            viewHolder.tvTime2 = (TextView) convertView.findViewById(R.id.tv_time_2);
-//            viewHolder.tvTime3 = (TextView) convertView.findViewById(R.id.tv_time_3);
-//            viewHolder.tvTime4 = (TextView) convertView.findViewById(R.id.tv_time_4);
-//            viewHolder.tvNumberOfQuestions1 = (TextView) convertView.findViewById(R.id.tv_number_1);
-//            viewHolder.tvNumberOfQuestions2 = (TextView) convertView.findViewById(R.id.tv_number_2);
-//            viewHolder.tvNumberOfQuestions3 = (TextView) convertView.findViewById(R.id.tv_number_3);
-//            viewHolder.tvNumberOfQuestions4 = (TextView) convertView.findViewById(R.id.tv_number_4);
+
             viewHolder.btnPart1 = (Button) convertView.findViewById(R.id.button_part1);
             viewHolder.btnPart2 = (Button) convertView.findViewById(R.id.button_part2);
             viewHolder.btnPart3 = (Button) convertView.findViewById(R.id.button_part3);
@@ -82,8 +75,11 @@ public class TitleAdapter extends ArrayAdapter<TitleOnPhone> {
                     intent.putExtra("titleName", "Test" + (position + 1));
                     intent.putExtra("time", "" + listTitle.get(position).getTime1());
                     intent.putExtra("numberOfQuestion", listTitle.get(position).getNumberOfQuestions1());
+                    intent.putExtra("serialID", listTitle.get(position).getSerialID());
                     intent.putExtra("partID", listTitle.get(position).getPart1ID());
+                    intent.putExtra("audio", listTitle.get(position).getPart1Audio());
                     getContext().startActivity(intent);
+                    //Toast.makeText(context, "" + listTitle.get(position).getPart1Audio(), Toast.LENGTH_SHORT).show();
                 }
             });
             viewHolder.btnPart2.setOnClickListener(new View.OnClickListener() {
@@ -93,8 +89,11 @@ public class TitleAdapter extends ArrayAdapter<TitleOnPhone> {
                     intent.putExtra("titleName", "Test" + (position + 1));
                     intent.putExtra("time", "" + listTitle.get(position).getTime2());
                     intent.putExtra("numberOfQuestion", listTitle.get(position).getNumberOfQuestions2());
+                    intent.putExtra("serialID", listTitle.get(position).getSerialID());
                     intent.putExtra("partID", listTitle.get(position).getPart2ID());
+                    intent.putExtra("audio", listTitle.get(position).getPart2Audio());
                     getContext().startActivity(intent);
+                    //Toast.makeText(context, "" + listTitle.get(position).getPart1Audio(), Toast.LENGTH_SHORT).show();
                 }
             });
             viewHolder.btnPart3.setOnClickListener(new View.OnClickListener() {
@@ -104,7 +103,9 @@ public class TitleAdapter extends ArrayAdapter<TitleOnPhone> {
                     intent.putExtra("titleName", "Test" + (position + 1));
                     intent.putExtra("time", "" + listTitle.get(position).getTime3());
                     intent.putExtra("numberOfQuestion", listTitle.get(position).getNumberOfQuestions3());
+                    intent.putExtra("serialID", listTitle.get(position).getSerialID());
                     intent.putExtra("partID", listTitle.get(position).getPart3ID());
+                    intent.putExtra("audio", listTitle.get(position).getPart3Audio());
                     getContext().startActivity(intent);
                 }
             });
@@ -115,7 +116,9 @@ public class TitleAdapter extends ArrayAdapter<TitleOnPhone> {
                     intent.putExtra("titleName", "Test" + (position + 1));
                     intent.putExtra("time", "" + listTitle.get(position).getTime4());
                     intent.putExtra("numberOfQuestion", listTitle.get(position).getNumberOfQuestions4());
+                    intent.putExtra("serialID", listTitle.get(position).getSerialID());
                     intent.putExtra("partID", listTitle.get(position).getPart4ID());
+                    intent.putExtra("audio", listTitle.get(position).getPart4Audio());
                     getContext().startActivity(intent);
                 }
             });

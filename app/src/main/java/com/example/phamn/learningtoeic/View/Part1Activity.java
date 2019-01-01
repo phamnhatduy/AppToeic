@@ -1,30 +1,21 @@
 package com.example.phamn.learningtoeic.View;
 
-import android.app.Activity;
 import android.app.Dialog;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
@@ -70,7 +61,9 @@ public class Part1Activity extends AppCompatActivity {
     MediaPlayer mediaPlayer = new MediaPlayer();
     Dialog dialogLoading;
     boolean isTesting = true; // reviewing -> isTesting = false
-    HistoryRepository historyRepository = new HistoryRepository(getApplication());
+    String serial = "";
+    String audio = "";
+    String title = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,11 +74,15 @@ public class Part1Activity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         Intent intent = getIntent();
-        String titleName = intent.getStringExtra("titleName");
-
+        title = intent.getStringExtra("titleName");
+        serial = "Serial" + intent.getIntExtra("serialID", 1);
+        audio = intent.getStringExtra("audio");
+        //Toast.makeText(this, "" + audio, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "title: " + titleName + " ,serial: " + serial, Toast.LENGTH_SHORT).show();
+        //serial = "Serial1";
         //dùng livedata
         part1ViewModel = ViewModelProviders.of(this).get(Part1ViewModel.class);
-        part1ViewModel.setTitleName(titleName);
+        part1ViewModel.setTitleName(serial, title);
         liveDataListener();
 
         // show dialog Loading
@@ -117,7 +114,7 @@ public class Part1Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mediaPlayer.pause();
-                btnPause.setText("Tiếp tục");
+                btnPause.setBackgroundResource(R.drawable.ic_play_arrow);
                 showNoticeDialog("Bạn có muốn thoát?");
             }
         });
@@ -127,17 +124,15 @@ public class Part1Activity extends AppCompatActivity {
             public void onClick(View v) {
                 if(mediaPlayer.isPlaying()) {
                     mediaPlayer.pause();
-                    btnPause.setText("Tiếp tục");
+                    btnPause.setBackgroundResource(R.drawable.ic_play_arrow);
                 }
                 else {
                     mediaPlayer.start();
-                    btnPause.setText("Tạm dừng");
+                    btnPause.setBackgroundResource(R.drawable.ic_pause);
                 }
             }
         });
 
-        btnPreviousTime.setText("<<");
-        btnNextTime.setText(">>");
         btnPreviousTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -229,14 +224,15 @@ public class Part1Activity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     startProgressBarTime();
-                    dialogLoading.hide();
+                    dialogLoading.cancel();
                 }
             });
         }
     }
 
     public void initAudio(){
-        String url = "https://myhost2018.000webhostapp.com/Test1/Audio/Test1_Part1.m4a";
+        //String url = "https://myhost2018.000webhostapp.com/" + serial + "/Test1/Audio/Test1_Part1.m4a";
+        String url = "https://myhost2018.000webhostapp.com/Serial1/" + title + "/Audio/"+ title +"_Part1.m4a";
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         try {
             mediaPlayer.setDataSource(url);
@@ -270,7 +266,6 @@ public class Part1Activity extends AppCompatActivity {
     }
 
     public void updateTime(){
-
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -316,8 +311,8 @@ public class Part1Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mediaPlayer.pause();
-                btnPause.setText("Tiếp tục");
-                dialogNotice.hide();
+                btnPause.setBackgroundResource(R.drawable.ic_play_arrow);
+                dialogNotice.dismiss();
                 showScoreDialog();
             }
         });
@@ -330,10 +325,13 @@ public class Part1Activity extends AppCompatActivity {
         dialog.setCanceledOnTouchOutside(false);
         TextView tvScore = (TextView)dialog.findViewById(R.id.textview_score);
 
-        String result = getResult();
+        final String result = getResult();
         tvScore.setText(result);
         Intent intent = getIntent();
-        int partID = intent.getIntExtra("partID", 0);
+        final int partID = intent.getIntExtra("partID", 0);
+        intent.putExtra("history", "" + partID + ","+ result);
+
+        HistoryRepository historyRepository = new HistoryRepository(getApplicationContext());
         historyRepository.deleteHistory(partID);
         historyRepository.insert(new History(partID,
                 Calendar.getInstance().get(Calendar.DAY_OF_MONTH) + "/" + (Calendar.getInstance().get(Calendar.MONTH) + 1),
@@ -343,6 +341,7 @@ public class Part1Activity extends AppCompatActivity {
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dialog.dismiss();
                 finish();
             }
         });
@@ -351,10 +350,11 @@ public class Part1Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 btnSubmit.setVisibility(View.INVISIBLE);
+                btnPause.setBackgroundResource(R.drawable.ic_pause);
                 isTesting = false;
                 part1ViewModel.updateQuestion(0);   // the first question
                 startProgressBarTime();
-                dialog.hide();
+                dialog.dismiss();
             }
         });
     }
@@ -371,15 +371,17 @@ public class Part1Activity extends AppCompatActivity {
         btnYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(getApplicationContext(), NavigationActivity.class);
-//                startActivity(intent);
+                Intent intent = new Intent(getApplicationContext(), NavigationActivity.class);
+                intent.putExtra("back","Co");
+                //startActivity(intent);
+                dialog.dismiss();
                 finish();
             }
         });
         btnNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.hide();
+                dialog.dismiss();
             }
         });
     }

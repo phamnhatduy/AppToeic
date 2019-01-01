@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 public class Title implements Serializable{
+    @SerializedName("serialID") private int serialID;
     @SerializedName("titleName") private String titleName;
     @SerializedName("partID") private int partID;
     @SerializedName("partName") private String partName;
@@ -15,13 +16,22 @@ public class Title implements Serializable{
     public Title() {
     }
 
-    public Title(String titleName, int partID, String partName, String audio, String time, int numberOfQuestions) {
+    public Title(int serialID, String titleName, int partID, String partName, String audio, String time, int numberOfQuestions) {
+        this.serialID = serialID;
         this.titleName = titleName;
         this.partID = partID;
         this.partName = partName;
         this.audio = audio;
         this.time = time;
         this.numberOfQuestions = numberOfQuestions;
+    }
+
+    public int getSerialID() {
+        return serialID;
+    }
+
+    public void setSerialID(int serialID) {
+        this.serialID = serialID;
     }
 
     public String getTitleName() {

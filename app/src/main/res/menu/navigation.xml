@@ -4,6 +4,6 @@
     <item
         android:id="@+id/action_reload"
         android:orderInCategory="100"
-        android:title="Tải lại"
+        android:title="Khởi động lại"
         app:showAsAction="never" />
 </menu>

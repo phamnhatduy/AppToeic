@@ -8,4 +8,6 @@
     <color name="tv_score">#464646</color>
     <color name="tv_date">#464646</color>
     <color name="tv_title_name">#464646</color>
+    <color name="btn_audio">#ffffff</color>
+    <color name="ic_nav">#FF000000</color>
 </resources>

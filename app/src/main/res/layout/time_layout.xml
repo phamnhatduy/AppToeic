@@ -42,30 +42,32 @@
         android:id="@+id/linear_layout_media"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="#0050da"
+        android:background="#392ad4"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/tv_current_time">
 
         <Button
             android:id="@+id/button_previous"
-            android:layout_width="100dp"
+            android:layout_width="50dp"
             android:layout_height="match_parent"
-            android:text="Pre"
+            android:background="@drawable/ic_fast_rewind"
             android:textSize="15dp" />
 
         <Button
             android:id="@+id/button_pause"
-            android:layout_width="120dp"
-            android:layout_height="match_parent"
-            android:text="@string/btn_pause"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/ic_pause"
             android:textSize="15dp" />
 
         <Button
             android:id="@+id/button_next"
-            android:layout_width="100dp"
+            android:layout_width="50dp"
             android:layout_height="match_parent"
-            android:text="Nex"
-            android:textSize="15dp" />
+            android:textSize="15dp"
+            android:background="@drawable/ic_fast_forward"/>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

@@ -6,7 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TitleOnPhone {
+    private int serialID;
     private String titleName;
+    private String part1Audio;
+    private String part2Audio;
+    private String part3Audio;
+    private String part4Audio;
     private int part1ID;
     private int part2ID;
     private int part3ID;
@@ -24,11 +29,18 @@ public class TitleOnPhone {
     private History history3;
     private History history4;
 
-    public TitleOnPhone(String titleName, int part1ID, int part2ID, int part3ID, int part4ID,
+    public TitleOnPhone(int serialID, String titleName,
+                        String part1Audio, String part2Audio, String part3Audio, String part4Audio,
+                        int part1ID, int part2ID, int part3ID, int part4ID,
                         String time1, String time2, String time3, String time4,
                         int numberOfQuestions1, int numberOfQuestions2, int numberOfQuestions3, int numberOfQuestions4,
                         History history1, History history2, History history3, History history4) {
+        this.serialID = serialID;
         this.titleName = titleName;
+        this.part1Audio = part1Audio;
+        this.part2Audio = part2Audio;
+        this.part3Audio = part3Audio;
+        this.part4Audio = part4Audio;
         this.part1ID = part1ID;
         this.part2ID = part2ID;
         this.part3ID = part3ID;
@@ -51,12 +63,52 @@ public class TitleOnPhone {
 
     }
 
+    public int getSerialID() {
+        return serialID;
+    }
+
+    public void setSerialID(int serialID) {
+        this.serialID = serialID;
+    }
+
     public String getTitleName() {
         return titleName;
     }
 
     public void setTitleName(String titleName) {
         this.titleName = titleName;
+    }
+
+    public String getPart1Audio() {
+        return part1Audio;
+    }
+
+    public void setPart1Audio(String part1Audio) {
+        this.part1Audio = part1Audio;
+    }
+
+    public String getPart2Audio() {
+        return part2Audio;
+    }
+
+    public void setPart2Audio(String part2Audio) {
+        this.part2Audio = part2Audio;
+    }
+
+    public String getPart3Audio() {
+        return part3Audio;
+    }
+
+    public void setPart3Audio(String part3Audio) {
+        this.part3Audio = part3Audio;
+    }
+
+    public String getPart4Audio() {
+        return part4Audio;
+    }
+
+    public void setPart4Audio(String part4Audio) {
+        this.part4Audio = part4Audio;
     }
 
     public int getPart1ID() {

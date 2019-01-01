@@ -29,6 +29,7 @@ public class Part4ViewModel extends AndroidViewModel{
     public MutableLiveData<List<Part4OnPhone>> listCurrentQuestion = new MutableLiveData<>();
     public MutableLiveData<Integer> currentIndex = new MutableLiveData<>();
     public MutableLiveData<String> titleName = new MutableLiveData<>();
+    public MutableLiveData<String> serial = new MutableLiveData<>();
     
     public Part4ViewModel(@NonNull Application application) {
         super(application);
@@ -36,7 +37,7 @@ public class Part4ViewModel extends AndroidViewModel{
 
     public void getAllQuestion() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://myhost2018.000webhostapp.com/" + titleName.getValue() + "/Part4/")
+                .baseUrl("https://myhost2018.000webhostapp.com/Serial1/" + titleName.getValue() + "/Part4/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         APIService apiService = retrofit.create(APIService.class);
@@ -123,11 +124,15 @@ public class Part4ViewModel extends AndroidViewModel{
         return titleName;
     }
 
-    public void setTitleName(String titleName) {
+    public void setTitleName(String serial, String titleName) {
         if(titleName != null)
             this.titleName.setValue(titleName);
         else
             this.titleName.setValue("Test1");
+        if(serial != null)
+            this.serial.setValue(serial);
+        else
+            this.serial.setValue("Serial1");
         getAllQuestion();
     }
 

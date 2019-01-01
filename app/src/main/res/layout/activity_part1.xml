@@ -103,49 +103,54 @@ xmlns:tools="http://schemas.android.com/tools">
             android:text="@string/btn_next_question"
             android:textSize="15dp" />
     </LinearLayout>
-
-    <RadioGroup
-        android:id="@+id/radio_group"
-        android:layout_width="393dp"
+    <ScrollView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/scroll_view"
+        android:layout_weight="1"
+        android:fillViewport="true"
         android:layout_alignParentStart="true"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_below="@+id/linear_layout_control"
         android:layout_alignParentLeft="true">
-
-        <RadioButton
-            android:id="@+id/radioButton_A"
+        <RadioGroup
+            android:id="@+id/radio_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="A"
-            android:textSize="20dp" />
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentLeft="true">
 
-        <RadioButton
-            android:id="@+id/radioButton_B"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="B"
-            android:textSize="20dp" />
+            <RadioButton
+                android:id="@+id/radioButton_A"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="A"
+                android:textSize="20dp" />
 
-        <RadioButton
-            android:id="@+id/radioButton_C"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="C"
-            android:textSize="20dp" />
+            <RadioButton
+                android:id="@+id/radioButton_B"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="B"
+                android:textSize="20dp" />
 
-        <RadioButton
-            android:id="@+id/radioButton_D"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="D"
-            android:textSize="20dp" />
-    </RadioGroup>
-    <!--<FrameLayout
-        android:id="@+id/frame_part1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </FrameLayout>-->
+            <RadioButton
+                android:id="@+id/radioButton_C"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="C"
+                android:textSize="20dp" />
+
+            <RadioButton
+                android:id="@+id/radioButton_D"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="D"
+                android:textSize="20dp" />
+        </RadioGroup>
+    </ScrollView>
 </RelativeLayout>
 </layout>

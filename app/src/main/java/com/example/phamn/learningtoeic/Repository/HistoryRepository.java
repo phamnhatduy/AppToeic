@@ -3,6 +3,7 @@ package com.example.phamn.learningtoeic.Repository;
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.content.Context;
 import android.os.AsyncTask;
 
 import com.example.phamn.learningtoeic.DAO.HistoryDAO;
@@ -17,8 +18,8 @@ public class HistoryRepository {
     private History history;
     private String date;
 
-    public HistoryRepository(Application application){
-        HistoryDatabase database = HistoryDatabase.getInstance(application);
+    public HistoryRepository(Context context){
+        HistoryDatabase database = HistoryDatabase.getInstance(context);
         historyDAO  = database.historyDAO();
         listAllHistory = historyDAO.getListAllHistory();
         //date = historyDAO.getDate();
