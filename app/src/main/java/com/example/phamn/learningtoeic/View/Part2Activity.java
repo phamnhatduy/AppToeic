@@ -472,4 +472,12 @@ public class Part2Activity extends AppCompatActivity {
             return radioButtonB;
         return radioButtonC;
     }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        mediaPlayer.pause();
+        btnPause.setBackgroundResource(R.drawable.ic_play_arrow);
+        showNoticeDialog("Bạn có muốn thoát?");
+    }
 }

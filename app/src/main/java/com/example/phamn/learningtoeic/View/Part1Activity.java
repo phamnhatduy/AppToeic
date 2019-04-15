@@ -4,13 +4,18 @@ import android.app.Dialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -24,6 +29,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.example.phamn.learningtoeic.Model.History;
 import com.example.phamn.learningtoeic.Model.Part1OnPhone;
 import com.example.phamn.learningtoeic.R;
@@ -64,6 +72,13 @@ public class Part1Activity extends AppCompatActivity {
     String serial = "";
     String audio = "";
     String title = "";
+
+    Matrix matrix = new Matrix();
+    Float scale = 1f;
+    ScaleGestureDetector sgd;
+    ImageView ivZoom;
+    PinchZoomPan pZP;
+    Dialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +86,22 @@ public class Part1Activity extends AppCompatActivity {
 //        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 //                WindowManager.LayoutParams.FLAG_FULLSCREEN);    // set fullscreen
         setContentView(R.layout.activity_part1);
-        ButterKnife.bind(this);
+        ButterKnife.bind(this); // databinding
+
+        dialog = new Dialog(this,android.R.style.Theme_Black_NoTitleBar_Fullscreen);
+        dialog.setContentView(R.layout.zoom_image);
+        dialog.setCanceledOnTouchOutside(false);
+        pZP = (PinchZoomPan) dialog.findViewById(R.id.ivZoom);
+
+        //sgd = new ScaleGestureDetector(this, new ScaleListener());
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showZoomImage();
+            }
+        });
+
 
         Intent intent = getIntent();
         title = intent.getStringExtra("titleName");
@@ -230,6 +260,35 @@ public class Part1Activity extends AppCompatActivity {
         }
     }
 
+    public void showZoomImage(){
+        dialog.show();
+//        sgd = new ScaleGestureDetector(this, new ScaleListener());
+//        ivZoom.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                sgd.onTouchEvent(event);
+//                return true;
+//            }
+//        });
+        Button btnClose = (Button)dialog.findViewById(R.id.btn_close);
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+    }
+
+//    private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener{
+//        @Override
+//        public boolean onScale(ScaleGestureDetector detector) {
+//            scale = scale * detector.getScaleFactor();
+//            scale = Math.max(0.1f, Math.min(scale, 5f));
+//            matrix.setScale(scale,scale);
+//            ivZoom.setImageMatrix(matrix);
+//            return true;
+//        }
+//    }
     public void initAudio(){
         //String url = "https://myhost2018.000webhostapp.com/" + serial + "/Test1/Audio/Test1_Part1.m4a";
         String url = "https://myhost2018.000webhostapp.com/Serial1/" + title + "/Audio/"+ title +"_Part1.m4a";
@@ -391,16 +450,20 @@ public class Part1Activity extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable Part1OnPhone questionPart1) {
                 tvNumber.setText("" + questionPart1.getQuestionNumber());
-//                Picasso.with(getApplicationContext()).load(questionPart1.getImage())
-//                        .placeholder(R.drawable.loading)
-//                        .error(R.drawable.error_image)
-//                        .into(imageView);
                 Glide.with(getApplicationContext())
                         .load(questionPart1.getImage())
-                        //.load("https://myhost2018.000webhostapp.com/Test1/Part1/image/1.jpg")
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(imageView);
-
+                Glide.with(getApplicationContext())
+                        .load(questionPart1.getImage())
+                        .asBitmap()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(new SimpleTarget<Bitmap>() {
+                            @Override
+                            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                                pZP.loadImageOnCanvas(resource);
+                            }
+                        });
                     if (!questionPart1.getAnswerChosen().equals("")) {
                         //Toast.makeText(Part1Activity.this, "" + questionPart1.getAnswerChosen(), Toast.LENGTH_SHORT).show();
                         switch (questionPart1.getAnswerChosen()) {
@@ -493,5 +556,13 @@ public class Part1Activity extends AppCompatActivity {
         if (anwser.equals("C"))
             return radioButtonC;
         return radioButtonD;
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        mediaPlayer.pause();
+        btnPause.setBackgroundResource(R.drawable.ic_play_arrow);
+        showNoticeDialog("Bạn có muốn thoát?");
     }
 }
