@@ -65,7 +65,7 @@ public class Part1Activity extends AppCompatActivity {
     @BindView(R.id.seekbar_time) SeekBar seekBar;
     @BindView(R.id.tv_current_time) TextView tvCurrentTime;
     @BindView(R.id.tv_total_time) TextView tvTotalTime;
-
+    //test
     MediaPlayer mediaPlayer = new MediaPlayer();
     Dialog dialogLoading;
     boolean isTesting = true; // reviewing -> isTesting = false
@@ -363,6 +363,15 @@ public class Part1Activity extends AppCompatActivity {
 
             if(!part1ViewModel.getListQuestion().getValue().get(i - 1).getAnswerChosen().equals(""))
                 btn.setBackgroundResource(R.drawable.question_chosen);
+            final int x = i - 1;
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    radioGroup.clearCheck();
+                    part1ViewModel.updateQuestion(x);
+                    dialogNotice.dismiss();
+                }
+            });
         }
 
         Button btnSubmit = (Button)dialogNotice.findViewById(R.id.button_submit);
