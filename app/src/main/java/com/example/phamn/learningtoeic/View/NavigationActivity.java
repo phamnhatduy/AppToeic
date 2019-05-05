@@ -29,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.phamn.learningtoeic.Adapter.TitleAdapter;
+import com.example.phamn.learningtoeic.MiniGameActivity;
 import com.example.phamn.learningtoeic.Model.History;
 import com.example.phamn.learningtoeic.Model.Serial;
 import com.example.phamn.learningtoeic.Model.TitleOnPhone;
@@ -120,6 +121,10 @@ public class NavigationActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         switch (id){
+            case R.id.nav_mini_game:
+                Intent intent3 = new Intent(this, MiniGameActivity.class);
+                this.startActivity(intent3);
+                break;
             case R.id.nav_series_1:
                 serialID = 1;
                 break;
