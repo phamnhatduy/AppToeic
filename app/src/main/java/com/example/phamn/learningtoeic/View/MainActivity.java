@@ -110,25 +110,25 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void test(){
-        TitleOnPhone title = new TitleOnPhone();
-        title.setTitleName("đây là test");
-        title.setTime1("1:00");
-        title.setTime2("2:00");
-        title.setTime3("3:00");
-        title.setTime4("4:00");
-        title.setNumberOfQuestions1(1);
-        title.setNumberOfQuestions2(2);
-        title.setNumberOfQuestions3(3);
-        title.setNumberOfQuestions4(4);
-
-        listTitle.add(title);
-        listTitle.add(title);
-        listTitle.add(title);
-        listTitle.add(title);
-        //}
-        titleAdapter.notifyDataSetChanged();
-    }
+//    public void test(){
+//        TitleOnPhone title = new TitleOnPhone();
+//        title.setTitleName("đây là test");
+//        title.setTime1("1:00");
+//        title.setTime2("2:00");
+//        title.setTime3("3:00");
+//        title.setTime4("4:00");
+//        title.setNumberOfQuestions1(1);
+//        title.setNumberOfQuestions2(2);
+//        title.setNumberOfQuestions3(3);
+//        title.setNumberOfQuestions4(4);
+//
+//        listTitle.add(title);
+//        listTitle.add(title);
+//        listTitle.add(title);
+//        listTitle.add(title);
+//        //}
+//        titleAdapter.notifyDataSetChanged();
+//    }
 
     public void mapping(){
         lvTitle = (ListView) findViewById(R.id.lv_title);
@@ -193,33 +193,33 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void showLoadingDialog(boolean successful){
-        if(successful == false) { // đang tải
-            dialogLoading = new Dialog(this, R.style.AppTheme);
-            //dialogLoading.setTitle("LearningToeic");
-            dialogLoading.setContentView(R.layout.loading_layout);
-            dialogLoading.show();
-            dialogLoading.setCanceledOnTouchOutside(false);
-            Animation animRotate = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate);
-            ImageView ivLoading = dialogLoading.findViewById(R.id.iv_loading);
-            ivLoading.startAnimation(animRotate);
-            Button btnStart = dialogLoading.findViewById(R.id.btn_start);
-            btnStart.setVisibility(View.INVISIBLE);
-        }
-        else {  // tải thành công
-            ImageView ivLoading = dialogLoading.findViewById(R.id.iv_loading);
-            ivLoading.clearAnimation();
-            ivLoading.setImageResource(R.drawable.success);
-            TextView tvLoading = dialogLoading.findViewById(R.id.tv_loading);
-            tvLoading.setText("Load Successfully!");
-            Button btnStart = dialogLoading.findViewById(R.id.btn_start);
-            btnStart.setVisibility(View.VISIBLE);
-            btnStart.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialogLoading.hide();
-                }
-            });
-        }
-    }
+//    public void showLoadingDialog(boolean successful){
+//        if(successful == false) { // đang tải
+//            dialogLoading = new Dialog(this, R.style.AppTheme);
+//            //dialogLoading.setTitle("LearningToeic");
+//            dialogLoading.setContentView(R.layout.loading_layout);
+//            dialogLoading.show();
+//            dialogLoading.setCanceledOnTouchOutside(false);
+//            Animation animRotate = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate);
+//            ImageView ivLoading = dialogLoading.findViewById(R.id.iv_loading);
+//            ivLoading.startAnimation(animRotate);
+//            Button btnStart = dialogLoading.findViewById(R.id.btn_start);
+//            btnStart.setVisibility(View.INVISIBLE);
+//        }
+//        else {  // tải thành công
+//            ImageView ivLoading = dialogLoading.findViewById(R.id.iv_loading);
+//            ivLoading.clearAnimation();
+//            ivLoading.setImageResource(R.drawable.success);
+//            TextView tvLoading = dialogLoading.findViewById(R.id.tv_loading);
+//            tvLoading.setText("Load Successfully!");
+//            Button btnStart = dialogLoading.findViewById(R.id.btn_start);
+//            btnStart.setVisibility(View.VISIBLE);
+//            btnStart.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    dialogLoading.hide();
+//                }
+//            });
+//        }
+//    }
 }

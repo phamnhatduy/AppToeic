@@ -400,6 +400,18 @@ public class Part3Activity extends AppCompatActivity {
             btn.setText("" + (30 + i));
             if(!part3ViewModel.getListAllQuestion().getValue().get(i - 11).getAnswerChosen().equals(""))
                 btn.setBackgroundResource(R.drawable.question_chosen);
+            final int x = i - 11;
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    radioGroup1.clearCheck();
+                    radioGroup2.clearCheck();
+                    radioGroup3.clearCheck();
+                    radioGroup4.clearCheck();
+                    part3ViewModel.updateQuestion(x);
+                    dialogNotice.dismiss();
+                }
+            });
         }
 
         Button btnSubmit = (Button)dialogNotice.findViewById(R.id.button_submit);

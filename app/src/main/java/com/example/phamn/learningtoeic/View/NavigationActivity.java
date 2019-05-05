@@ -3,7 +3,10 @@ package com.example.phamn.learningtoeic.View;
 import android.app.Dialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.Group;
@@ -148,7 +151,6 @@ public class NavigationActivity extends AppCompatActivity
                         dialogHelp.cancel();
                     }
                 });
-
                 break;
             case R.id.nav_about:
                 final Dialog dialog = new Dialog(this);
@@ -310,6 +312,37 @@ public class NavigationActivity extends AppCompatActivity
         dialogStarting.setContentView(R.layout.start_layout);
         dialogStarting.show();
         dialogStarting.setCanceledOnTouchOutside(false);
+        if(isOnline()){
+//            Toast.makeText(this, "có internet", Toast.LENGTH_SHORT).show();
+        }
+        else {
+//            Toast.makeText(this, "không có internet", Toast.LENGTH_SHORT).show();
+            showInternetDialog();
+        }
+    }
+
+    public void showInternetDialog(){
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.internet_layout);
+        dialog.show();
+        dialog.setCanceledOnTouchOutside(true);
+        Button btn = (Button) dialog.findViewById(R.id.button_try_again);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                startActivity(getIntent());
+            }
+        });
+    }
+
+    private Boolean isOnline() {
+        ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo ni = cm.getActiveNetworkInfo();
+        if(ni != null && ni.isConnected()) {
+            return true;
+        }
+        return false;
     }
 
     public void showLoadingDialog(boolean successful){

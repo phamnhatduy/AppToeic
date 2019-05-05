@@ -303,6 +303,15 @@ public class Part2Activity extends AppCompatActivity {
 
             if(!part2ViewModel.getListQuestion().getValue().get(i - 11).getAnswerChosen().equals(""))
                 btn.setBackgroundResource(R.drawable.question_chosen);
+            final int x = i - 11;
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    radioGroup.clearCheck();
+                    part2ViewModel.updateQuestion(x);
+                    dialogNotice.dismiss();
+                }
+            });
         }
 
         Button btnSubmit = (Button)dialogNotice.findViewById(R.id.button_submit);
