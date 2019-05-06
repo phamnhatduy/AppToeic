@@ -32,7 +32,6 @@
         <activity android:name=".View.TopicVocabularyActivity" />
         <activity android:name=".View.TipsActivity" />
         <activity android:name=".View.TopicTipsActivity" />
-        <activity android:name=".MiniGameActivity"></activity>
     </application>
 
 </manifest>
