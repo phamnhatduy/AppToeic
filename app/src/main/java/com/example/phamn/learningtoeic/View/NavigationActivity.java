@@ -9,7 +9,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.constraint.Group;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -21,15 +20,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.phamn.learningtoeic.Adapter.TitleAdapter;
-import com.example.phamn.learningtoeic.MiniGameActivity;
 import com.example.phamn.learningtoeic.Model.History;
 import com.example.phamn.learningtoeic.Model.Serial;
 import com.example.phamn.learningtoeic.Model.TitleOnPhone;
@@ -121,10 +117,6 @@ public class NavigationActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         switch (id){
-            case R.id.nav_mini_game:
-                Intent intent3 = new Intent(this, MiniGameActivity.class);
-                this.startActivity(intent3);
-                break;
             case R.id.nav_series_1:
                 serialID = 1;
                 break;
