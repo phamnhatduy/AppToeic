@@ -283,14 +283,7 @@ public class Part1Activity extends AppCompatActivity {
 
     public void showZoomImage(){
         dialog.show();
-//        sgd = new ScaleGestureDetector(this, new ScaleListener());
-//        ivZoom.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                sgd.onTouchEvent(event);
-//                return true;
-//            }
-//        });
+
         Button btnClose = (Button)dialog.findViewById(R.id.btn_close);
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
