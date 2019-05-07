@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,6 +49,7 @@ import butterknife.ButterKnife;
 
 public class Part1Activity extends AppCompatActivity {
     Part1ViewModel part1ViewModel;
+    @BindView(R.id.scroll_view) ScrollView scrollView;
     @BindView(R.id.button_previous) Button btnPreviousTime;
     @BindView(R.id.button_next) Button btnNextTime;
     @BindView(R.id.button_previous_question) Button btnPreviousQuestion;
@@ -102,6 +104,24 @@ public class Part1Activity extends AppCompatActivity {
                 showZoomImage();
             }
         });
+        scrollView.setOnTouchListener(new OnSwipeTouchListener(Part1Activity.this) {
+            public void onSwipeTop() {
+                Toast.makeText(Part1Activity.this, "top", Toast.LENGTH_SHORT).show();
+            }
+            public void onSwipeRight() {
+                radioGroup.clearCheck();
+                part1ViewModel.previousQuestion();
+            }
+            public void onSwipeLeft() {
+                radioGroup.clearCheck();
+                part1ViewModel.nextQuestion();
+            }
+            public void onSwipeBottom() {
+                Toast.makeText(Part1Activity.this, "bottom", Toast.LENGTH_SHORT).show();
+            }
+
+        });
+
 
 
         Intent intent = getIntent();
@@ -263,14 +283,7 @@ public class Part1Activity extends AppCompatActivity {
 
     public void showZoomImage(){
         dialog.show();
-//        sgd = new ScaleGestureDetector(this, new ScaleListener());
-//        ivZoom.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                sgd.onTouchEvent(event);
-//                return true;
-//            }
-//        });
+
         Button btnClose = (Button)dialog.findViewById(R.id.btn_close);
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
