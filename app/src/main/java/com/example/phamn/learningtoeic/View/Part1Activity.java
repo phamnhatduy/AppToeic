@@ -65,6 +65,7 @@ public class Part1Activity extends AppCompatActivity {
     @BindView(R.id.seekbar_time) SeekBar seekBar;
     @BindView(R.id.tv_current_time) TextView tvCurrentTime;
     @BindView(R.id.tv_total_time) TextView tvTotalTime;
+    //@BindView(R.id.btn_answerA) Button btnAnswerA;
     //test
     MediaPlayer mediaPlayer = new MediaPlayer();
     Dialog dialogLoading;
