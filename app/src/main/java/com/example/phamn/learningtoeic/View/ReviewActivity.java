@@ -26,8 +26,8 @@ public class ReviewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        soundPlay();
         setContentView(R.layout.activity_review);
+        soundPlay();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Learning Toeic");
         //init

@@ -14,9 +14,6 @@ public class SoundManager {
     private AudioManager mAudioManager;
     private Context mContext;
     public SoundManager() {
-
-
-
     }
 
     public void initSounds(Context theContext) {
@@ -32,7 +29,6 @@ public class SoundManager {
     }
 
     public void playSound(int index) {
-
         int streamVolume = mAudioManager
                 .getStreamVolume(AudioManager.STREAM_MUSIC);
         mSoundPool.play(mSoundPoolMap.get(index), streamVolume, streamVolume,
