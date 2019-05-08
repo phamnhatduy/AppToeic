@@ -1,6 +1,7 @@
 package com.example.phamn.learningtoeic.View;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
@@ -8,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import com.example.phamn.learningtoeic.Adapter.TopicVocabularyAdapter;
 import com.example.phamn.learningtoeic.Adapter.VocabularyAdapter;
@@ -22,6 +24,8 @@ public class VocabularyActivity extends AppCompatActivity {
     VocabularyAdapter adapter;
     List<Vocabulary> listVocab;
     List<List<Vocabulary>> listTopic;
+    //
+    SoundManager soundManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,8 +49,77 @@ public class VocabularyActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String topic = intent.getStringExtra("topic");
         getSupportActionBar().setTitle(topic);
-        adapter = new VocabularyAdapter(getListVocab(topic));
+        //
+        adapter = new VocabularyAdapter(this,getListVocab(topic));
         recyclerView.setAdapter(adapter);
+        soundPlay();
+        //
+        adapter.setOnItemClickedListener(new VocabularyAdapter.OnItemClickedListener() {
+            @Override
+            public void onItemClick(String pos) {
+                Toast.makeText(VocabularyActivity.this, pos, Toast.LENGTH_SHORT).show();
+                if(pos.equals("1. abide by")) {
+                    soundManager.playSound(1);
+                }
+                if(pos.equals("2. agreement")) {
+                    soundManager.playSound(2);
+                }
+                if(pos.equals("3. assurance")) {
+                    soundManager.playSound(3);
+                }
+                if(pos.equals("4. cancellation")) {
+                    soundManager.playSound(4);
+                }
+                if(pos.equals("5. determine")) {
+                    soundManager.playSound(5);
+                }
+                if(pos.equals("6. engage")) {
+                    soundManager.playSound(6);
+                }
+                if(pos.equals("7. establish")) {
+                    soundManager.playSound(7);
+                }
+                if(pos.equals("8. obligate")) {
+                    soundManager.playSound(8);
+                }
+                if(pos.equals("9. party")) {
+                    soundManager.playSound(9);
+                }
+                if(pos.equals("10. provision")) {
+                    soundManager.playSound(10);
+                }
+                if(pos.equals("11. resolve")) {
+                    soundManager.playSound(11);
+                }
+                if(pos.equals("12. specific")) {
+                    soundManager.playSound(12);
+                }
+            }
+        });
+    }
+    public void PlayMedia()
+    {
+        MediaPlayer mediaPlayer;
+        mediaPlayer = MediaPlayer.create(this,R.raw.abide);
+        mediaPlayer.start();
+    }
+    public void soundPlay()
+    {
+        soundManager = new SoundManager();
+        soundManager.initSounds(getBaseContext());
+        soundManager.addSound(1,R.raw.abide);
+        soundManager.addSound(2,R.raw.agreement);
+        soundManager.addSound(3,R.raw.assurance);
+        soundManager.addSound(4,R.raw.cancellation);
+        soundManager.addSound(5,R.raw.determine);
+        soundManager.addSound(6,R.raw.engage);
+        soundManager.addSound(7,R.raw.establish);
+        soundManager.addSound(8,R.raw.obligate);
+        soundManager.addSound(9,R.raw.party);
+        soundManager.addSound(10,R.raw.provision);
+        soundManager.addSound(11,R.raw.resolve);
+        soundManager.addSound(12,R.raw.specific);
+
     }
 
     public List<Vocabulary> getListVocab(String topic) {
@@ -164,7 +237,7 @@ public class VocabularyActivity extends AppCompatActivity {
         list.add(new Vocabulary("determine", "/di'tə:min/", "(v): quyết định, xác định, định rõ; quyết tâm, kiên quyết", "After reading the contract, I was still unable to detemine if our company was liable for back wages."));
         list.add(new Vocabulary("engage", "/in'geidʤ/", "(v)Tham gia, cam kết, (n)sự hứa hẹn, hứa hôn", "He engaged us in a fascinating discussion about current business law"));
         list.add(new Vocabulary("establish", "/is'tæbliʃ/", "(v): thiết lập, thành lập; xác minh, chứng minh, củng cố", "The merger of the two company established a powerful new corporation"));
-        list.add(new Vocabulary("obligateobligate", "/'ɔbligeit/", "(v): bắt buộc, ép buộc", "The contractor was obligated by the contract to work 40 hours a week."));
+        list.add(new Vocabulary("obligate", "/'ɔbligeit/", "(v): bắt buộc, ép buộc", "The contractor was obligated by the contract to work 40 hours a week."));
         list.add(new Vocabulary("party", "/'pɑ:ti/", "(n): đảng, phái, đội, nhóm; người tham dự/tham gia; buổi liên hoan, buổi tiệc", "The parties agreed to settlement in their contract dispute."));
         list.add(new Vocabulary("provision", "/provision/", "(n): sự dự liệu, dự trữ, dự phòng, cung cấp; điều khoản", "The father made provision for his children through his will."));
         list.add(new Vocabulary("resolve", "/ri'zɔlv/", "(v, n): (v) giải quyết, (n) sự kiên quyết / sự tin chắc", "The manager resolved to clean out all the files at the end of the week."));
@@ -204,8 +277,8 @@ public class VocabularyActivity extends AppCompatActivity {
         list = new ArrayList<>();
         list.add(new Vocabulary("address", "/ə'dres/", "(n,v): (n) địa chỉ, diễn văn, bài nói chuyện, tác phong nói chuyện, sự khôn khéo; (v) trình bày", "Marco's business plan addresses the needs of small business owners"));
         list.add(new Vocabulary("avoidavoid", "/ə'vɔid/", "(v): tránh, tránh khỏi; hủy bỏ, bác bỏ", "To avoid going out of business, owners should prepare a proper business plan"));
-        list.add(new Vocabulary("demonstratedemonstrate", "/'demənstreit/", "(v): bày tỏ, biểu lộ, cho thấy; chứng minh, giải thích", "The professor demonstrated through a case study that a business plan can impress a lender"));
-        list.add(new Vocabulary("developdevelop", "/di'veləp/", "(v): phát triển, tiến triển, triển khai, mở rộng", "Lily developed her ideas into a business plan by taking a class at the community college"));
+        list.add(new Vocabulary("demonstrate", "/'demənstreit/", "(v): bày tỏ, biểu lộ, cho thấy; chứng minh, giải thích", "The professor demonstrated through a case study that a business plan can impress a lender"));
+        list.add(new Vocabulary("develop", "/di'veləp/", "(v): phát triển, tiến triển, triển khai, mở rộng", "Lily developed her ideas into a business plan by taking a class at the community college"));
         list.add(new Vocabulary("evaluateevaluate", "/i'væljueit/", "(v): đánh giá, định giá; ước lượng", "It's important to evaluate your competition when making a business plan"));
         list.add(new Vocabulary("gather", "/'gæðə/", "(v): tập hợp, tụ thập, thu thập; kết luận, suy ra", "We gathered information for our plan from many sources"));
         list.add(new Vocabulary("offer", "/'ɔfə/", "(n,v): (n) đề xuất, đề nghị, chào mời, chào hàng, dạm, hỏi, ướm; (v) đề nghị", "Devon accepted our offer to write the business plan"));
