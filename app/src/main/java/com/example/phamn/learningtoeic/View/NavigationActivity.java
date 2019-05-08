@@ -132,6 +132,10 @@ public class NavigationActivity extends AppCompatActivity
                 Intent intent2 = new Intent(this, IdiomActivity.class);
                 this.startActivity(intent2);
                 break;
+            case R.id.nav_review:
+                Intent intent3 = new Intent(this,ReviewActivity.class);
+                this.startActivity(intent3);
+                break;
             case R.id.nav_clear_history:
                 HistoryRepository repo = new HistoryRepository(getApplication());
                 repo.deleteAllHistory();

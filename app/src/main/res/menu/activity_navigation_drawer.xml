@@ -28,6 +28,11 @@
                 android:id="@+id/nav_idiom"
                 android:icon="@drawable/ic_format_color_text"
                 android:title="Thành ngữ" />
+            <item
+                android:id="@+id/nav_review"
+                android:icon="@drawable/ic_play_arrow"
+                android:title="Ôn tập"
+                ></item>
         </menu>
     </item>
     <item android:title="Thông tin">
