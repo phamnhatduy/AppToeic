@@ -17,12 +17,14 @@ import com.example.phamn.learningtoeic.R;
 import java.util.Random;
 
 public class ReviewActivity extends AppCompatActivity {
-    ImageView imageView;
+    ImageView imgSpreaker,imgX;
+    TextView txtShowAnswer;
     EditText edtAnswer;
     Button btnAnswer,btnChange;
     SoundManager soundManager;
     Random random;
     int pos;
+    int countClick;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +33,9 @@ public class ReviewActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Learning Toeic");
         //init
-        imageView = findViewById(R.id.image_speaker);
+        imgSpreaker = findViewById(R.id.image_speaker);
+        imgX=findViewById(R.id.image_x);
+        txtShowAnswer=findViewById(R.id.txt_showAnswer);
         edtAnswer = findViewById(R.id.edt_answer);
         btnAnswer=findViewById(R.id.btn_play);
         btnChange=findViewById(R.id.btn_change);
@@ -43,14 +47,27 @@ public class ReviewActivity extends AppCompatActivity {
                 "offer","overcrowded","party","persuasion","primarily","productive","promise","protect","provision","register",
                 "reputation","require","resolve","risk","satisfaction","select","session","specific","strategy","strong","substitution",
                 "variety"};
-
+        final String[] wordTranslate = {"/ə'baid/:(v)tôn trọng,tuân theo","/ə'kɔmədeit/:(v)điều tiết, điều chỉnh","/ə'dres/:(n)địa chỉ",
+         "/ə'gri:mənt/:(n)hợp đồng","/ə'reindʤmənt/:(n)sắp xếp","/ə,sousi'eiʃn/:(n)liên kết","/ə'ʃuərəns/:(n)bảo đảm,chắc chắn",
+         "/ə'tend/:(v)tham dự","/ə'trækt/:(v)hấp dẫn,thu hút","/ə'vɔid/:(v)tránh","/,kænse'leiʃn/:(n)sự hủy bỏ","/,kæriktə'ristik/:(adj)đặc thù,(n)đặc trưng",
+         "/kəm'peə/:(v)so sánh","/,kɔmpi'tiʃn/:(n)tranh giành,thi đấu","/'kɔnsikwəns/:(n)kết quả","/kən'sidə/:(n)cân nhắc,suy xét",
+         "/kən'sju:m/:(v)tiêu thụ","/kən'vins/:(v)thuyết phục","/'kʌvə/:(v)che,phủ","/ˈkʌrəntli/:(adv)hiện nay","/'demənstreit/:(v)bày tỏ",
+         "/di'tə:min/:(v)quyết định,xác định","/di'veləp/:(v)phát triển","/in'geidʤ/:(n)sự hứa hẹn","/is'tæbliʃ/:(n)thiết lập,thành lập,",
+         "/i'væljueit/:(v)đánh giá, ước lượng","/,ekspaiə'reiʃn/:(n)sự hết hạn","/fæd/:(n)sự nhất thời","/'friːkwəntli/:(adv)thường xuyên",
+         "/'gæðə/:(v)tập hợp","/hould/:(v)giữ","/im'plai/:(v)ẩn ý","/,inspə'reiʃn/:(n)‹sự/người/vật› truyền cảm hứng","/lou'keiʃn/:(n)vị trí",
+         "/'mɑ:kit/:(n)thị trường,chợ","/'ɔbligeit/:(v)bắt buộc","/'ɔfə/:(n,v)đề xuất","/əʊvəˈkraʊdɪd/:(n)chật ních","/'pɑ:ti/:(n)đảng,buổi tiệc",
+         "/pə'sweiʤn/:(n)sự thuyết phục","/'praimərili/:(adv)trước hết","/prəˈdʌktɪv/:(adj):sản xuất","/promise/:(n)lời hứa","/protect/:(v)bảo vệ",
+         "/provision/:(n)sự dự trữ","/'redʤistə/:(v)đăng ký,(n)danh sách","/,repju:'teiʃn/:(n)danh tiếng","/ri'kwaiə/:(v)yêu cầu","/ri'zɔlv/:(v)giải quyết",
+         "/rɪsk/:(n)rủi ro","/,sætis'fækʃn/:(n)sự hài lòng","/si'lekt/:(v)chọn lựa","/'seʃn/:(n)phiên,kỳ","/spi'sifik/:(adj)riêng biệt",
+         "/ˈstrætədʒi/:(n)chiến lược","/strɔɳ/:(adj)khoẻ,mạnh","/,sʌbsti'tju:ʃn/:(n)sự thay thế","/və'raiəti/:(n)đa dạng"
+        };
         random = new Random();
-        pos = random.nextInt(58);
-        imageView.setOnClickListener(new View.OnClickListener() {
+        pos = random.nextInt(10);
+        imgSpreaker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 v.startAnimation(animation);
-                imageView.setImageResource(R.drawable.sound_icon);
+                imgSpreaker.setImageResource(R.drawable.sound_icon);
                 // pos = random.nextInt(58);
                 soundManager.playSound(pos);
             }
@@ -64,27 +81,90 @@ public class ReviewActivity extends AppCompatActivity {
                 soundManager.playSound(pos);
                 Toast.makeText(ReviewActivity.this, wordAnswer[pos], Toast.LENGTH_SHORT).show();
                 edtAnswer.getText().clear();
+                imgX.setVisibility(View.INVISIBLE);
+                txtShowAnswer.setVisibility(View.INVISIBLE);
+                countClick=0;
             }
         });
         btnAnswer.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 String ans = edtAnswer.getText().toString().trim();
+                /*
                 if(ans.equals(""))
                 {
                     Toast.makeText(ReviewActivity.this, "Please insert your answer ", Toast.LENGTH_SHORT).show();
                 }
-                else
-                {
-                    if(ans.equalsIgnoreCase(wordAnswer[pos]))
-                    {
+               else {
+                    if (ans.equalsIgnoreCase(wordAnswer[pos])) {
+                        imageViewX.setVisibility(View.INVISIBLE);
                         Toast.makeText(ReviewActivity.this, "That's correct!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        imageViewX.setVisibility(View.VISIBLE);
+                        Toast.makeText(ReviewActivity.this, "That's wrong.Try Again!", Toast.LENGTH_SHORT).show();
                     }
-                    else
-                    {
-                        Toast.makeText(ReviewActivity.this, "That's wrong !", Toast.LENGTH_SHORT).show();
-                    }
-                }
+                }*/
+               countClick+=1;
+               if(countClick==1)
+               {
+                   if(ans.equals(""))
+                   {
+                       Toast.makeText(ReviewActivity.this, "Please insert your answer ", Toast.LENGTH_SHORT).show();
+                   }
+                   else {
+                       if (ans.equalsIgnoreCase(wordAnswer[pos])) {
+                           imgX.setVisibility(View.INVISIBLE);
+                          // imgX.setImageResource(R.drawable.correct_icon);
+                           Toast.makeText(ReviewActivity.this, "That's correct!", Toast.LENGTH_SHORT).show();
+                       } else {
+                           imgX.setVisibility(View.VISIBLE);
+                           Toast.makeText(ReviewActivity.this, "That's wrong.Try Again!", Toast.LENGTH_SHORT).show();
+                           edtAnswer.getText().clear();
+                       }
+                   }
+               }
+               if(countClick==2)
+               {
+                   txtShowAnswer.setText(wordTranslate[pos]);
+                   txtShowAnswer.setVisibility(View.VISIBLE);
+                   if(ans.equals(""))
+                   {
+                       Toast.makeText(ReviewActivity.this, "Please insert your answer ", Toast.LENGTH_SHORT).show();
+
+                   }
+                   else {
+                       if (ans.equalsIgnoreCase(wordAnswer[pos])) {
+                           imgX.setVisibility(View.INVISIBLE);
+                           //imgX.setImageResource(R.drawable.correct_icon);
+                           Toast.makeText(ReviewActivity.this, "That's correct!", Toast.LENGTH_SHORT).show();
+                       } else {
+                           imgX.setVisibility(View.VISIBLE);
+                           Toast.makeText(ReviewActivity.this, "That's wrong.Try Again!", Toast.LENGTH_SHORT).show();
+                           edtAnswer.getText().clear();
+                       }
+                   }
+               }
+               if(countClick>=3)
+               {
+                   txtShowAnswer.setText(wordAnswer[pos]);
+                   txtShowAnswer.setVisibility(View.VISIBLE);
+                   if(ans.equals(""))
+                   {
+                       Toast.makeText(ReviewActivity.this, "Please insert your answer ", Toast.LENGTH_SHORT).show();
+                   }
+                   else {
+                       if (ans.equalsIgnoreCase(wordAnswer[pos])) {
+                           imgX.setVisibility(View.INVISIBLE);
+                          // imgX.setImageResource(R.drawable.correct_icon);
+                           Toast.makeText(ReviewActivity.this, "That's correct!", Toast.LENGTH_SHORT).show();
+                       } else {
+                           imgX.setVisibility(View.VISIBLE);
+                           Toast.makeText(ReviewActivity.this, "That's wrong.Try Again!", Toast.LENGTH_SHORT).show();
+                           edtAnswer.getText().clear();
+                       }
+                   }
+               }
             }
         });
     }

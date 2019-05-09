@@ -276,10 +276,10 @@ public class VocabularyActivity extends AppCompatActivity {
 
         list = new ArrayList<>();
         list.add(new Vocabulary("address", "/ə'dres/", "(n,v): (n) địa chỉ, diễn văn, bài nói chuyện, tác phong nói chuyện, sự khôn khéo; (v) trình bày", "Marco's business plan addresses the needs of small business owners"));
-        list.add(new Vocabulary("avoidavoid", "/ə'vɔid/", "(v): tránh, tránh khỏi; hủy bỏ, bác bỏ", "To avoid going out of business, owners should prepare a proper business plan"));
+        list.add(new Vocabulary("avoid", "/ə'vɔid/", "(v): tránh, tránh khỏi; hủy bỏ, bác bỏ", "To avoid going out of business, owners should prepare a proper business plan"));
         list.add(new Vocabulary("demonstrate", "/'demənstreit/", "(v): bày tỏ, biểu lộ, cho thấy; chứng minh, giải thích", "The professor demonstrated through a case study that a business plan can impress a lender"));
         list.add(new Vocabulary("develop", "/di'veləp/", "(v): phát triển, tiến triển, triển khai, mở rộng", "Lily developed her ideas into a business plan by taking a class at the community college"));
-        list.add(new Vocabulary("evaluateevaluate", "/i'væljueit/", "(v): đánh giá, định giá; ước lượng", "It's important to evaluate your competition when making a business plan"));
+        list.add(new Vocabulary("evaluate", "/i'væljueit/", "(v): đánh giá, định giá; ước lượng", "It's important to evaluate your competition when making a business plan"));
         list.add(new Vocabulary("gather", "/'gæðə/", "(v): tập hợp, tụ thập, thu thập; kết luận, suy ra", "We gathered information for our plan from many sources"));
         list.add(new Vocabulary("offer", "/'ɔfə/", "(n,v): (n) đề xuất, đề nghị, chào mời, chào hàng, dạm, hỏi, ướm; (v) đề nghị", "Devon accepted our offer to write the business plan"));
         list.add(new Vocabulary("primarily", "/'praimərili/", "(adv): trước hết, đầu tiên; chính, chủ yếu, quan trọng nhất", "The developers are thinking primarily of how to enter the South American market"));
