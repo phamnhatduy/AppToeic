@@ -33,13 +33,8 @@
             android:id="@+id/txt_false"
             android:textSize="20dp"
             android:text="Incorrect:0"/>
-
-
     </LinearLayout>
-
-
     <RelativeLayout
-        android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -54,8 +49,8 @@
             android:visibility="invisible"
             android:layout_centerHorizontal="true"
             android:src="@drawable/x_icon"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:id="@+id/image_x"
             android:layout_below="@id/image_speaker"/>
        <TextView
@@ -65,16 +60,15 @@
            android:layout_height="wrap_content"
            android:id="@+id/txt_showAnswer"
            android:text="AAAAAAAAAAA"
-           android:textSize="20dp"
+           android:textSize="22dp"
            android:layout_below="@id/image_x"/>
-
         <EditText
-            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
             android:id="@+id/edt_answer"
             android:layout_width="300dp"
             android:layout_height="80dp"
             android:layout_below="@+id/image_x"
-            android:layout_marginTop="114dp"
+            android:layout_marginTop="55dp"
             android:hint="Your Answer" />
     </RelativeLayout>
 
