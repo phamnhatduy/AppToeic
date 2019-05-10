@@ -16,6 +16,7 @@ import com.example.phamn.learningtoeic.R;
 
 import java.util.Random;
 
+
 public class ReviewActivity extends AppCompatActivity {
     ImageView imgSpreaker,imgX;
     TextView txtShowAnswer;

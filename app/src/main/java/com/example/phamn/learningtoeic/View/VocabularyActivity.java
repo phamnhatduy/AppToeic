@@ -8,10 +8,8 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
-import android.widget.Switch;
 import android.widget.Toast;
 
-import com.example.phamn.learningtoeic.Adapter.TopicVocabularyAdapter;
 import com.example.phamn.learningtoeic.Adapter.VocabularyAdapter;
 import com.example.phamn.learningtoeic.Model.Vocabulary;
 import com.example.phamn.learningtoeic.R;
