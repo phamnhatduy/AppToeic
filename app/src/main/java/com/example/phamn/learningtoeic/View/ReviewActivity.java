@@ -68,7 +68,7 @@ public class ReviewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 v.startAnimation(animation);
-                imgSpreaker.setImageResource(R.drawable.sound_icon);
+                imgSpreaker.setImageResource(R.drawable.icon_sound);
                 // pos = random.nextInt(58);
                 soundManager.playSound(pos);
             }

@@ -6,13 +6,31 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".View.PracticeActivity">
+
+    <ProgressBar
+        android:id="@+id/progress_ques"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="90"
+        android:progress="30"
+        android:progressDrawable="@drawable/custom_progress" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt_level"
+        android:textSize="25dp"
+        android:text="Level 1"
+        android:layout_below="@id/progress_ques"/>
     <ImageView
+        android:layout_below="@id/txt_level"
         android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
         android:id="@+id/img_play"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/play_sounds"/>
+        android:src="@drawable/play_sound_1"/>
     <TextView
         android:hint="Question"
         android:textSize="25dp"
@@ -21,11 +39,18 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@id/img_play"
         android:id="@+id/edt_question"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    <ImageView
+        android:visibility="invisible"
+        android:layout_centerHorizontal="true"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:id="@+id/img_ans"
+        android:layout_below="@id/edt_question"
+        android:src="@drawable/ic_volume"/>
     <TextView
         android:visibility="invisible"
-       android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
         android:hint="translation"
         android:textSize="20dp"
@@ -33,12 +58,11 @@
         android:textColor="@color/colorAccent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/edt_question"
+        android:layout_below="@id/img_ans"
         android:id="@+id/txt_translate"/>
     <EditText
-       android:layout_centerHorizontal="true"
+        android:layout_centerHorizontal="true"
         android:hint="Answer"
-        android:layout_marginTop="30dp"
         android:layout_below="@id/txt_translate"
         android:id="@+id/edt_ans"
         android:textSize="25dp"
@@ -51,23 +75,21 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <Button
-        android:layout_weight="1"
-        android:layout_marginTop="60dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="25dp"
-        android:id="@+id/btn_confirm"
-        android:text="Confirm"/>
-    <Button
-        android:layout_weight="1"
-        android:layout_marginTop="60dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btn_next"
-        android:text="Next"
-        android:textSize="25dp"
-       />
+        <Button
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25dp"
+            android:id="@+id/btn_confirm"
+            android:text="Confirm"/>
+        <Button
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_next"
+            android:text="Next"
+            android:textSize="25dp"
+            />
     </LinearLayout>
 
 </RelativeLayout>

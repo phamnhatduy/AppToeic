@@ -41,10 +41,10 @@
         <ImageView
             android:layout_centerHorizontal="true"
             android:id="@+id/image_speaker"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginTop="10dp"
-            android:src="@drawable/play_sounds" />
+            android:src="@drawable/play_sound_1" />
         <ImageView
             android:visibility="invisible"
             android:layout_centerHorizontal="true"
