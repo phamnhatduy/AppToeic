@@ -24,12 +24,13 @@ public class PracticeActivity extends AppCompatActivity {
     SoundManager soundManager;
     ImageView imgStart,imgAns;
     EditText edtAns;
-    TextView txtQues,txtTrans,txtLevel,txtCongra;
+    TextView txtQues,txtTrans,txtLevel,txtCongra,txtScore,txtHighScore;
     Button btnConfirm,btnNext;
     ProgressBar progressQues;
     Random random;
     int i;
     int countClick;
+    int score,highScore;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +44,8 @@ public class PracticeActivity extends AppCompatActivity {
         txtQues=findViewById(R.id.edt_question);
         txtTrans=findViewById(R.id.txt_translate);
         txtCongra=findViewById(R.id.txt_congra);
+        txtScore=findViewById(R.id.txt_score);
+        txtHighScore=findViewById(R.id.txt_highscore);
         btnConfirm=findViewById(R.id.btn_confirm);
         btnNext=findViewById(R.id.btn_next);
         progressQues=findViewById(R.id.progress_ques);
@@ -144,6 +147,7 @@ public class PracticeActivity extends AppCompatActivity {
                             txtTrans.setVisibility(View.VISIBLE);
                             txtCongra.setVisibility(View.VISIBLE);
                             txtCongra.startAnimation(animation);
+                            score+=1;
                             Toast.makeText(PracticeActivity.this, "true", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(PracticeActivity.this, "false", Toast.LENGTH_SHORT).show();
@@ -153,6 +157,7 @@ public class PracticeActivity extends AppCompatActivity {
                     if(txtLevel.getText().equals("Level 2"))
                     {
                         if (ans.equalsIgnoreCase(ansData2[i])) {
+                            score+=1;
                             txtTrans.setText(transData2[i]);
                             txtTrans.setVisibility(View.VISIBLE);
                             txtCongra.setVisibility(View.VISIBLE);
@@ -311,6 +316,7 @@ public class PracticeActivity extends AppCompatActivity {
                         }
                     }
                 }
+                txtScore.setText("Score:"+score);
 
             }
 
