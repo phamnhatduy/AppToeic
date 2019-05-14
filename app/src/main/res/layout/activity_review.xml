@@ -60,6 +60,7 @@
            android:layout_height="wrap_content"
            android:id="@+id/txt_showAnswer"
            android:text="AAAAAAAAAAA"
+           android:textColor="@color/colorText"
            android:textSize="22dp"
            android:layout_below="@id/image_x"/>
         <EditText

@@ -31,7 +31,7 @@
             <item
                 android:id="@+id/nav_review"
                 android:icon="@drawable/ic_play_arrow"
-                android:title="Ôn tập"
+                android:title="Luyện từ"
                 ></item>
             <item
                 android:id="@+id/nav_practice"
