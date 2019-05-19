@@ -7,6 +7,7 @@ import java.util.List;
 
 public class TitleOnPhone {
     private int serialID;
+    private String serialName;
     private String titleName;
     private String part1Audio;
     private String part2Audio;
@@ -29,13 +30,14 @@ public class TitleOnPhone {
     private History history3;
     private History history4;
 
-    public TitleOnPhone(int serialID, String titleName,
+    public TitleOnPhone(int serialID, String serialName, String titleName,
                         String part1Audio, String part2Audio, String part3Audio, String part4Audio,
                         int part1ID, int part2ID, int part3ID, int part4ID,
                         String time1, String time2, String time3, String time4,
                         int numberOfQuestions1, int numberOfQuestions2, int numberOfQuestions3, int numberOfQuestions4,
                         History history1, History history2, History history3, History history4) {
         this.serialID = serialID;
+        this.serialName = serialName;
         this.titleName = titleName;
         this.part1Audio = part1Audio;
         this.part2Audio = part2Audio;
@@ -61,6 +63,14 @@ public class TitleOnPhone {
 
     public TitleOnPhone() {
 
+    }
+
+    public String getSerialName() {
+        return serialName;
+    }
+
+    public void setSerialName(String serialName) {
+        this.serialName = serialName;
     }
 
     public int getSerialID() {

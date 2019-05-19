@@ -1,5 +1,6 @@
 package com.example.phamn.learningtoeic.Adapter;
 
+import android.app.Activity;
 import android.app.Application;
 import android.app.Dialog;
 import android.app.NativeActivity;
@@ -35,7 +36,7 @@ public class TitleAdapter extends ArrayAdapter<TitleOnPhone> {
     private Context context;
     private int resource;
     private List<TitleOnPhone> listTitle;
-
+    private Context mContext;
 
     public TitleAdapter(@NonNull Context context, int resource, @NonNull List<TitleOnPhone> objects) {
         super(context, resource, objects);
@@ -46,7 +47,7 @@ public class TitleAdapter extends ArrayAdapter<TitleOnPhone> {
 
     @NonNull
     @Override
-    public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public View getView(final int position, @Nullable View convertView, @NonNull final ViewGroup parent) {
         final ViewHolder viewHolder;
         if(convertView == null){
             viewHolder = new ViewHolder();
@@ -72,13 +73,16 @@ public class TitleAdapter extends ArrayAdapter<TitleOnPhone> {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(getContext(), Part1Activity.class);
-                    intent.putExtra("titleName", "Test" + (position + 1));
+                    intent.putExtra("serialName", listTitle.get(position).getSerialName());
+                    intent.putExtra("titleName", listTitle.get(position).getTitleName());
                     intent.putExtra("time", "" + listTitle.get(position).getTime1());
                     intent.putExtra("numberOfQuestion", listTitle.get(position).getNumberOfQuestions1());
-                    intent.putExtra("serialID", listTitle.get(position).getSerialID());
                     intent.putExtra("partID", listTitle.get(position).getPart1ID());
                     intent.putExtra("audio", listTitle.get(position).getPart1Audio());
                     getContext().startActivity(intent);
+                    //((Activity)parent.getContext()).startActivityForResult(intent, 0);
+                    //((Activity)context).startActivityForResult();
+
                     //Toast.makeText(context, "" + listTitle.get(position).getPart1Audio(), Toast.LENGTH_SHORT).show();
                 }
             });
@@ -86,7 +90,8 @@ public class TitleAdapter extends ArrayAdapter<TitleOnPhone> {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(getContext(), Part2Activity.class);
-                    intent.putExtra("titleName", "Test" + (position + 1));
+                    intent.putExtra("serialName", listTitle.get(position).getSerialName());
+                    intent.putExtra("titleName", listTitle.get(position).getTitleName());
                     intent.putExtra("time", "" + listTitle.get(position).getTime2());
                     intent.putExtra("numberOfQuestion", listTitle.get(position).getNumberOfQuestions2());
                     intent.putExtra("serialID", listTitle.get(position).getSerialID());
@@ -100,10 +105,11 @@ public class TitleAdapter extends ArrayAdapter<TitleOnPhone> {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(getContext(), Part3Activity.class);
-                    intent.putExtra("titleName", "Test" + (position + 1));
+                    intent.putExtra("serialName", listTitle.get(position).getSerialName());
+                    intent.putExtra("titleName", listTitle.get(position).getTitleName());
                     intent.putExtra("time", "" + listTitle.get(position).getTime3());
                     intent.putExtra("numberOfQuestion", listTitle.get(position).getNumberOfQuestions3());
-                    intent.putExtra("serialID", listTitle.get(position).getSerialID());
+                    intent.putExtra("serialID", "" + listTitle.get(position).getSerialID());
                     intent.putExtra("partID", listTitle.get(position).getPart3ID());
                     intent.putExtra("audio", listTitle.get(position).getPart3Audio());
                     getContext().startActivity(intent);
@@ -113,7 +119,8 @@ public class TitleAdapter extends ArrayAdapter<TitleOnPhone> {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(getContext(), Part4Activity.class);
-                    intent.putExtra("titleName", "Test" + (position + 1));
+                    intent.putExtra("serialName", listTitle.get(position).getSerialName());
+                    intent.putExtra("titleName", listTitle.get(position).getTitleName());
                     intent.putExtra("time", "" + listTitle.get(position).getTime4());
                     intent.putExtra("numberOfQuestion", listTitle.get(position).getNumberOfQuestions4());
                     intent.putExtra("serialID", listTitle.get(position).getSerialID());

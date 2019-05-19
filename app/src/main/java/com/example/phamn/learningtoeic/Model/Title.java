@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 public class Title implements Serializable{
     @SerializedName("serialID") private int serialID;
+    @SerializedName("serialName") private String serialName;
     @SerializedName("titleName") private String titleName;
     @SerializedName("partID") private int partID;
     @SerializedName("partName") private String partName;
@@ -16,8 +17,9 @@ public class Title implements Serializable{
     public Title() {
     }
 
-    public Title(int serialID, String titleName, int partID, String partName, String audio, String time, int numberOfQuestions) {
+    public Title(int serialID, String serialName, String titleName, int partID, String partName, String audio, String time, int numberOfQuestions) {
         this.serialID = serialID;
+        this.serialName = serialName;
         this.titleName = titleName;
         this.partID = partID;
         this.partName = partName;
@@ -28,6 +30,14 @@ public class Title implements Serializable{
 
     public int getSerialID() {
         return serialID;
+    }
+
+    public String getSerialName() {
+        return serialName;
+    }
+
+    public void setSerialName(String serialName) {
+        this.serialName = serialName;
     }
 
     public void setSerialID(int serialID) {

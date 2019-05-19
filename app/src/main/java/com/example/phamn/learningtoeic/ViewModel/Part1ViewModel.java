@@ -41,7 +41,8 @@ public class Part1ViewModel extends AndroidViewModel{
 
     public void getAllQuestion() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://myhost2018.000webhostapp.com/Serial1/" + title.getValue() + "/Part1/")
+                .baseUrl("https://myhost2018.000webhostapp.com/" + serial.getValue() + "/" + title.getValue() + "/Part1/")
+//                .baseUrl("https://myhost2018.000webhostapp.com/Serial1/Test1/Part1/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         APIService apiService = retrofit.create(APIService.class);

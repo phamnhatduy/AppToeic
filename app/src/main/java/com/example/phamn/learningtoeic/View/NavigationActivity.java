@@ -9,6 +9,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.SubMenu;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -24,6 +25,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.phamn.learningtoeic.Adapter.TitleAdapter;
 import com.example.phamn.learningtoeic.Model.History;
@@ -35,15 +37,13 @@ import com.example.phamn.learningtoeic.ViewModel.HistoryViewModel;
 import com.example.phamn.learningtoeic.ViewModel.MainViewModel;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class NavigationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     MainViewModel mainViewModel;
     HistoryViewModel historyViewModel;
-    Button btnPart1;
-    Button btnPart2, btnPart3, btnPart4, btnHistory1, btnHistory2, btnHistory3, btnHistory4;
-    TextView tvPartName;
     Dialog dialogLoading, dialogStarting;
     ListView lvTitle;
     TitleAdapter titleAdapter;
@@ -69,8 +69,20 @@ public class NavigationActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        Menu m = navigationView.getMenu();
+        Menu sub = m.addSubMenu("new submenu");
+        sub.add("sub 1");
+        //MenuItem menuItem = m.add(R.id.group_series, R.id.nav_series_1, Menu.NONE, "customer");
+//        Menu subMenu = m.addSubMenu("Customer ...");
+//        subMenu.add("item 1");
+//        subMenu.add("item 2");
 
-        mapping();
+        m.add(R.id.group_series, 1, Menu.NONE, "customer 1").setIcon(R.drawable.ic_folder);
+        m.add(R.id.group_infomation, 2, Menu.NONE, "customer 2").setIcon(R.drawable.ic_folder);
+        m.add(R.id.group_series, 3, Menu.NONE, "customer 3").setIcon(R.drawable.ic_folder);
+        navigationView.invalidate();
+
+        lvTitle = (ListView) findViewById(R.id.lv_title);
 
 
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
@@ -119,6 +131,11 @@ public class NavigationActivity extends AppCompatActivity
         switch (id){
             case R.id.nav_series_1:
                 serialID = 1;
+                mainViewModel.updateTitle(serialID);
+                break;
+            case R.id.nav_series_2:
+                serialID = 2;
+                mainViewModel.updateTitle(serialID);
                 break;
             case R.id.nav_vacabulary:
                 Intent intent = new Intent(this, TopicVocabularyActivity.class);
@@ -176,10 +193,6 @@ public class NavigationActivity extends AppCompatActivity
         return true;
     }
 
-    public void mapping(){
-        lvTitle = (ListView) findViewById(R.id.lv_title);
-    }
-
     public void liveDataListener(){
         mainViewModel.getListAllSerial().observe(this, new Observer<List<Serial>>() {
             @Override
@@ -190,22 +203,17 @@ public class NavigationActivity extends AppCompatActivity
         mainViewModel.getListTitleOfSerial().observe(this, new Observer<List<TitleOnPhone>>() {
             @Override
             public void onChanged(@Nullable List<TitleOnPhone> titles) {
-
-            }
-        });
-        mainViewModel.getListAllTitle().observe(this, new Observer<List<TitleOnPhone>>() {
-            @Override
-            public void onChanged(@Nullable List<TitleOnPhone> titles) {
                 if (listTitle == null) {
                     listTitle = new ArrayList<>();
                     titleAdapter = new TitleAdapter(getApplication(), R.layout.item_title_listview, listTitle);
                     lvTitle.setAdapter(titleAdapter);
                 }
-
+                listTitle.clear();
                 for (int i = 0; i < titles.size(); i++) {
                     TitleOnPhone title = new TitleOnPhone();
                     title.setSerialID(titles.get(i).getSerialID());
                     title.setTitleName(titles.get(i).getTitleName());
+                    title.setSerialName(titles.get(i).getSerialName());
                     title.setPart1Audio(titles.get(i).getPart1Audio());
                     title.setPart2Audio(titles.get(i).getPart2Audio());
                     title.setPart3Audio(titles.get(i).getPart3Audio());
@@ -256,6 +264,69 @@ public class NavigationActivity extends AppCompatActivity
                     dialogStarting.cancel();
             }
         });
+        mainViewModel.getListAllTitle().observe(this, new Observer<List<TitleOnPhone>>() {
+            @Override
+            public void onChanged(@Nullable List<TitleOnPhone> titles) {
+//                if (listTitle == null) {
+//                    listTitle = new ArrayList<>();
+//                    titleAdapter = new TitleAdapter(getApplication(), R.layout.item_title_listview, listTitle);
+//                    lvTitle.setAdapter(titleAdapter);
+//                }
+//
+//                for (int i = 0; i < titles.size(); i++) {
+//                    TitleOnPhone title = new TitleOnPhone();
+//                    title.setSerialID(titles.get(i).getSerialID());
+//                    title.setTitleName(titles.get(i).getTitleName());
+//                    title.setPart1Audio(titles.get(i).getPart1Audio());
+//                    title.setPart2Audio(titles.get(i).getPart2Audio());
+//                    title.setPart3Audio(titles.get(i).getPart3Audio());
+//                    title.setPart4Audio(titles.get(i).getPart4Audio());
+//                    title.setPart1ID(titles.get(i).getPart1ID());
+//                    title.setPart2ID(titles.get(i).getPart2ID());
+//                    title.setPart3ID(titles.get(i).getPart3ID());
+//                    title.setPart4ID(titles.get(i).getPart4ID());
+//                    title.setTime1(titles.get(i).getTime1());
+//                    title.setTime2(titles.get(i).getTime2());
+//                    title.setTime3(titles.get(i).getTime3());
+//                    title.setTime4(titles.get(i).getTime4());
+//                    title.setNumberOfQuestions1(titles.get(i).getNumberOfQuestions1());
+//                    title.setNumberOfQuestions2(titles.get(i).getNumberOfQuestions2());
+//                    title.setNumberOfQuestions3(titles.get(i).getNumberOfQuestions3());
+//                    title.setNumberOfQuestions4(titles.get(i).getNumberOfQuestions4());
+//                    title.setHistory1(new History(title.getPart1ID(), "--/--", "--/--"));
+//                    title.setHistory2(new History(title.getPart2ID(), "--/--", "--/--"));
+//                    title.setHistory3(new History(title.getPart3ID(), "--/--", "--/--"));
+//                    title.setHistory4(new History(title.getPart4ID(), "--/--", "--/--"));
+//                    if (listHistory != null && listHistory.size() > 0) {
+//                        for (int j = 0; j < listHistory.size(); j++) {
+//                            if (listHistory.get(j).getPartID() == titles.get(i).getPart1ID()) {
+//                                title.setHistory1(listHistory.get(j));
+//                                continue;
+//                            }
+//                            if (listHistory.get(j).getPartID() == titles.get(i).getPart2ID()) {
+//                                title.setHistory2(listHistory.get(j));
+//                                continue;
+//                            }
+//                            if (listHistory.get(j).getPartID() == titles.get(i).getPart3ID()) {
+//                                title.setHistory3(listHistory.get(j));
+//                                continue;
+//                            }
+//                            if (listHistory.get(j).getPartID() == titles.get(i).getPart4ID()) {
+//                                title.setHistory4(listHistory.get(j));
+//                                continue;
+//                            }
+//                        }
+//                    }
+//
+//                    listTitle.add(title);
+//
+//                }
+//                titleAdapter.notifyDataSetChanged();
+//
+//                if(dialogStarting.isShowing())
+//                    dialogStarting.cancel();
+            }
+        });
 
         mainViewModel.getListHistory().observe(this, new Observer<List<History>>() {
             @Override
@@ -266,6 +337,8 @@ public class NavigationActivity extends AppCompatActivity
                     listTitle.clear();
                     for (int i = 0; i < list.size(); i++) {
                         TitleOnPhone title = new TitleOnPhone();
+                        title.setSerialID(list.get(i).getSerialID());
+                        title.setSerialName(list.get(i).getSerialName());
                         title.setTitleName(list.get(i).getTitleName());
                         title.setPart1ID(list.get(i).getPart1ID());
                         title.setPart2ID(list.get(i).getPart2ID());

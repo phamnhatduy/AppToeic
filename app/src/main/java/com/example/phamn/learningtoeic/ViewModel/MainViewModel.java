@@ -95,10 +95,12 @@ public class MainViewModel extends AndroidViewModel {
     }
 
     public void convertTitle(){
+        list.clear();
         for (int i = 0; i < titleOnline.size() ; i++) {
             if(i % 4 == 0) {
                 TitleOnPhone t = new TitleOnPhone();
                 t.setSerialID(titleOnline.get(i).getSerialID());
+                t.setSerialName(titleOnline.get(i).getSerialName());
                 t.setTitleName(titleOnline.get(i).getTitleName());
                 t.setPart1Audio(titleOnline.get(i).getAudio());
                 t.setPart2Audio(titleOnline.get(i + 1).getAudio());
@@ -119,8 +121,9 @@ public class MainViewModel extends AndroidViewModel {
                 list.add(t);
             }
         }
+        listAllTitle.setValue(null);
         listAllTitle.setValue(list);
-        //updateTitle(1);
+        updateTitle(1);
     }
 
     public void updateTitle(int serialID){
