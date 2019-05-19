@@ -73,9 +73,10 @@ public class Part1Activity extends AppCompatActivity {
     Dialog dialogLoading;
     boolean isTesting = true; // reviewing -> isTesting = false
     String serial = "";
+    String serialName = "";
     String audio = "";
     String title = "";
-
+    String result = "";
     Matrix matrix = new Matrix();
     Float scale = 1f;
     ScaleGestureDetector sgd;
@@ -125,11 +126,9 @@ public class Part1Activity extends AppCompatActivity {
 
 
         Intent intent = getIntent();
+        serial = intent.getStringExtra("serialName");
         title = intent.getStringExtra("titleName");
-        serial = "Serial" + intent.getIntExtra("serialID", 1);
         audio = intent.getStringExtra("audio");
-        //Toast.makeText(this, "" + audio, Toast.LENGTH_SHORT).show();
-        //Toast.makeText(this, "title: " + titleName + " ,serial: " + serial, Toast.LENGTH_SHORT).show();
         //serial = "Serial1";
         //dùng livedata
         part1ViewModel = ViewModelProviders.of(this).get(Part1ViewModel.class);
@@ -407,13 +406,11 @@ public class Part1Activity extends AppCompatActivity {
         dialog.setCanceledOnTouchOutside(false);
         TextView tvScore = (TextView)dialog.findViewById(R.id.textview_score);
 
-        final String result = getResult();
+        result = getResult();
         tvScore.setText(result);
         Intent intent = getIntent();
-        final int partID = intent.getIntExtra("partID", 0);
-        intent.putExtra("history", "" + partID + ","+ result);
-
-        HistoryRepository historyRepository = new HistoryRepository(getApplicationContext());
+        int partID = intent.getIntExtra("partID", 0);
+        HistoryRepository historyRepository = new HistoryRepository(getApplication());
         historyRepository.deleteHistory(partID);
         historyRepository.insert(new History(partID,
                 Calendar.getInstance().get(Calendar.DAY_OF_MONTH) + "/" + (Calendar.getInstance().get(Calendar.MONTH) + 1),
@@ -425,6 +422,7 @@ public class Part1Activity extends AppCompatActivity {
             public void onClick(View v) {
                 dialog.dismiss();
                 finish();
+                //getApplicationContext().startActivity(intent);
             }
         });
         Button btnReview = (Button)dialog.findViewById(R.id.button_review);
@@ -450,6 +448,11 @@ public class Part1Activity extends AppCompatActivity {
         tvNotice.setText(content);
         Button btnYes = (Button)dialog.findViewById(R.id.btn_yes);
         Button btnNo = (Button)dialog.findViewById(R.id.btn_no);
+
+        final Intent intent = new Intent(getApplicationContext(), NavigationActivity.class);
+        final int partID = intent.getIntExtra("partID", 0);
+        intent.putExtra("history", "" + partID + ","+ result);
+
         btnYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -458,6 +461,8 @@ public class Part1Activity extends AppCompatActivity {
                 //startActivity(intent);
                 dialog.dismiss();
                 finish();
+                //getApplicationContext().startActivity(intent);
+
             }
         });
         btnNo.setOnClickListener(new View.OnClickListener() {

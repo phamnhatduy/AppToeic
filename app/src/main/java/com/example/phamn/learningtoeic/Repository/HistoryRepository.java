@@ -26,7 +26,7 @@ public class HistoryRepository {
         //history = historyDAO.getHistory(partID);
     }
 
-    public  void insert(History history){
+    public void insert(History history){
         new InsertHistoryAsyncTask(historyDAO).execute(history);
     }
 
@@ -34,7 +34,7 @@ public class HistoryRepository {
 //        new DeleteHistoryAsyncTask(historyDAO).execute(history);
 //    }
 
-    public  void update(History history){
+    public void update(History history){
         new UpdateHistoryAsyncTask(historyDAO).execute(history);
     }
 

@@ -61,7 +61,7 @@ public class Part2Activity extends AppCompatActivity {
     MediaPlayer mediaPlayer = new MediaPlayer();
     Dialog dialogLoading;
     boolean isTesting = true; // reviewing -> isTesting = false
-    HistoryRepository historyRepository = new HistoryRepository(getApplication());
+    //HistoryRepository historyRepository = new HistoryRepository(getApplication());
     String serial = "Serial1";
     String title = "Test1";
     String audio = "";
@@ -77,7 +77,7 @@ public class Part2Activity extends AppCompatActivity {
         title = intent.getStringExtra("titleName");
         serial = "Serial" + intent.getIntExtra("serialID", 1);
         audio = intent.getStringExtra("audio");
-
+        Toast.makeText(this, "title: " + title + " ,serial: " + serial, Toast.LENGTH_LONG).show();
         part2ViewModel = ViewModelProviders.of(this).get(Part2ViewModel.class);
         part2ViewModel.setTitleName(serial, title);
         liveDataListener();
@@ -360,11 +360,11 @@ public class Part2Activity extends AppCompatActivity {
         tvScore.setText(result);
         Intent intent = getIntent();
         int partID = intent.getIntExtra("partID", 0);
+        HistoryRepository historyRepository = new HistoryRepository(getApplication());
         historyRepository.deleteHistory(partID);
         historyRepository.insert(new History(partID,
                 Calendar.getInstance().get(Calendar.DAY_OF_MONTH) + "/" + (Calendar.getInstance().get(Calendar.MONTH) + 1),
                 result)); // add to history
-        tvScore.setText(result);
 
         Button btnHome = (Button)dialog.findViewById(R.id.button_home);
         btnHome.setOnClickListener(new View.OnClickListener() {

@@ -79,7 +79,6 @@ public class Part4Activity extends AppCompatActivity {
     MediaPlayer mediaPlayer = new MediaPlayer();
     Dialog dialogLoading;
     boolean isTesting = true; // reviewing -> isTesting = false
-    HistoryRepository historyRepository = new HistoryRepository(getApplication());
     String serial = "";
     String title = "";
     String audio = "";
@@ -456,6 +455,7 @@ public class Part4Activity extends AppCompatActivity {
         tvScore.setText(result);
         Intent intent = getIntent();
         int partID = intent.getIntExtra("partID", 0);
+        HistoryRepository historyRepository = new HistoryRepository(getApplication());
         historyRepository.deleteHistory(partID);
         historyRepository.insert(new History(partID,
                 Calendar.getInstance().get(Calendar.DAY_OF_MONTH) + "/" + (Calendar.getInstance().get(Calendar.MONTH) + 1),
