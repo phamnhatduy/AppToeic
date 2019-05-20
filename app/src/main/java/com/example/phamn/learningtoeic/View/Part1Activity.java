@@ -1,5 +1,6 @@
 package com.example.phamn.learningtoeic.View;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -408,7 +409,7 @@ public class Part1Activity extends AppCompatActivity {
 
         result = getResult();
         tvScore.setText(result);
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         int partID = intent.getIntExtra("partID", 0);
         HistoryRepository historyRepository = new HistoryRepository(getApplication());
         historyRepository.deleteHistory(partID);
@@ -421,6 +422,10 @@ public class Part1Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
+                Intent intent2 = new Intent();//(Part1Activity.this, NavigationActivity.class);
+                intent2.putExtra(Intent.EXTRA_INTENT, 1);
+                setResult(99, intent2);
+//                startActivityForResult(intent2, Activity.RESULT_OK);
                 finish();
                 //getApplicationContext().startActivity(intent);
             }

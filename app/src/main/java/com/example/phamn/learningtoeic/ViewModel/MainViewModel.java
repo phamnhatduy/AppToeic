@@ -40,16 +40,7 @@ public class MainViewModel extends AndroidViewModel {
     public MainViewModel(@NonNull Application application) {
         super(application);
         repo = new HistoryRepository(application);
-//        repo.insert(new History(1, "11/11", "11"));
-//        repo.insert(new History(2, "22/22", "22"));
-//        repo.insert(new History(3, "3/3", "33"));
-//        repo.insert(new History(4, "4/4", "44"));
-//        repo.insert(new History(5, "55/55", "55"));
-//        repo.insert(new History(6, "66/66", "66"));
-//        repo.insert(new History(7, "7/7", "77"));
-//        repo.insert(new History(8, "8/8", "88"));
         listHistory = repo.getListAllHistory();
-//        getAllSerial(application);
         getAllTitle(application);
     }
 
@@ -84,7 +75,7 @@ public class MainViewModel extends AndroidViewModel {
             @Override
             public void onResponse(Call<List<Title>> call, Response<List<Title>> response) {
                 titleOnline = response.body();
-                convertTitle();
+                updateTitle(1);
             }
 
             @Override
@@ -121,19 +112,19 @@ public class MainViewModel extends AndroidViewModel {
                 list.add(t);
             }
         }
-        listAllTitle.setValue(null);
         listAllTitle.setValue(list);
-        updateTitle(1);
     }
 
     public void updateTitle(int serialID){
         List<TitleOnPhone> list = new ArrayList<>();
+        convertTitle();
         for(int i = 0; i < listAllTitle.getValue().size(); i++){
             if(listAllTitle.getValue().get(i).getSerialID() == serialID) {
                 list.add(listAllTitle.getValue().get(i));
             }
         }
         listTitleOfSerial.setValue(list);
+        listAllTitle.setValue(list);
     }
     public MutableLiveData<List<TitleOnPhone>> getListAllTitle() {
         return listAllTitle;

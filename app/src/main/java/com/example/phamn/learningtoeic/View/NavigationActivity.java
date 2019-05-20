@@ -1,5 +1,6 @@
 package com.example.phamn.learningtoeic.View;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -50,7 +51,7 @@ public class NavigationActivity extends AppCompatActivity
     List<TitleOnPhone> listTitle;
     List<History> listHistory;
     int serialID = 1;
-
+    NavigationView navigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +68,7 @@ public class NavigationActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         Menu m = navigationView.getMenu();
         Menu sub = m.addSubMenu("new submenu");
@@ -87,6 +88,8 @@ public class NavigationActivity extends AppCompatActivity
 
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         liveDataListener();
+
+
 
     }
     @Override
@@ -193,7 +196,24 @@ public class NavigationActivity extends AppCompatActivity
         return true;
     }
 
-    public void liveDataListener(){
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 99) {
+
+//            int result = data.getIntExtra(Intent.EXTRA_INTENT, 2);
+//            Toast.makeText(this, "back: " + result, Toast.LENGTH_SHORT).show();
+//            onOptionsItemSelected(navigationView.getMenu().getItem(1));
+//            onNavigationItemSelected(navigationView.getMenu().getItem(0));
+            //navigationView.setCheckedItem(R.id.nav_series_2);
+//            navigationView.getMenu().getItem(1).setChecked(true);
+//            onNavigationItemSelected(navigationView.getMenu().getItem(1));
+//            serialID = 2;
+//            mainViewModel.updateTitle(serialID);
+        }
+    }
+
+    public final void liveDataListener(){
         mainViewModel.getListAllSerial().observe(this, new Observer<List<Serial>>() {
             @Override
             public void onChanged(@Nullable List<Serial> serials) {

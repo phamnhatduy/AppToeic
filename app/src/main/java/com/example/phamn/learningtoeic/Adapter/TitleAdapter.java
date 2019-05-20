@@ -79,8 +79,8 @@ public class TitleAdapter extends ArrayAdapter<TitleOnPhone> {
                     intent.putExtra("numberOfQuestion", listTitle.get(position).getNumberOfQuestions1());
                     intent.putExtra("partID", listTitle.get(position).getPart1ID());
                     intent.putExtra("audio", listTitle.get(position).getPart1Audio());
-                    getContext().startActivity(intent);
-                    //((Activity)parent.getContext()).startActivityForResult(intent, 0);
+//                    getContext().startActivity(intent);
+                    ((Activity)parent.getContext()).startActivityForResult(intent, 99);
                     //((Activity)context).startActivityForResult();
 
                     //Toast.makeText(context, "" + listTitle.get(position).getPart1Audio(), Toast.LENGTH_SHORT).show();
