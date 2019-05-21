@@ -110,46 +110,75 @@ xmlns:tools="http://schemas.android.com/tools">
         android:layout_weight="1"
         android:fillViewport="true"
         android:layout_alignParentStart="true"
+        android:layout_marginTop="5dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_below="@+id/linear_layout_control"
         android:layout_alignParentLeft="true">
         <RadioGroup
             android:id="@+id/radio_group"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
             android:layout_alignParentLeft="true">
 
             <RadioButton
                 android:id="@+id/radioButton_A"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/radio_flat_selector"
+                android:gravity="left|center_vertical"
+                android:paddingTop="@dimen/radio_space"
+                android:paddingBottom="@dimen/radio_space"
                 android:text="A"
-                android:textSize="20dp" />
+                android:textSize="20dp"
+                android:textColor="@drawable/radio_flat_text_selector"
+                android:button="@drawable/radio_button_style"
+                android:layout_marginBottom="10dp"/>
 
             <RadioButton
                 android:id="@+id/radioButton_B"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/radio_flat_selector"
+                android:gravity="left|center_vertical"
+                android:paddingTop="@dimen/radio_space"
+                android:paddingBottom="@dimen/radio_space"
                 android:text="B"
-                android:textSize="20dp" />
+                android:textSize="20dp"
+                android:textColor="@drawable/radio_flat_text_selector"
+                android:button="@drawable/radio_button_style"
+                android:layout_marginBottom="10dp"/>
 
             <RadioButton
                 android:id="@+id/radioButton_C"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/radio_flat_selector"
+                android:gravity="left|center_vertical"
+                android:paddingTop="@dimen/radio_space"
+                android:paddingBottom="@dimen/radio_space"
                 android:text="C"
-                android:textSize="20dp" />
+                android:textSize="20dp"
+                android:textColor="@drawable/radio_flat_text_selector"
+                android:button="@drawable/radio_button_style"
+                android:layout_marginBottom="10dp"/>
 
             <RadioButton
                 android:id="@+id/radioButton_D"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/radio_flat_selector"
+                android:gravity="left|center_vertical"
+                android:paddingTop="@dimen/radio_space"
+                android:paddingBottom="@dimen/radio_space"
                 android:text="D"
-                android:textSize="20dp" />
+                android:textSize="20dp"
+                android:textColor="@drawable/radio_flat_text_selector"
+                android:button="@drawable/radio_button_style"
+                android:layout_marginBottom="10dp"/>
         </RadioGroup>
     </ScrollView>
 </RelativeLayout>

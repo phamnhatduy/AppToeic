@@ -21,10 +21,6 @@
         <item android:title="Học tập">
             <menu>
                 <item
-                    android:id="@+id/nav_mini_game"
-                    android:icon="@drawable/ic_videogame_asset_black_24dp"
-                    android:title="Mini game" />
-                <item
                     android:id="@+id/nav_vacabulary"
                     android:icon="@drawable/ic_font_download"
                     android:title="Từ vựng" />
