@@ -77,7 +77,7 @@ public class Part2Activity extends AppCompatActivity {
         title = intent.getStringExtra("titleName");
         serial = "Serial" + intent.getIntExtra("serialID", 1);
         audio = intent.getStringExtra("audio");
-        Toast.makeText(this, "title: " + title + " ,serial: " + serial, Toast.LENGTH_LONG).show();
+//        Toast.makeText(this, "title: " + title + " ,serial: " + serial, Toast.LENGTH_LONG).show();
         part2ViewModel = ViewModelProviders.of(this).get(Part2ViewModel.class);
         part2ViewModel.setTitleName(serial, title);
         liveDataListener();
@@ -411,24 +411,32 @@ public class Part2Activity extends AppCompatActivity {
                     radioButtonA.setText("A. " + questionPart2.getAnswerA());
                     radioButtonB.setText("B. " + questionPart2.getAnswerB());
                     radioButtonC.setText("C. " + questionPart2.getAnswerC());
-                    radioButtonA.setTextColor(Color.parseColor("#000000"));
+                    radioButtonA.setTextColor(getResources().getColor(R.color.colorTextRadioButton));
+                    radioButtonA.setBackgroundResource(R.drawable.radio_flat_selector);
                     radioButtonA.setEnabled(false);
-                    radioButtonB.setTextColor(Color.parseColor("#000000"));
+                    radioButtonB.setTextColor(getResources().getColor(R.color.colorTextRadioButton));
+                    radioButtonB.setBackgroundResource(R.drawable.radio_flat_selector);
                     radioButtonB.setEnabled(false);
-                    radioButtonC.setTextColor(Color.parseColor("#000000"));
+                    radioButtonC.setTextColor(getResources().getColor(R.color.colorTextRadioButton));
+                    radioButtonC.setBackgroundResource(R.drawable.radio_flat_selector);
                     radioButtonC.setEnabled(false);
                     if (!questionPart2.getAnswerChosen().trim().equals("")){
                         if (questionPart2.getAnswerChosen().equals(questionPart2.getCorrectAnswer())) {
-                            getRadioButton(questionPart2.getAnswerChosen()).setTextColor(Color.parseColor("#FF01D71A"));
+//                            getRadioButton(questionPart2.getAnswerChosen()).setTextColor(Color.parseColor("#FF01D71A"));
+                            getRadioButton(questionPart2.getAnswerChosen()).setBackgroundResource(R.drawable.radio_flat_selector_right);
                         } else {
                             if (!questionPart2.getAnswerChosen().equals(questionPart2.getCorrectAnswer())) {
-                                getRadioButton(questionPart2.getAnswerChosen()).setTextColor(Color.parseColor("#FFF90000"));
-                                getRadioButton(questionPart2.getCorrectAnswer()).setTextColor(Color.parseColor("#FF01D71A"));
+//                                getRadioButton(questionPart2.getAnswerChosen()).setTextColor(Color.parseColor("#FFF90000"));
+//                                getRadioButton(questionPart2.getCorrectAnswer()).setTextColor(Color.parseColor("#FF01D71A"));
+                                getRadioButton(questionPart2.getAnswerChosen()).setBackgroundResource(R.drawable.radio_flat_selector_wrong);
+                                getRadioButton(questionPart2.getCorrectAnswer()).setBackgroundResource(R.drawable.radio_flat_selector_right);
                             }
                         }
                     }
-                    else
-                        getRadioButton(questionPart2.getCorrectAnswer()).setTextColor(Color.parseColor("#FF01D71A"));
+                    else {
+//                        getRadioButton(questionPart2.getCorrectAnswer()).setTextColor(Color.parseColor("#FF01D71A"));
+                        getRadioButton(questionPart2.getCorrectAnswer()).setBackgroundResource(R.drawable.radio_flat_selector_right);
+                    }
                 }
             }
         });

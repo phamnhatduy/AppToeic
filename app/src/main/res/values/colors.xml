@@ -6,5 +6,6 @@
     <color name="colorProgress">#6AC34A</color>
     <color name="colorBackground">#FFFFFF</color>
     <color name="colorText">#070707</color>
+    <color name="colorTextRadioButton">#5c5c5c</color>
 
 </resources>

@@ -517,33 +517,46 @@ public class Part4Activity extends AppCompatActivity {
                                 .setChecked(true); //check vào đáp án đã chọn trước đó
 
                     if(!isTesting){ // đang xem lại bài test
-                        getRadioButton(i + 1 + "A").setTextColor(Color.parseColor("#000000"));
+                        getRadioButton(i + 1 + "A").setTextColor(getResources().getColor(R.color.colorTextRadioButton));
+                        getRadioButton(i + 1 + "A").setBackgroundResource(R.drawable.radio_flat_selector);
                         getRadioButton(i + 1 + "A").setEnabled(false);
-                        getRadioButton(i + 1 + "B").setTextColor(Color.parseColor("#000000"));
+                        getRadioButton(i + 1 + "B").setTextColor(getResources().getColor(R.color.colorTextRadioButton));
+                        getRadioButton(i + 1 + "B").setBackgroundResource(R.drawable.radio_flat_selector);
                         getRadioButton(i + 1 + "B").setEnabled(false);
-                        getRadioButton(i + 1 + "C").setTextColor(Color.parseColor("#000000"));
+                        getRadioButton(i + 1 + "C").setTextColor(getResources().getColor(R.color.colorTextRadioButton));
+                        getRadioButton(i + 1 + "C").setBackgroundResource(R.drawable.radio_flat_selector);
                         getRadioButton(i + 1 + "C").setEnabled(false);
-                        getRadioButton(i + 1 + "D").setTextColor(Color.parseColor("#000000"));
+                        getRadioButton(i + 1 + "D").setTextColor(getResources().getColor(R.color.colorTextRadioButton));
+                        getRadioButton(i + 1 + "D").setBackgroundResource(R.drawable.radio_flat_selector);
                         getRadioButton(i + 1 + "D").setEnabled(false);
                         if (!listCurrentQuestion.get(i).getAnswerChosen().trim().equals("")){   // đáp án không bỏ trống
                             // đáp án chọn là đúng
                             if (listCurrentQuestion.get(i).getAnswerChosen().equals(listCurrentQuestion.get(i).getCorrectAnswer())) {
+//                                getRadioButton(i + 1 + listCurrentQuestion.get(i).getAnswerChosen())
+//                                        .setTextColor(Color.parseColor("#FF01D71A"));
                                 getRadioButton(i + 1 + listCurrentQuestion.get(i).getAnswerChosen())
-                                        .setTextColor(Color.parseColor("#FF01D71A"));
+                                        .setBackgroundResource(R.drawable.radio_flat_selector_right);
                             }
                             // đáp án chọn là sai
                             else {
                                 if (!listCurrentQuestion.get(i).getAnswerChosen().equals(listCurrentQuestion.get(i).getCorrectAnswer())) {
+//                                    getRadioButton(i + 1 + listCurrentQuestion.get(i).getAnswerChosen())
+//                                            .setTextColor(Color.parseColor("#FFF90000"));
                                     getRadioButton(i + 1 + listCurrentQuestion.get(i).getAnswerChosen())
-                                            .setTextColor(Color.parseColor("#FFF90000"));
+                                            .setBackgroundResource(R.drawable.radio_flat_selector_wrong);
+//                                    getRadioButton(i + 1 + listCurrentQuestion.get(i).getCorrectAnswer())
+//                                            .setTextColor(Color.parseColor("#FF01D71A"));
                                     getRadioButton(i + 1 + listCurrentQuestion.get(i).getCorrectAnswer())
-                                            .setTextColor(Color.parseColor("#FF01D71A"));
+                                            .setBackgroundResource(R.drawable.radio_flat_selector_right);
                                 }
                             }
                         }
-                        else
+                        else {
+//                            getRadioButton(i + 1 + listCurrentQuestion.get(i).getCorrectAnswer())
+//                                    .setTextColor(Color.parseColor("#FF01D71A"));
                             getRadioButton(i + 1 + listCurrentQuestion.get(i).getCorrectAnswer())
-                                    .setTextColor(Color.parseColor("#FF01D71A"));
+                                    .setBackgroundResource(R.drawable.radio_flat_selector_right);
+                        }
 
                         tvNote.setText(listCurrentQuestion.get(0).getNote());
                     }
