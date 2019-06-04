@@ -42,7 +42,7 @@
         android:id="@+id/linear_layout_media"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="#392ad4"
+        android:background="#215CF3"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/tv_current_time">

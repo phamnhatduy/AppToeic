@@ -7,5 +7,6 @@
     <color name="colorBackground">#FFFFFF</color>
     <color name="colorText">#070707</color>
     <color name="colorTextRadioButton">#5c5c5c</color>
+    <color name="colorTime">#215CF3</color>
 
 </resources>
