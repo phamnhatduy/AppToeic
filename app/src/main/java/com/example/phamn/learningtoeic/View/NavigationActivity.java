@@ -160,6 +160,9 @@ public class NavigationActivity extends AppCompatActivity
                 Intent intent4 = new Intent(this,PracticeActivity.class);
                 this.startActivity(intent4);
                 break;
+            case R.id.nav_upload:
+                Intent intent5 = new Intent(this,UploadActivity.class);
+                this.startActivity(intent5);
             case R.id.nav_clear_history:
                 HistoryRepository repo = new HistoryRepository(getApplication());
                 repo.deleteAllHistory();

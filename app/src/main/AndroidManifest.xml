@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".View.PracticeActivity"></activity>
+        <activity android:name=".View.UploadActivity"></activity>
+        <activity android:name=".View.PracticeActivity" />
         <activity android:name=".View.ReviewActivity" />
         <activity android:name=".View.MainActivity" />
         <activity android:name=".View.Part1Activity" />

@@ -49,6 +49,11 @@
         android:id="@+id/group_infomation">
         <item android:title="Thông tin">
             <menu>
+                <item android:id="@+id/nav_upload"
+                    android:icon="@drawable/ic_file_upload"
+                    android:title="Tải lên"
+                    >
+                </item>
                 <item
                     android:id="@+id/nav_clear_history"
                     android:icon="@drawable/ic_delete"
