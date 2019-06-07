@@ -30,7 +30,7 @@ public class UploadActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Learning Toeic");
+        getSupportActionBar().setTitle("Share");
 
 
         imgPreview=findViewById(R.id.preview);
@@ -48,7 +48,7 @@ public class UploadActivity extends AppCompatActivity {
         btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                final Intent emailIntent = new Intent(Intent.ACTION_SEND);
                 // set the type to 'email'
                 emailIntent .setType("vnd.android.cursor.dir/email");
                 String to[] = {"thathaivuong151@gmail.com"};
@@ -58,6 +58,7 @@ public class UploadActivity extends AppCompatActivity {
                 // the mail subject
                 emailIntent .putExtra(Intent.EXTRA_SUBJECT, "Share file");
                 startActivity(Intent.createChooser(emailIntent , "Send email...."));
+
                 //Toast.makeText(UploadActivity.this, "Thank for your support ! ", Toast.LENGTH_SHORT).show();
             }
         });

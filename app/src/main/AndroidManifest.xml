@@ -7,14 +7,21 @@
 
     <application
         android:allowBackup="true"
+        android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".View.UploadActivity"></activity>
+        <activity android:name=".View.ResultRememberActivity"></activity>
+        <activity android:name=".View.StartRememberActivity" />
+        <activity android:name=".View.RememberActivity" />
+        <activity android:name=".View.UploadActivity" />
         <activity android:name=".View.PracticeActivity" />
-        <activity android:name=".View.ReviewActivity" />
+        <activity
+            android:name=".View.ReviewActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".View.MainActivity" />
         <activity android:name=".View.Part1Activity" />
         <activity android:name=".View.Part2Activity" />

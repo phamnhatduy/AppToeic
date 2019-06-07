@@ -153,7 +153,7 @@ public class NavigationActivity extends AppCompatActivity
                 this.startActivity(intent2);
                 break;
             case R.id.nav_review:
-                Intent intent3 = new Intent(this,ReviewActivity.class);
+                Intent intent3 = new Intent(this,StartRememberActivity.class);
                 this.startActivity(intent3);
                 break;
             case R.id.nav_practice:

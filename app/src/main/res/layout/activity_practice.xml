@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/background_remember_01"
     tools:context=".View.PracticeActivity">
 
     <ProgressBar
@@ -22,32 +23,42 @@
         android:layout_below="@id/progress_ques"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <TextView
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/txt_level"
-            android:textSize="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/progress_ques"
+            android:layout_marginLeft="15dp"
+            android:layout_weight="1"
+            android:fontFamily="sans-serif-black"
             android:text="Level 1"
-            android:layout_below="@id/progress_ques"/>
+            android:textColor="@color/colorBackground"
+            android:textSize="20dp" />
+
         <TextView
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Score:0"
             android:id="@+id/txt_score"
-            android:textSize="20dp"
-            android:layout_toRightOf="@id/txt_level"
-            android:layout_below="@id/progress_ques"/>
-        <TextView
-            android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="High Score:0"
+            android:layout_below="@id/progress_ques"
+            android:layout_toRightOf="@id/txt_level"
+            android:layout_weight="1"
+            android:fontFamily="sans-serif-black"
+            android:text="Score:0"
+            android:textColor="@color/colorBackground"
+            android:textSize="20dp" />
+
+        <TextView
             android:id="@+id/txt_highscore"
-            android:textSize="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/progress_ques"
             android:layout_toRightOf="@id/txt_score"
-            android:layout_below="@id/progress_ques"/>
+            android:layout_weight="1"
+            android:fontFamily="sans-serif-black"
+            android:text="HighScore:0"
+            android:textColor="@color/colorBackground"
+            android:textSize="20dp" />
     </LinearLayout>
     <TextView
         android:layout_below="@+id/lin_text"
@@ -71,7 +82,7 @@
     <TextView
         android:hint="Question"
         android:textSize="25dp"
-        android:textColor="@color/colorText"
+        android:textColor="@color/colorBackground"
         android:gravity="center"
         android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
@@ -98,29 +109,41 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/img_ans"
         android:id="@+id/txt_translate"/>
+
     <EditText
-        android:layout_centerHorizontal="true"
-        android:hint="Answer"
-        android:layout_below="@id/txt_translate"
         android:id="@+id/edt_ans"
-        android:textSize="25dp"
         android:layout_width="300dp"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_translate"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/custom_edittext"
+        android:fontFamily="sans-serif"
+        android:gravity="center"
+        android:imeOptions="actionDone"
+        android:singleLine="true"
+        android:hint="Type your answer in here"
+        android:textSize="25dp" />
     <LinearLayout
+        android:layout_marginTop="50dp"
         android:layout_below="@id/edt_ans"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <Button
-            android:layout_weight="0.5"
+            android:id="@+id/btn_confirm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25dp"
-            android:id="@+id/btn_confirm"
-            android:text="Confirm"/>
+            android:layout_weight="0.5"
+            android:background="@drawable/custom_button"
+            android:text="Submit"
+            android:textColor="@color/colorBackground"
+            android:textSize="25dp" />
         <Button
-            android:layout_weight="1"
+            android:textColor="@color/colorBackground"
+            android:background="@drawable/custom_button"
+            android:layout_weight="0.5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/btn_next"
@@ -128,5 +151,6 @@
             android:textSize="25dp"
             />
     </LinearLayout>
+
 
 </RelativeLayout>

@@ -1,44 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_weight="3"
+    android:background="#ffff"
     tools:context=".View.ReviewActivity">
+    <ProgressBar
+        android:id="@+id/progress_time"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="100"
+        android:min="0"
+        android:progress="100"
+        android:progressDrawable="@drawable/custom_progress" />
     <LinearLayout
+        android:id="@+id/lin_text"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal"
-        android:layout_weight="1"
+        android:layout_weight="3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
+            android:textColor="@color/colorText"
+            android:layout_marginLeft="15dp"
+            android:fontFamily="cursive"
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/txt_no"
-            android:textSize="20dp"
+            android:textSize="25dp"
             android:text="Num:0"/>
         <TextView
+            android:textColor="@color/colorText"
+            android:fontFamily="cursive"
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/txt_true"
-            android:textSize="20dp"
-            android:text="Correct:0"/>
-        <TextView
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/txt_false"
-            android:textSize="20dp"
-            android:text="Incorrect:0"/>
+            android:id="@+id/txt_correct"
+            android:textSize="25dp"
+            android:text="TotalScore:50"/>
+
     </LinearLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        <TextView
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:layout_below="@+id/lin_text"
+            android:visibility="invisible"
+            android:layout_marginLeft="10dp"
+            android:layout_centerInParent="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_congra_review"
+            android:textSize="25dp"
+            android:text="Congratulations!"
+            android:textColor="@color/colorAccent"/>
         <ImageView
+            android:layout_below="@id/txt_congra_review"
             android:layout_centerHorizontal="true"
             android:id="@+id/image_speaker"
             android:layout_width="100dp"
@@ -53,46 +72,59 @@
             android:layout_height="60dp"
             android:id="@+id/image_x"
             android:layout_below="@id/image_speaker"/>
-       <TextView
-           android:visibility="invisible"
-           android:layout_centerHorizontal="true"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:id="@+id/txt_showAnswer"
-           android:text="AAAAAAAAAAA"
-           android:textColor="@color/colorText"
-           android:textSize="22dp"
-           android:layout_below="@id/image_x"/>
+
+    <TextView
+        android:id="@+id/txt_showAnswer"
+        android:layout_width="wrap_content"
+        android:layout_height="47dp"
+        android:layout_below="@id/image_x"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="AAAAAAAAAAA"
+        android:textColor="@color/colorText"
+        android:textSize="25dp"
+        android:visibility="invisible" />
         <EditText
+            android:background="@drawable/custom_edittext"
+            android:gravity="center"
+            android:textSize="25dp"
             android:layout_centerHorizontal="true"
             android:id="@+id/edt_answer"
             android:layout_width="300dp"
-            android:layout_height="80dp"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/image_x"
             android:layout_marginTop="55dp"
-            android:hint="Your Answer" />
-    </RelativeLayout>
+            android:fontFamily="sans-serif"
+            android:imeOptions="actionDone"
+            android:singleLine="true"
+            android:hint="Type your answer in here" />
 
     <LinearLayout
+        android:layout_below="@id/edt_answer"
+        android:layout_marginTop="50dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="4"
         android:orientation="horizontal">
 
         <Button
+            android:background="@drawable/custom_button"
             android:id="@+id/btn_play"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:text="Answer"
+            android:textColor="@color/colorBackground"
+            android:text="Submit"
             android:textSize="20dp" />
         <Button
+            android:textColor="@color/colorBackground"
+            android:background="@drawable/custom_button"
             android:layout_weight="0.5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/btn_change"
-            android:text="Change"
+            android:text="Next"
             android:textSize="20dp"/>
 
     </LinearLayout>
-</LinearLayout>
+</RelativeLayout>
