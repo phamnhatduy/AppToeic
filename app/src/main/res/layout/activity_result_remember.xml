@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/background_remember_01"
+    tools:context=".View.ResultRememberActivity">
+    <TextView
+        android:id="@+id/txt_top"
+        android:textSize="25dp"
+        android:textColor="@color/colorBackground"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your result"/>
+   <GridView
+       android:layout_gravity="center"
+       android:gravity="center"
+       android:textAlignment="center"
+       android:id="@+id/grid_wronglist"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content">
+
+   </GridView>
+    <Button
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:id="@+id/btn_practiceAgain"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:text="Practice Again"
+        android:textColor="@color/colorBackground"
+        android:textSize="20dp"
+        android:background="@drawable/custom_button"/>
+
+</LinearLayout>

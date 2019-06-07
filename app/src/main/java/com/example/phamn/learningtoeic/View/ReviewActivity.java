@@ -1,5 +1,9 @@
 package com.example.phamn.learningtoeic.View;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -9,6 +13,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,10 +25,13 @@ import java.util.Random;
 public class ReviewActivity extends AppCompatActivity {
     ImageView imgSpreaker,imgX;
     TextView txtShowAnswer;
+    TextView txtNo,txtCorrect,txtCongra;
     EditText edtAnswer;
+    ProgressBar progressBar;
     Button btnAnswer,btnChange;
     SoundManager soundManager;
     Random random;
+    int no=0,correct=50;
     int pos;
     int countClick;
     @Override
@@ -33,13 +41,10 @@ public class ReviewActivity extends AppCompatActivity {
         soundPlay();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Learning Toeic");
-        //init
-        imgSpreaker = findViewById(R.id.image_speaker);
-        imgX=findViewById(R.id.image_x);
-        txtShowAnswer=findViewById(R.id.txt_showAnswer);
-        edtAnswer = findViewById(R.id.edt_answer);
-        btnAnswer=findViewById(R.id.btn_play);
-        btnChange=findViewById(R.id.btn_change);
+        init();
+
+
+        final Animation animCongra =AnimationUtils.loadAnimation(this,R.anim.scale_congratulation);
         final Animation animation = AnimationUtils.loadAnimation(this,R.anim.scale_sound);
         final String[] wordAnswer = {"abide","accommodate","address","agreement","arrangement","association",
                 "assurance","attend","attract","avoid","cancellation","characteristic","compare","competition","consequence",
@@ -64,6 +69,7 @@ public class ReviewActivity extends AppCompatActivity {
         };
         random = new Random();
         pos = random.nextInt(10);
+
         imgSpreaker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,20 +77,28 @@ public class ReviewActivity extends AppCompatActivity {
                 imgSpreaker.setImageResource(R.drawable.icon_sound);
                 // pos = random.nextInt(58);
                 soundManager.playSound(pos);
+
+
             }
         });
-
+        if(imgSpreaker.isClickable()==true)
+        {
+           countDown();
+        }
         btnChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // imageView.setEnabled(false);
+                no+=1;
                 pos = random.nextInt(58);
                 soundManager.playSound(pos);
                 Toast.makeText(ReviewActivity.this, wordAnswer[pos], Toast.LENGTH_SHORT).show();
                 edtAnswer.getText().clear();
                 imgX.setVisibility(View.INVISIBLE);
+                txtCongra.setVisibility(View.INVISIBLE);
                 txtShowAnswer.setVisibility(View.INVISIBLE);
                 countClick=0;
+                txtNo.setText("Num:"+no);
             }
         });
         btnAnswer.setOnClickListener(new View.OnClickListener() {
@@ -92,20 +106,6 @@ public class ReviewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String ans = edtAnswer.getText().toString().trim();
-                /*
-                if(ans.equals(""))
-                {
-                    Toast.makeText(ReviewActivity.this, "Please insert your answer ", Toast.LENGTH_SHORT).show();
-                }
-               else {
-                    if (ans.equalsIgnoreCase(wordAnswer[pos])) {
-                        imageViewX.setVisibility(View.INVISIBLE);
-                        Toast.makeText(ReviewActivity.this, "That's correct!", Toast.LENGTH_SHORT).show();
-                    } else {
-                        imageViewX.setVisibility(View.VISIBLE);
-                        Toast.makeText(ReviewActivity.this, "That's wrong.Try Again!", Toast.LENGTH_SHORT).show();
-                    }
-                }*/
                countClick+=1;
                if(countClick==1)
                {
@@ -117,6 +117,8 @@ public class ReviewActivity extends AppCompatActivity {
                        if (ans.equalsIgnoreCase(wordAnswer[pos])) {
                            imgX.setVisibility(View.INVISIBLE);
                           // imgX.setImageResource(R.drawable.correct_icon);
+                           txtCongra.setVisibility(View.VISIBLE);
+                           txtCongra.startAnimation(animation);
                            Toast.makeText(ReviewActivity.this, "That's correct!", Toast.LENGTH_SHORT).show();
                        } else {
                            imgX.setVisibility(View.VISIBLE);
@@ -141,6 +143,7 @@ public class ReviewActivity extends AppCompatActivity {
                            Toast.makeText(ReviewActivity.this, "That's correct!", Toast.LENGTH_SHORT).show();
                        } else {
                            imgX.setVisibility(View.VISIBLE);
+                           correct-=1;
                            Toast.makeText(ReviewActivity.this, "That's wrong.Try Again!", Toast.LENGTH_SHORT).show();
                            edtAnswer.getText().clear();
                        }
@@ -161,13 +164,56 @@ public class ReviewActivity extends AppCompatActivity {
                            Toast.makeText(ReviewActivity.this, "That's correct!", Toast.LENGTH_SHORT).show();
                        } else {
                            imgX.setVisibility(View.VISIBLE);
+
                            Toast.makeText(ReviewActivity.this, "That's wrong.Try Again!", Toast.LENGTH_SHORT).show();
                            edtAnswer.getText().clear();
                        }
                    }
                }
+
+               txtCorrect.setText("TotalScore:"+correct);
             }
         });
+    }
+    public void countDown()
+    {
+        CountDownTimer countDownTimer = new CountDownTimer(10000,1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                int current = progressBar.getProgress();
+                progressBar.setProgress(current-10);
+            }
+
+            @Override
+            public void onFinish() {
+                showAlertDialog();
+                //Toast.makeText(ReviewActivity.this, "Time out !", Toast.LENGTH_SHORT).show();
+            }
+        };
+        countDownTimer.start();
+    }
+
+    public void showAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Time out !");
+        builder.setMessage("Do you want to try again ?");
+         builder.setCancelable(false);
+        builder.setPositiveButton("Try again", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                progressBar.setProgress(100);
+                countDown();
+            }
+        });
+        builder.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                edtAnswer.clearFocus();
+                dialogInterface.dismiss();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
     public void soundPlay()
     {
@@ -233,7 +279,19 @@ public class ReviewActivity extends AppCompatActivity {
         soundManager.addSound(57,R.raw.variety);
 
     }
-
+    public void init()
+    {
+        imgSpreaker = findViewById(R.id.image_speaker);
+        imgX=findViewById(R.id.image_x);
+        txtShowAnswer=findViewById(R.id.txt_showAnswer);
+        txtCorrect=findViewById(R.id.txt_correct);
+        txtNo=findViewById(R.id.txt_no);
+        txtCongra=findViewById(R.id.txt_congra_review);
+        edtAnswer = findViewById(R.id.edt_answer);
+        btnAnswer=findViewById(R.id.btn_play);
+        btnChange=findViewById(R.id.btn_change);
+        progressBar=findViewById(R.id.progress_time);
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

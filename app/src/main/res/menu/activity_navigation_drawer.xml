@@ -9,63 +9,63 @@
             android:id="@+id/nav_series_1"
             android:checked="true"
             android:icon="@drawable/ic_folder"
-            android:title="Bộ đề 1" />
+            android:title="Series 1" />
         <item
             android:id="@+id/nav_series_2"
             android:checked="true"
             android:icon="@drawable/ic_folder"
-            android:title="Bộ đề 2" />
+            android:title="Series 2" />
     </group>
     <group android:checkableBehavior="single"
         android:id="@+id/study">
-        <item android:title="Học tập">
+        <item android:title="Study">
             <menu>
                 <item
                     android:id="@+id/nav_vacabulary"
                     android:icon="@drawable/ic_font_download"
-                    android:title="Từ vựng" />
+                    android:title="Vocabulary" />
                 <item
                     android:id="@+id/nav_tips"
                     android:icon="@drawable/ic_lightbulb_outline"
-                    android:title="Mẹo làm bài" />
+                    android:title="Tips" />
                 <item
                     android:id="@+id/nav_idiom"
                     android:icon="@drawable/ic_format_color_text"
-                    android:title="Thành ngữ" />
+                    android:title="Idioms" />
                 <item
                     android:id="@+id/nav_review"
-                    android:icon="@drawable/ic_play_arrow"
-                    android:title="Luyện từ"
+                    android:icon="@drawable/ic_wb_auto_black_24dp"
+                    android:title="Remember Vocabulary"
                     ></item>
                 <item
                     android:id="@+id/nav_practice"
-                    android:icon="@drawable/ic_launcher_foreground"
-                    android:title="Luyện nghe"
+                    android:icon="@drawable/ic_hearing_black_24dp"
+                    android:title="Practise Listening"
                     ></item>
             </menu>
         </item>
     </group>
     <group android:checkableBehavior="single"
         android:id="@+id/group_infomation">
-        <item android:title="Thông tin">
+        <item android:title="More">
             <menu>
                 <item android:id="@+id/nav_upload"
-                    android:icon="@drawable/ic_file_upload"
-                    android:title="Tải lên"
+                    android:icon="@drawable/ic_share_black_24dp"
+                    android:title="Share"
                     >
                 </item>
                 <item
                     android:id="@+id/nav_clear_history"
                     android:icon="@drawable/ic_delete"
-                    android:title="Xóa lịch sử" />
+                    android:title="Clear History" />
                 <item
                     android:id="@+id/nav_support"
                     android:icon="@drawable/ic_help"
-                    android:title="Trợ giúp" />
+                    android:title="Help" />
                 <item
                     android:id="@+id/nav_about"
                     android:icon="@drawable/ic_error"
-                    android:title="Thông tin sản phẩm" />
+                    android:title="About" />
             </menu>
         </item>
     </group>

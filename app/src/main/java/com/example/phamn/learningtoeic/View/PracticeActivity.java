@@ -1,5 +1,7 @@
 package com.example.phamn.learningtoeic.View;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.media.MediaDataSource;
 import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
@@ -30,26 +32,20 @@ public class PracticeActivity extends AppCompatActivity {
     Random random;
     int i;
     int countClick;
-    int score,highScore;
+    int score=0,highScore=0;
+    SharedPreferences preferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_practice);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Learning Toeic");
-
-        imgStart=findViewById(R.id.img_play);
-        imgAns=findViewById(R.id.img_ans);
-        edtAns=findViewById(R.id.edt_ans);
-        txtQues=findViewById(R.id.edt_question);
-        txtTrans=findViewById(R.id.txt_translate);
-        txtCongra=findViewById(R.id.txt_congra);
-        txtScore=findViewById(R.id.txt_score);
-        txtHighScore=findViewById(R.id.txt_highscore);
-        btnConfirm=findViewById(R.id.btn_confirm);
-        btnNext=findViewById(R.id.btn_next);
-        progressQues=findViewById(R.id.progress_ques);
-        txtLevel=findViewById(R.id.txt_level);
+        init();
+        preferences =  getSharedPreferences("my score",Context.MODE_PRIVATE);
+        highScore = preferences.getInt("score",score);
+        if(highScore>=score) {
+            txtHighScore.setText("HighScore:" + highScore);
+        }
         final Animation animation = AnimationUtils.loadAnimation(this,R.anim.scale_sound);
         final Animation animCongra =AnimationUtils.loadAnimation(this,R.anim.scale_congratulation);
         final String[] quesData = {"Traffic is ____ freely on the motorway.","This photo ___ us a busy rush hour scene.",
@@ -148,6 +144,7 @@ public class PracticeActivity extends AppCompatActivity {
                             txtCongra.setVisibility(View.VISIBLE);
                             txtCongra.startAnimation(animation);
                             score+=1;
+                            saveScore();
                             Toast.makeText(PracticeActivity.this, "true", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(PracticeActivity.this, "false", Toast.LENGTH_SHORT).show();
@@ -158,6 +155,7 @@ public class PracticeActivity extends AppCompatActivity {
                     {
                         if (ans.equalsIgnoreCase(ansData2[i])) {
                             score+=1;
+                            saveScore();
                             txtTrans.setText(transData2[i]);
                             txtTrans.setVisibility(View.VISIBLE);
                             txtCongra.setVisibility(View.VISIBLE);
@@ -316,8 +314,9 @@ public class PracticeActivity extends AppCompatActivity {
                         }
                     }
                 }
-                txtScore.setText("Score:"+score);
 
+                txtScore.setText("Score:"+score);
+                //txtHighScore.setText(preferences.getInt("score",score));
             }
 
         });
@@ -380,6 +379,30 @@ public class PracticeActivity extends AppCompatActivity {
         soundManager.addSound(1,R.raw.ans2);
     }
 
+    public void saveScore()
+    {
+
+        SharedPreferences.Editor editor = preferences.edit();
+        //int score = Integer.parseInt(txtScore.getText().toString());
+        editor.putInt("score",score);
+        editor.commit();
+
+    }
+    public void init()
+    {
+        imgStart=findViewById(R.id.img_play);
+        imgAns=findViewById(R.id.img_ans);
+        edtAns=findViewById(R.id.edt_ans);
+        txtQues=findViewById(R.id.edt_question);
+        txtTrans=findViewById(R.id.txt_translate);
+        txtCongra=findViewById(R.id.txt_congra);
+        txtScore=findViewById(R.id.txt_score);
+        txtHighScore=findViewById(R.id.txt_highscore);
+        btnConfirm=findViewById(R.id.btn_confirm);
+        btnNext=findViewById(R.id.btn_next);
+        progressQues=findViewById(R.id.progress_ques);
+        txtLevel=findViewById(R.id.txt_level);
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
