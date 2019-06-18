@@ -89,6 +89,8 @@ public class PracticeActivity extends AppCompatActivity {
         final MediaPlayer mpAns8 = MediaPlayer.create(this,R.raw.ans8);
         final MediaPlayer mpAns9 = MediaPlayer.create(this,R.raw.ans9);
         final MediaPlayer mpAns10 = MediaPlayer.create(this,R.raw.ans10);
+        int mediaArr[] = new int[10];
+        mediaArr[1]=mp1.getAudioSessionId();
         if(txtLevel.getText().equals("Level 1")) {
             txtQues.setText(quesData[i]);
         }if(txtLevel.getText().equals("Level 2")){

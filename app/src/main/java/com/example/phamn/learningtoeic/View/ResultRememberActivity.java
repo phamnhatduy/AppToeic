@@ -7,19 +7,23 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.phamn.learningtoeic.Adapter.WronglistAdapter;
+import com.example.phamn.learningtoeic.Model.Wronglist;
 import com.example.phamn.learningtoeic.R;
 
 import java.util.ArrayList;
 
 public class ResultRememberActivity extends AppCompatActivity {
     Button btnAgain;
-    TextView txtShow;
-    GridView gridView;
-    ArrayList<String> arrayList =new ArrayList<>();
+    TextView txtNumlist;
+    ListView listView;
+    ArrayList<String> arrayList1;
+    ArrayList<String> arrayList2;
+    ArrayList<Wronglist> wronglists;
+    WronglistAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,16 +31,33 @@ public class ResultRememberActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Vocabulary Quizzes");
         setContentView(R.layout.activity_result_remember);
         btnAgain = findViewById(R.id.btn_practiceAgain);
-        gridView=findViewById(R.id.grid_wronglist);
-        //Intent intent = this.getIntent();
-        //arrayList = getIntent().getStringArrayListExtra("wrongWord");
-        //arrayList.add(intent.getStringExtra("wrongWord"));
+        listView=findViewById(R.id.list_wrong);
+        txtNumlist=findViewById(R.id.txt_numlist);
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_dropdown_item_1line,arrayList);
-        gridView.setAdapter(arrayAdapter);
+        arrayList1 = new ArrayList<>();
+        arrayList2=new ArrayList<>();
 
+        Intent intent = this.getIntent();
+        arrayList1 = getIntent().getStringArrayListExtra("id");
+        arrayList2= getIntent().getStringArrayListExtra("name");
 
+        wronglists=new ArrayList<>();
+        for(int i=0;i<arrayList1.size();i++) {
+            {
+                wronglists.add(new Wronglist(arrayList1.get(i),arrayList2.get(i)));
+                //wronglists.add(new Wronglist(arrayList2.get(j)));
+            }
+        }
+        //wronglists.add(new Wronglist(arrayList2.toString()));
+        adapter = new WronglistAdapter(this,R.layout.list_wrong,wronglists);
+        //arrayList.add("AAAAAAAAAA");
+      // ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
+                // android.R.layout.simple_dropdown_item_1line
+               //,arrayList);
+       // listView.setAdapter(arrayAdapter);
+        listView.setAdapter(adapter);
+
+        txtNumlist.setText("("+wronglists.size()+")");
         btnAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,7 +73,7 @@ public class ResultRememberActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                this.finish();
-                //return true;
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

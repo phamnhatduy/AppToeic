@@ -5,26 +5,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/background_remember_01"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:weightSum="3"
+    android:background="@drawable/photo_bg_1"
     tools:context=".View.ResultRememberActivity">
     <TextView
         android:id="@+id/txt_top"
-        android:textSize="25dp"
+        android:textSize="20dp"
         android:textColor="@color/colorBackground"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Your result"/>
-   <GridView
-       android:layout_gravity="center"
-       android:gravity="center"
-       android:textAlignment="center"
-       android:id="@+id/grid_wronglist"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content">
-
-   </GridView>
+        android:text="You have finished this session."/>
     <Button
+        android:layout_marginTop="20dp"
         android:layout_gravity="center"
         android:gravity="center"
         android:id="@+id/btn_practiceAgain"
@@ -34,5 +29,21 @@
         android:textColor="@color/colorBackground"
         android:textSize="20dp"
         android:background="@drawable/custom_button"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No"
+        android:textSize="20dp"
+        android:id="@+id/txt_numlist"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ListView
+            android:id="@+id/list_wrong"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            ></ListView>
+    </LinearLayout>
+
 
 </LinearLayout>

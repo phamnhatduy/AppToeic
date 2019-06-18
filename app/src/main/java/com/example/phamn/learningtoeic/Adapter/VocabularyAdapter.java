@@ -59,7 +59,7 @@ public class VocabularyAdapter extends RecyclerView.Adapter<VocabularyAdapter.Vi
             }
         });
         if(row_index==position){
-            holder.layout.setBackgroundColor(Color.parseColor("#D3D5D6"));
+            holder.layout.setBackgroundColor(Color.parseColor("#03A9F4"));
             holder.tvWord.setTextColor(Color.parseColor("#ffffff"));
         }
         else

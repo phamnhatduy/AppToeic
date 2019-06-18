@@ -8,6 +8,8 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.phamn.learningtoeic.Adapter.VocabularyAdapter;
@@ -22,6 +24,7 @@ public class VocabularyActivity extends AppCompatActivity {
     VocabularyAdapter adapter;
     List<Vocabulary> listVocab;
     List<List<Vocabulary>> listTopic;
+    Button btnEng,btnVn,btnAudio;
     //
     SoundManager soundManager;
     @Override
@@ -29,8 +32,12 @@ public class VocabularyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vocabulary);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        btnEng=findViewById(R.id.btn_engtovn);
+        btnVn=findViewById(R.id.btn_vntoeng);
+        btnAudio=findViewById(R.id.btn_audio);
         recyclerView = (RecyclerView) findViewById(R.id.recycle_view_vocabulary);
+
+
 
         DividerItemDecoration dividerHorizontal =
                 new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
@@ -45,7 +52,7 @@ public class VocabularyActivity extends AppCompatActivity {
         listTopic = new ArrayList<>();
         initListTopic();
         Intent intent = getIntent();
-        String topic = intent.getStringExtra("topic");
+        final String topic = intent.getStringExtra("topic");
         getSupportActionBar().setTitle(topic);
         //
         adapter = new VocabularyAdapter(this,getListVocab(topic));
@@ -55,7 +62,7 @@ public class VocabularyActivity extends AppCompatActivity {
         adapter.setOnItemClickedListener(new VocabularyAdapter.OnItemClickedListener() {
             @Override
             public void onItemClick(String pos) {
-                Toast.makeText(VocabularyActivity.this, pos, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(VocabularyActivity.this, pos, Toast.LENGTH_SHORT).show();
                 if(pos.equals("1. abide by")) {
                     soundManager.playSound(1);
                 }
@@ -94,13 +101,34 @@ public class VocabularyActivity extends AppCompatActivity {
                 }
             }
         });
+        btnVn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(VocabularyActivity.this,VnToEngActivity.class);
+                intent.putExtra("topic",topic);
+                startActivity(intent);
+            }
+        });
+        btnEng.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(VocabularyActivity.this,EngToVnActivity.class);
+                intent.putExtra("topic",topic);
+                startActivity(intent);
+            }
+        });
+
+        btnAudio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(VocabularyActivity.this,AudioActivity.class);
+                intent.putExtra("topic",topic);
+                startActivity(intent);
+            }
+        });
     }
-    public void PlayMedia()
-    {
-        MediaPlayer mediaPlayer;
-        mediaPlayer = MediaPlayer.create(this,R.raw.abide);
-        mediaPlayer.start();
-    }
+
     public void soundPlay()
     {
         soundManager = new SoundManager();

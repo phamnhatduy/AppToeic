@@ -24,8 +24,12 @@ import android.widget.Toast;
 import com.example.phamn.learningtoeic.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 public class RememberActivity<List> extends AppCompatActivity {
     TextView txtQues;
@@ -60,8 +64,7 @@ public class RememberActivity<List> extends AppCompatActivity {
             "chiến lược","khoẻ,mạnh","sự thay thế","đa dạng"
     };
      ArrayList<String> wrongList;
-     ArrayList<String> wrongListMean=new ArrayList<>();
-    public static final int MY_REQUEST_CODE = 100;
+     ArrayList<String> wrongListMean;
      Animation animation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +76,6 @@ public class RememberActivity<List> extends AppCompatActivity {
         txtQues=findViewById(R.id.txt_question);
         txtCongra=findViewById(R.id.txt_congra_remem);
         radioGroup1=findViewById(R.id.radio_group_ans1);
-        progressBar=findViewById(R.id.progress_time);
         txtNo=findViewById(R.id.txt_no);
         txtCorr=findViewById(R.id.txt_correct);
         txtIncorr=findViewById(R.id.txt_incorrect);
@@ -84,6 +86,7 @@ public class RememberActivity<List> extends AppCompatActivity {
         radioButtonD=findViewById(R.id.radio_d);
         soundPlay();
         wrongList = new ArrayList<String>();
+        wrongListMean=new ArrayList<String>();
         random = new Random();
         pos = random.nextInt(10);
         txtQues.setText(wordTranslate[pos]);
@@ -93,20 +96,18 @@ public class RememberActivity<List> extends AppCompatActivity {
         radioButtonC.setText(wordAnswer[pos+2]);
         radioButtonD.setText(wordAnswer[pos+3]);
 
-
-
-
         radioGroup1.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 //countDown();
                 switch (radioGroup1.getCheckedRadioButtonId())
                 {
+
                     case R.id.radio_a:
                         if(radioButtonA.isChecked()) {
                             CompareAns();
                             delay();
-                           // no+=1;
+                           //no+=1;
                         }
 
                    case R.id.radio_b:
@@ -134,6 +135,7 @@ public class RememberActivity<List> extends AppCompatActivity {
                 txtIncorr.setText("Incorrect:"+incorr);
                 if(no==10)
                 {
+
                     Toast.makeText(RememberActivity.this, "Stopppp", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -153,29 +155,32 @@ public class RememberActivity<List> extends AppCompatActivity {
                 // ChangeQues();
             }
             else {
-                showAnswer();
                 wrongList.add(wordAnswer[pos]);
+              // wrongList.add(wordTranslate[pos]);
                 wrongListMean.add(wordTranslate[pos]);
                 radioButtonA.setChecked(true);
                 radioButtonA.setBackgroundResource(R.drawable.radio_flat_selector_wrong);
+                showAnswer();
                 soundManager.playSound(pos);
-                txtCongra.setText("Quite bad !");
+                txtCongra.setText("Wrong !");
                 txtCongra.startAnimation(animation);
                 txtCongra.setVisibility(View.VISIBLE);
-                incorr+=1;}
+                corr-=1;
+                incorr+=1;
+            }
 
 
         }
-        if( radioButtonB.isChecked())
+      else if(radioButtonB.isChecked() )
         {
              if(radioButtonB.getText().equals(wordAnswer[pos]))
             {
-            txtCongra.setText("Congratulation !");
-            txtCongra.setVisibility(View.VISIBLE);
-            txtCongra.startAnimation(animation);
+                txtCongra.setText("Congratulation !");
+                txtCongra.setVisibility(View.VISIBLE);
+                txtCongra.startAnimation(animation);
             //Toast.makeText(RememberActivity.this, "true", Toast.LENGTH_SHORT).show();
-            soundManager.playSound(pos);
-            corr+=1;
+                soundManager.playSound(pos);
+                corr+=1;
             //incorr+=1;
             //ChangeQues();
             }
@@ -187,19 +192,22 @@ public class RememberActivity<List> extends AppCompatActivity {
                  radioButtonB.setBackgroundResource(R.drawable.radio_flat_selector_wrong);
                  showAnswer();
                  wrongList.add(wordAnswer[pos]);
+              //  wrongList.add(wordTranslate[pos]);
                  wrongListMean.add(wordTranslate[pos]);
                  soundManager.playSound(pos);
                  txtCongra.setText("Wrong !");
                  txtCongra.startAnimation(animation);
                  txtCongra.setVisibility(View.VISIBLE);
-                incorr+=1;}
+                 corr-=1;
+                 incorr+=1;}
 
         }
-        if(radioButtonC.isChecked())
+      else if(radioButtonC.isChecked())
         {
             if(radioButtonC.getText().equals(wordAnswer[pos])) {
                 txtCongra.setText("Congratulation !");
                 txtCongra.setVisibility(View.VISIBLE);
+                txtCongra.startAnimation(animation);
                 //Toast.makeText(RememberActivity.this, "true", Toast.LENGTH_SHORT).show();
                 soundManager.playSound(pos);
                 corr+=1;
@@ -211,18 +219,20 @@ public class RememberActivity<List> extends AppCompatActivity {
                 || radioButtonD.getText().equals(wordAnswer[pos]))
                     radioButtonA.setChecked(true);*/
                 radioButtonC.setChecked(true);
-               radioButtonC.setBackgroundResource(R.drawable.radio_flat_selector_wrong);
+                radioButtonC.setBackgroundResource(R.drawable.radio_flat_selector_wrong);
                 wrongList.add(wordAnswer[pos]);
+                //wrongList.add(wordTranslate[pos]);
                 wrongListMean.add(wordTranslate[pos]);
                 showAnswer();
                 soundManager.playSound(pos);
                 txtCongra.setText("Wrong !");
                 txtCongra.startAnimation(animation);
                 txtCongra.setVisibility(View.VISIBLE);
+                corr-=1;
                 incorr+=1;}
 
         }
-        if(radioButtonD.isChecked())
+      else if(radioButtonD.isChecked())
         {
             if(radioButtonD.getText().equals(wordAnswer[pos]) ) {
                 txtCongra.setText("Congratulation !");
@@ -238,21 +248,25 @@ public class RememberActivity<List> extends AppCompatActivity {
                 radioButtonD.setChecked(true);
                 radioButtonD.setBackgroundResource(R.drawable.radio_flat_selector_wrong);
                 wrongList.add(wordAnswer[pos]);
+                //wrongList.add(wordTranslate[pos]);
                 wrongListMean.add(wordTranslate[pos]);
-               showAnswer();
+                 showAnswer();
                 soundManager.playSound(pos);
                 txtCongra.setText("Wrong !");
                 txtCongra.startAnimation(animation);
                 txtCongra.setVisibility(View.VISIBLE);
+                corr-=1;
                 incorr+=1;}
             //ChangeQues();
 
         }
 
         else {
+            //radioButtonD.setChecked(true);
+            //radioButtonD.setBackgroundResource(R.drawable.radio_flat_selector_wrong);
                 // txtCongra.setText("Quite bad !");
                 //soundManager.playSound(pos);
-               // incorr += 1;
+               //incorr += 1;
                 //radioButtonA.setChecked(true);
                 //ChangeQues();
                 //txtCongra.startAnimation(animation);
@@ -291,22 +305,63 @@ public class RememberActivity<List> extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             public void run() {
                 ChangeQues();
+               // no+=1;
             }
         }, 2000);
     }
     public void ChangeQues()
     {
-        random = new Random();
-        pos = random.nextInt(50);
+        //random = new Random();
+        pos = random.nextInt(40);
         txtQues.setText(wordTranslate[pos]);
+
+        /*
         radioButtonA.setText(wordAnswer[pos+random.nextInt(3)]);
         radioButtonB.setText(wordAnswer[pos+random.nextInt(4)]);
         radioButtonC.setText(wordAnswer[pos+random.nextInt(5)]);
         radioButtonD.setText(wordAnswer[pos+random.nextInt(1)]);
+        */
+        int butArray[] = new int[4];
+        butArray[0] = radioButtonA.getId();
+        butArray[1]= radioButtonB.getId();
+        butArray[2]=radioButtonC.getId();
+        butArray[3]=radioButtonD.getId();
+        int ra = random.nextInt(butArray.length);
+        if(ra==0) {
+            radioButtonA.setText(wordAnswer[pos]);
+            radioButtonB.setText(wordAnswer[pos+1]);
+            radioButtonC.setText(wordAnswer[pos+2]);
+            radioButtonD.setText(wordAnswer[pos+3]);
+        }else if(ra==1){
+            radioButtonA.setText(wordAnswer[pos+2]);
+            radioButtonB.setText(wordAnswer[pos]);
+            radioButtonC.setText(wordAnswer[pos+3]);
+            radioButtonD.setText(wordAnswer[pos+1]);
+        }else if(ra==2){
+            radioButtonA.setText(wordAnswer[pos+4]);
+            radioButtonB.setText(wordAnswer[pos+3]);
+            radioButtonC.setText(wordAnswer[pos]);
+            radioButtonD.setText(wordAnswer[pos+1]);
+        }
+        else if(ra==3){
+            radioButtonA.setText(wordAnswer[pos+4]);
+            radioButtonB.setText(wordAnswer[pos+2]);
+            radioButtonC.setText(wordAnswer[pos+1]);
+            radioButtonD.setText(wordAnswer[pos]);
+
+        }
+        /*
+        radioButtonA.setText(wordAnswer[pos+random.nextInt(7)+1]);
+        radioButtonB.setText(wordAnswer[pos+random.nextInt(5)+2]);
+        radioButtonC.setText(wordAnswer[pos+random.nextInt(4)+1]);
+        radioButtonD.setText(wordAnswer[pos+random.nextInt(1)]);
+        */
+
         radioButtonA.setBackgroundResource(R.drawable.radio_flat_selector);
         radioButtonB.setBackgroundResource(R.drawable.radio_flat_selector);
         radioButtonC.setBackgroundResource(R.drawable.radio_flat_selector);
         radioButtonD.setBackgroundResource(R.drawable.radio_flat_selector);
+
         radioGroup1.clearCheck();
         txtCongra.setVisibility(View.INVISIBLE);
         no+=1;
@@ -328,7 +383,12 @@ public class RememberActivity<List> extends AppCompatActivity {
            @Override
            public void onClick(DialogInterface dialog, int which) {
                Toast.makeText(RememberActivity.this, wrongList.toString(), Toast.LENGTH_SHORT).show();
+               Toast.makeText(RememberActivity.this,wrongListMean.toString(), Toast.LENGTH_SHORT).show();
                Intent intent = new Intent(RememberActivity.this,ResultRememberActivity.class);
+               //Collection collection = Arrays.asList(wrongList);
+
+               intent.putStringArrayListExtra("id",wrongList);
+               intent.putStringArrayListExtra("name",wrongListMean);
                //String s = wrongList.get(pos);
                //intent.putStringArrayListExtra("wrongWord",(ArrayList<String>) wrongList);
                startActivity(intent);

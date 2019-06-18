@@ -14,14 +14,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".View.ResultRememberActivity"></activity>
-        <activity android:name=".View.StartRememberActivity" />
+        <activity android:name=".View.AudioActivity"></activity>
+        <activity android:name=".View.VnToEngActivity" />
+        <activity android:name=".View.EngToVnActivity" />
+        <activity android:name=".View.ResultRememberActivity" />
         <activity android:name=".View.RememberActivity" />
         <activity android:name=".View.UploadActivity" />
         <activity android:name=".View.PracticeActivity" />
-        <activity
-            android:name=".View.ReviewActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".View.MainActivity" />
         <activity android:name=".View.Part1Activity" />
         <activity android:name=".View.Part2Activity" />

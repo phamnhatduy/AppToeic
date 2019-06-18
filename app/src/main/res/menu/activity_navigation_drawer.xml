@@ -33,11 +33,6 @@
                     android:icon="@drawable/ic_format_color_text"
                     android:title="Idioms" />
                 <item
-                    android:id="@+id/nav_review"
-                    android:icon="@drawable/ic_wb_auto_black_24dp"
-                    android:title="Remember Vocabulary"
-                    ></item>
-                <item
                     android:id="@+id/nav_practice"
                     android:icon="@drawable/ic_hearing_black_24dp"
                     android:title="Practise Listening"
