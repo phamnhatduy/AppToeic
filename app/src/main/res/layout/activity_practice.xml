@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/background_remember_01"
+    android:background="@drawable/photo_bg_1"
     tools:context=".View.PracticeActivity">
 
     <ProgressBar
@@ -70,7 +70,7 @@
         android:id="@+id/txt_congra"
         android:textSize="25dp"
         android:text="Congratulations!"
-        android:textColor="@color/colorAccent"/>
+        android:textColor="@color/colorRed"/>
     <ImageView
         android:layout_below="@id/txt_congra"
         android:layout_marginTop="10dp"
@@ -104,7 +104,7 @@
         android:hint="translation"
         android:textSize="18dp"
         android:gravity="center"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/colorBackground"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/img_ans"

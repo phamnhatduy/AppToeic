@@ -70,6 +70,7 @@ public class NavigationActivity extends AppCompatActivity
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        /*
         Menu m = navigationView.getMenu();
         Menu sub = m.addSubMenu("new submenu");
         sub.add("sub 1");
@@ -81,6 +82,7 @@ public class NavigationActivity extends AppCompatActivity
         m.add(R.id.group_series, 1, Menu.NONE, "customer 1").setIcon(R.drawable.ic_folder);
         m.add(R.id.group_infomation, 2, Menu.NONE, "customer 2").setIcon(R.drawable.ic_folder);
         m.add(R.id.group_series, 3, Menu.NONE, "customer 3").setIcon(R.drawable.ic_folder);
+        */
         navigationView.invalidate();
 
         lvTitle = (ListView) findViewById(R.id.lv_title);
@@ -151,10 +153,6 @@ public class NavigationActivity extends AppCompatActivity
             case R.id.nav_idiom:
                 Intent intent2 = new Intent(this, IdiomActivity.class);
                 this.startActivity(intent2);
-                break;
-            case R.id.nav_review:
-                Intent intent3 = new Intent(this,StartRememberActivity.class);
-                this.startActivity(intent3);
                 break;
             case R.id.nav_practice:
                 Intent intent4 = new Intent(this,PracticeActivity.class);

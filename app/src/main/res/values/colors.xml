@@ -10,7 +10,8 @@
     <color name="colorTextQues">#F1EEEE</color>
     <color name="colorTime">#215CF3</color>
     <color name="colorButton">#03C4F4</color>
-    <color name="colorActionBar">#93D7E5</color>
+    <color name="colorActionBar">#03A9F4</color>
+    <color name="colorRed">#F5291A</color>
 
 
 </resources>
