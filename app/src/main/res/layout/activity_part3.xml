@@ -22,6 +22,7 @@
             android:layout_marginStart="4dp"
             android:layout_marginTop="1dp"
             android:text="Part 3"
+            android:textColor="@color/colorText"
             android:textSize="30dp"
             android:textStyle="italic" />
 
@@ -29,7 +30,7 @@
             android:id="@+id/button_submit"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:background="@drawable/border_button1"
+            android:background="@drawable/custom_button"
             android:layout_marginTop="5dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
@@ -39,7 +40,7 @@
             android:id="@+id/button_back"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:background="@drawable/border_button1"
+            android:background="@drawable/custom_button"
             android:layout_marginTop="5dp"
             android:layout_marginRight="5dp"
             android:layout_alignParentEnd="true"
@@ -76,9 +77,11 @@
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:text="@string/btn_previous_question"
+                android:background="@drawable/border_button1"
                 android:textSize="15dp" />
 
             <Button
+                android:background="@drawable/border_button1"
                 android:layout_marginLeft="20dp"
                 android:id="@+id/button_next_question"
                 android:layout_width="130dp"

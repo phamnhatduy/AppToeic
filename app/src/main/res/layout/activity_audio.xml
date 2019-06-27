@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/txt_no"
             android:textSize="20dp"
-            android:text="Num:1"/>
+            android:text="No:12"/>
         <TextView
             android:textColor="@color/colorBackground"
             android:fontFamily="sans-serif-black"

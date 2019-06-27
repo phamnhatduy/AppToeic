@@ -1,6 +1,7 @@
 package com.example.phamn.learningtoeic.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.phamn.learningtoeic.Model.Vocabulary;
 import com.example.phamn.learningtoeic.R;
@@ -18,11 +20,10 @@ import com.example.phamn.learningtoeic.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VocabularyAdapter extends RecyclerView.Adapter<VocabularyAdapter.ViewHolder>{
+public class VocabularyAdapter extends RecyclerView.Adapter<VocabularyAdapter.ViewHolder>  {
     private List<Vocabulary> listVocab = new ArrayList<>();
     int row_index = -1;
     private Context mContext;
-
     public VocabularyAdapter(Context mContext,List<Vocabulary> listVocab) {
         this.listVocab = listVocab;
         this.mContext=mContext;
@@ -30,7 +31,6 @@ public class VocabularyAdapter extends RecyclerView.Adapter<VocabularyAdapter.Vi
     public VocabularyAdapter(List<Vocabulary> listVocab) {
         this.listVocab = listVocab;
     }
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
@@ -53,11 +53,11 @@ public class VocabularyAdapter extends RecyclerView.Adapter<VocabularyAdapter.Vi
                 row_index = position;
                 notifyDataSetChanged();
                 if (onItemClickedListener != null ) {
-                    onItemClickedListener.onItemClick(holder.tvWord.getText().toString());
-                    //holder.layout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorAccent));
+                   onItemClickedListener.onItemClick(listVocab.get(position).getWord(),position);
                 }
             }
         });
+
         if(row_index==position){
             holder.layout.setBackgroundColor(Color.parseColor("#03A9F4"));
             holder.tvWord.setTextColor(Color.parseColor("#ffffff"));
@@ -70,7 +70,8 @@ public class VocabularyAdapter extends RecyclerView.Adapter<VocabularyAdapter.Vi
 
     }
     public interface OnItemClickedListener {
-        void onItemClick(String pos);
+        void onItemClick(String pos,int i);
+
     }
 
     private OnItemClickedListener onItemClickedListener;
@@ -100,4 +101,6 @@ public class VocabularyAdapter extends RecyclerView.Adapter<VocabularyAdapter.Vi
             recyclerView=itemView.findViewById(R.id.recycle_view_vocabulary);
         }
     }
+
+
 }

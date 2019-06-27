@@ -22,6 +22,7 @@
             android:layout_marginStart="4dp"
             android:layout_marginTop="1dp"
             android:text="Part 2"
+            android:textColor="@color/colorText"
             android:textSize="30dp"
             android:textStyle="italic" />
 
@@ -29,7 +30,7 @@
             android:id="@+id/button_submit"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:background="@drawable/border_button1"
+            android:background="@drawable/custom_button"
             android:layout_marginTop="5dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
@@ -39,7 +40,7 @@
             android:id="@+id/button_back"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:background="@drawable/border_button1"
+            android:background="@drawable/custom_button"
             android:layout_marginTop="5dp"
             android:layout_marginRight="5dp"
             android:layout_alignParentEnd="true"
@@ -72,6 +73,7 @@
             android:layout_alignParentLeft="true">
 
             <Button
+                android:background="@drawable/border_button1"
                 android:id="@+id/button_previous_question"
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
@@ -84,6 +86,7 @@
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:text="@string/btn_next_question"
+                android:background="@drawable/border_button1"
                 android:textSize="15dp" />
         </LinearLayout>
         <TextView

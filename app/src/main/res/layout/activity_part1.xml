@@ -23,6 +23,7 @@ xmlns:tools="http://schemas.android.com/tools">
             android:layout_marginTop="1dp"
             android:layout_marginBottom="1dp"
             android:text="Part 1"
+            android:textColor="@color/colorText"
             android:textSize="30dp"
             android:textStyle="italic" />
 
@@ -33,7 +34,7 @@ xmlns:tools="http://schemas.android.com/tools">
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp"
-            android:background="@drawable/border_button1"
+            android:background="@drawable/custom_button"
             android:text="@string/btn_submit" />
 
         <Button
@@ -45,7 +46,7 @@ xmlns:tools="http://schemas.android.com/tools">
             android:layout_alignParentRight="true"
             android:layout_marginTop="5dp"
             android:layout_marginRight="5dp"
-            android:background="@drawable/border_button1"
+            android:background="@drawable/custom_button"
             android:text="@string/btn_back" />
 
         <include
@@ -86,6 +87,7 @@ xmlns:tools="http://schemas.android.com/tools">
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:text="@string/btn_previous_question"
+                android:background="@drawable/border_button1"
                 android:textSize="15dp" />
 
             <TextView
@@ -102,6 +104,7 @@ xmlns:tools="http://schemas.android.com/tools">
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:text="@string/btn_next_question"
+                android:background="@drawable/border_button1"
                 android:textSize="15dp" />
         </LinearLayout>
 

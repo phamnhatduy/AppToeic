@@ -26,7 +26,7 @@ public class VocabularyActivity extends AppCompatActivity {
     List<List<Vocabulary>> listTopic;
     Button btnEng,btnVn,btnAudio;
     //
-    SoundManager soundManager;
+    SoundManager soundContract,soundMarket;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +51,7 @@ public class VocabularyActivity extends AppCompatActivity {
         listVocab = new ArrayList<>();
         listTopic = new ArrayList<>();
         initListTopic();
+        //truyen topic tu TopicVocabularyAdapter
         Intent intent = getIntent();
         final String topic = intent.getStringExtra("topic");
         getSupportActionBar().setTitle(topic);
@@ -58,47 +59,24 @@ public class VocabularyActivity extends AppCompatActivity {
         adapter = new VocabularyAdapter(this,getListVocab(topic));
         recyclerView.setAdapter(adapter);
         soundPlay();
-        //
+
+
+        //adapter.getItemCount();
         adapter.setOnItemClickedListener(new VocabularyAdapter.OnItemClickedListener() {
             @Override
-            public void onItemClick(String pos) {
-                //Toast.makeText(VocabularyActivity.this, pos, Toast.LENGTH_SHORT).show();
-                if(pos.equals("1. abide by")) {
-                    soundManager.playSound(1);
+            public void onItemClick(String pos,int i) {
+                //Toast.makeText(VocabularyActivity.this, arrayList.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(VocabularyActivity.this, pos+"/"+i, Toast.LENGTH_SHORT).show();
+
+
+                if(topic.equals("Contracts")) {
+                    soundContract.playSound(i);
                 }
-                if(pos.equals("2. agreement")) {
-                    soundManager.playSound(2);
+                else if(topic.equals("Marketing"))
+                {
+                    soundMarket.playSound(i);
                 }
-                if(pos.equals("3. assurance")) {
-                    soundManager.playSound(3);
-                }
-                if(pos.equals("4. cancellation")) {
-                    soundManager.playSound(4);
-                }
-                if(pos.equals("5. determine")) {
-                    soundManager.playSound(5);
-                }
-                if(pos.equals("6. engage")) {
-                    soundManager.playSound(6);
-                }
-                if(pos.equals("7. establish")) {
-                    soundManager.playSound(7);
-                }
-                if(pos.equals("8. obligate")) {
-                    soundManager.playSound(8);
-                }
-                if(pos.equals("9. party")) {
-                    soundManager.playSound(9);
-                }
-                if(pos.equals("10. provision")) {
-                    soundManager.playSound(10);
-                }
-                if(pos.equals("11. resolve")) {
-                    soundManager.playSound(11);
-                }
-                if(pos.equals("12. specific")) {
-                    soundManager.playSound(12);
-                }
+
             }
         });
         btnVn.setOnClickListener(new View.OnClickListener() {
@@ -131,20 +109,35 @@ public class VocabularyActivity extends AppCompatActivity {
 
     public void soundPlay()
     {
-        soundManager = new SoundManager();
-        soundManager.initSounds(getBaseContext());
-        soundManager.addSound(1,R.raw.abide);
-        soundManager.addSound(2,R.raw.agreement);
-        soundManager.addSound(3,R.raw.assurance);
-        soundManager.addSound(4,R.raw.cancellation);
-        soundManager.addSound(5,R.raw.determine);
-        soundManager.addSound(6,R.raw.engage);
-        soundManager.addSound(7,R.raw.establish);
-        soundManager.addSound(8,R.raw.obligate);
-        soundManager.addSound(9,R.raw.party);
-        soundManager.addSound(10,R.raw.provision);
-        soundManager.addSound(11,R.raw.resolve);
-        soundManager.addSound(12,R.raw.specific);
+        soundContract = new SoundManager();
+        soundContract.initSounds(getBaseContext());
+        soundContract.addSound(0,R.raw.abide);
+        soundContract.addSound(1,R.raw.agreement);
+        soundContract.addSound(2,R.raw.assurance);
+        soundContract.addSound(3,R.raw.cancellation);
+        soundContract.addSound(4,R.raw.determine);
+        soundContract.addSound(5,R.raw.engage);
+        soundContract.addSound(6,R.raw.establish);
+        soundContract.addSound(7,R.raw.obligate);
+        soundContract.addSound(8,R.raw.party);
+        soundContract.addSound(9,R.raw.provision);
+        soundContract.addSound(10,R.raw.resolve);
+        soundContract.addSound(11,R.raw.specific);
+        soundMarket = new SoundManager();
+        soundMarket.initSounds(getBaseContext());
+        soundMarket.addSound(0,R.raw.attract);
+        soundMarket.addSound(1,R.raw.compare);
+        soundMarket.addSound(2,R.raw.competition);
+        soundMarket.addSound(3,R.raw.consume);
+        soundMarket.addSound(4,R.raw.convince);
+        soundMarket.addSound(5,R.raw.currently);
+        soundMarket.addSound(6,R.raw.fad);
+        soundMarket.addSound(7,R.raw.inspiration);
+        soundMarket.addSound(8,R.raw.market);
+        soundMarket.addSound(9,R.raw.persuasion);
+        soundMarket.addSound(10,R.raw.productive);
+        soundMarket.addSound(11,R.raw.satisfaction);
+
 
     }
 

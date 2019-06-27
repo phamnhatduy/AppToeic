@@ -13,8 +13,8 @@
         style="@android:style/Widget.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:max="90"
-        android:progress="30"
+        android:max="100"
+        android:progress="0"
         android:progressDrawable="@drawable/custom_progress" />
     <LinearLayout
         android:weightSum="3"
@@ -70,7 +70,7 @@
         android:id="@+id/txt_congra"
         android:textSize="25dp"
         android:text="Congratulations!"
-        android:textColor="@color/colorRed"/>
+        android:textColor="@color/colorAccent"/>
     <ImageView
         android:layout_below="@id/txt_congra"
         android:layout_marginTop="10dp"
@@ -101,7 +101,6 @@
     <TextView
         android:visibility="invisible"
         android:layout_centerHorizontal="true"
-        android:hint="translation"
         android:textSize="18dp"
         android:gravity="center"
         android:textColor="@color/colorBackground"

@@ -42,8 +42,8 @@
         android:id="@+id/linear_layout_media"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="#215CF3"
         android:gravity="center"
+        android:background="@drawable/custom_button"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/tv_current_time">
 

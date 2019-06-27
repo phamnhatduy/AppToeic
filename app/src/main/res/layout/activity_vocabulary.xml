@@ -17,14 +17,14 @@
             android:id="@+id/btn_engtovn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Eng - Vn"/>
+            android:text="English"/>
         <Button
             android:background="@drawable/custom_button"
             android:textColor="@color/colorBackground"
             android:id="@+id/btn_vntoeng"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Vn - Eng"/>
+            android:text="Vietnamese"/>
         <Button
             android:background="@drawable/custom_button"
             android:textColor="@color/colorBackground"

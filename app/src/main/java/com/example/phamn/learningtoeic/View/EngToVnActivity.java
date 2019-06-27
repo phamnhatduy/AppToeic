@@ -19,7 +19,11 @@ import android.widget.Toast;
 import com.example.phamn.learningtoeic.R;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.Random;
+import java.util.Set;
 
 public class EngToVnActivity extends AppCompatActivity {
 
@@ -28,7 +32,7 @@ public class EngToVnActivity extends AppCompatActivity {
     TextView txtNo,txtCorr,txtIncorr;
     RadioGroup radioGroup1;
     RadioButton radioButtonA,radioButtonB,radioButtonC,radioButtonD;
-    int pos;
+    int pos,duplicate;
     int no=1,corr=0,incorr=0;
     SoundManager soundManager;
     SoundManager soundContracts,soundMarket;
@@ -57,7 +61,7 @@ public class EngToVnActivity extends AppCompatActivity {
     };
     final String[] wordContract = {"abide","agreement", "assurance","cancellation","determine","engage","establish","obligate",
             "party","provision","resolve","specific"};
-    final String[] meanContract = {"tôn trọng,tuân theo","sắp xếp","bảo đảm,chắc chắn","sự hủy bỏ","quyết định,xác định","sự hứa hẹn",
+    final String[] meanContract = {"tôn trọng,tuân theo","đồng ý,hợp đồng","bảo đảm,chắc chắn","sự hủy bỏ","quyết định,xác định","sự hứa hẹn",
             "thiết lập,thành lập","bắt buộc","đảng,buổi tiệc","sự dự trữ","giải quyết","riêng biệt"};
     final String[] wordMarket={"attract","compare","competition","consume","convince","currently","fad","inspiration","market",
             "persuasion","productive","satisfaction"};
@@ -67,6 +71,8 @@ public class EngToVnActivity extends AppCompatActivity {
     ArrayList<String> wrongListContr,wrongListMar;
     ArrayList<String> wrongListMeanContr,wrongListMeanMar;
     Animation animation;
+    ArrayList<Integer> listRan =new ArrayList<>();
+    int[] number = {0,1,2,3,4,5,6,7,8,9,10,11};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,8 +97,23 @@ public class EngToVnActivity extends AppCompatActivity {
         wrongListMeanContr=new ArrayList<String>();
         wrongListMar=new ArrayList<>();
         wrongListMeanMar=new ArrayList<>();
+
+        for(int i : number)
+        {
+            listRan.add(i);
+        }
+        no=listRan.size();
         random = new Random();
-        pos = random.nextInt(12);
+        duplicate = random.nextInt(listRan.size());
+        pos=listRan.get(duplicate);
+        listRan.remove(duplicate);
+        if(listRan.isEmpty())
+        {
+            for(int i:number){listRan.add(i);}
+        }
+       // pos = random.nextInt(12);
+
+
         //txtQues.setText(wordTranslate[pos]);
         Intent intent=getIntent();
         top=intent.getStringExtra("topic");
@@ -107,9 +128,9 @@ public class EngToVnActivity extends AppCompatActivity {
         }
 
         radioGroup1.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                //countDown();
                 switch (radioGroup1.getCheckedRadioButtonId())
                 {
 
@@ -118,27 +139,35 @@ public class EngToVnActivity extends AppCompatActivity {
                             CompareAns();
                             delay();
                         }
+                            break;
 
                     case R.id.radio_b:
-                        if(radioButtonB.isChecked() ) {
+                        if(radioButtonB.isChecked()) {
                             CompareAns();
                             delay();
                         }
+                            break;
+
                     case R.id.radio_c:
-                        if(radioButtonC.isChecked()) {
-                            CompareAns();
-                            delay();
-                        }
+                            if(radioButtonC.isChecked()) {
+                                CompareAns();
+                                delay();
+                            }
+                            break;
+
                     case R.id.radio_d:
-                        if(radioButtonD.isChecked() ) {
-                            CompareAns();
-                            delay();
-                        }
+                            if(radioButtonD.isChecked()) {
+                                CompareAns();
+                                delay();
+                            }
+                           break;
+
                 }
 
-                //txtNo.setText(no+"/12");
+                txtNo.setText("No:"+no);
                 txtCorr.setText("Correct:"+corr);
                 txtIncorr.setText("Incorrect:"+incorr);
+
             }
         });
     }
@@ -186,12 +215,12 @@ public class EngToVnActivity extends AppCompatActivity {
                     wrongListMeanContr.add(meanContract[pos]);
                     radioButtonA.setChecked(true);
                     radioButtonA.setBackgroundResource(R.drawable.radio_flat_selector_wrong);
-                    showAnswer();
+                    //showAnswer();
                     soundContracts.playSound(pos);
-                    txtCongra.setText("Wrong !");
+                    txtCongra.setText(meanContract[pos]);
                     txtCongra.startAnimation(animation);
                     txtCongra.setVisibility(View.VISIBLE);
-                    corr -= 1;
+                   // corr -= 1;
                     incorr += 1;
                 }
             } else if (radioButtonB.isChecked()) {
@@ -204,14 +233,14 @@ public class EngToVnActivity extends AppCompatActivity {
                 } else {
                     radioButtonB.setChecked(true);
                     radioButtonB.setBackgroundResource(R.drawable.radio_flat_selector_wrong);
-                    showAnswer();
+                   // showAnswer();
                     wrongListContr.add(wordContract[pos]);
                     wrongListMeanContr.add(meanContract[pos]);
                     soundContracts.playSound(pos);
-                    txtCongra.setText("Wrong !");
+                    txtCongra.setText(meanContract[pos]);
                     txtCongra.startAnimation(animation);
                     txtCongra.setVisibility(View.VISIBLE);
-                    corr -= 1;
+                    //corr -= 1;
                     incorr += 1;
                 }
 
@@ -229,12 +258,12 @@ public class EngToVnActivity extends AppCompatActivity {
                     wrongListContr.add(wordContract[pos]);
                     //wrongList.add(wordTranslate[pos]);
                     wrongListMeanContr.add(meanContract[pos]);
-                    showAnswer();
+                    //showAnswer();
                     soundContracts.playSound(pos);
-                    txtCongra.setText("Wrong !");
+                    txtCongra.setText(meanContract[pos]);
                     txtCongra.startAnimation(animation);
                     txtCongra.setVisibility(View.VISIBLE);
-                    corr -= 1;
+                   //corr -= 1;
                     incorr += 1;
                 }
 
@@ -252,14 +281,17 @@ public class EngToVnActivity extends AppCompatActivity {
                     wrongListContr.add(wordContract[pos]);
                     //wrongList.add(wordTranslate[pos]);
                     wrongListMeanContr.add(meanContract[pos]);
-                    showAnswer();
+                    //showAnswer();
                     soundContracts.playSound(pos);
-                    txtCongra.setText("Wrong !");
+                    txtCongra.setText(meanContract[pos]);
                     txtCongra.startAnimation(animation);
                     txtCongra.setVisibility(View.VISIBLE);
-                    corr -= 1;
+                    //corr -= 1;
                     incorr += 1;
                 }
+            }
+            else {
+               // showAnswer();
             }
         }
         else if(top.equals("Marketing"))
@@ -276,12 +308,12 @@ public class EngToVnActivity extends AppCompatActivity {
                     wrongListMeanMar.add(meanMarket[pos]);
                     radioButtonA.setChecked(true);
                     radioButtonA.setBackgroundResource(R.drawable.radio_flat_selector_wrong);
-                    showAnswer();
+                    //showAnswer();
                     soundMarket.playSound(pos);
-                    txtCongra.setText("Wrong !");
+                    txtCongra.setText(meanMarket[pos]);
                     txtCongra.startAnimation(animation);
                     txtCongra.setVisibility(View.VISIBLE);
-                    corr -= 1;
+                    //corr -= 1;
                     incorr += 1;
                 }
             } else if (radioButtonB.isChecked()) {
@@ -294,14 +326,14 @@ public class EngToVnActivity extends AppCompatActivity {
                 } else {
                     radioButtonB.setChecked(true);
                     radioButtonB.setBackgroundResource(R.drawable.radio_flat_selector_wrong);
-                    showAnswer();
+                    //showAnswer();
                     wrongListMar.add(wordMarket[pos]);
                     wrongListMeanMar.add(meanMarket[pos]);
                     soundMarket.playSound(pos);
-                    txtCongra.setText("Wrong !");
+                    txtCongra.setText(meanMarket[pos]);
                     txtCongra.startAnimation(animation);
                     txtCongra.setVisibility(View.VISIBLE);
-                    corr -= 1;
+                    //corr -= 1;
                     incorr += 1;
                 }
 
@@ -319,12 +351,12 @@ public class EngToVnActivity extends AppCompatActivity {
                     wrongListMar.add(wordMarket[pos]);
                     //wrongList.add(wordTranslate[pos]);
                     wrongListMeanMar.add(meanMarket[pos]);
-                    showAnswer();
+                    //showAnswer();
                     soundMarket.playSound(pos);
-                    txtCongra.setText("Wrong !");
+                    txtCongra.setText(meanMarket[pos]);
                     txtCongra.startAnimation(animation);
                     txtCongra.setVisibility(View.VISIBLE);
-                    corr -= 1;
+                    //corr -= 1;
                     incorr += 1;
                 }
 
@@ -342,12 +374,12 @@ public class EngToVnActivity extends AppCompatActivity {
                     wrongListMar.add(wordMarket[pos]);
                     //wrongList.add(wordTranslate[pos]);
                     wrongListMeanMar.add(meanMarket[pos]);
-                    showAnswer();
+                    //showAnswer();
                     soundMarket.playSound(pos);
-                    txtCongra.setText("Wrong !");
+                    txtCongra.setText(meanMarket[pos]);
                     txtCongra.startAnimation(animation);
                     txtCongra.setVisibility(View.VISIBLE);
-                    corr -= 1;
+                    //corr -= 1;
                     incorr += 1;
                 }
             }
@@ -394,13 +426,27 @@ public class EngToVnActivity extends AppCompatActivity {
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
-                ChangeQues();
+                if(listRan.size()>0) {
+                    ChangeQues();
+
+                }
+                else {
+                    showFinishAlertDialog();
+                }
             }
         }, 2000);
     }
     public void ChangeQues()
     {
-        pos = random.nextInt(12);
+
+       // pos = random.nextInt(12);
+        //random = new Random();
+        duplicate = random.nextInt(listRan.size());
+        pos=listRan.get(duplicate);
+        listRan.remove(duplicate);
+        no-=1;
+
+
         // txtQues.setText(wordTranslate[pos]);
         int butArray[] = new int[4];
         butArray[0] = radioButtonA.getId();
@@ -521,11 +567,52 @@ public class EngToVnActivity extends AppCompatActivity {
 
         radioGroup1.clearCheck();
         txtCongra.setVisibility(View.INVISIBLE);
-        no+=1;
+       // no+=1;
+        if(no==12)
+        {
+            //Toast.makeText(this, "Stop", Toast.LENGTH_SHORT).show();
+        }
 
     }
-    public void showAlertDialog() {
+    public void showFinishAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Congratulation.You have completed this topic.");
+        //builder.setTitle("Your result");
+        builder.setCancelable(false);
+        builder.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //dialogInterface.dismiss();
+                //onRestart();
+               // onResume();
+                finish();
+
+            }
+        });
+        builder.setPositiveButton("Result", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                Intent intent = new Intent(EngToVnActivity.this,ResultRememberActivity.class);
+                intent.putExtra("code","eng");
+                if(top.equals("Contracts")) {
+                    intent.putStringArrayListExtra("id", wrongListContr);
+                    intent.putStringArrayListExtra("name", wrongListMeanContr);
+                }
+                else if(top.equals("Marketing"))
+                {
+                    intent.putStringArrayListExtra("id", wrongListMar);
+                    intent.putStringArrayListExtra("name", wrongListMeanMar);
+                }
+                startActivity(intent);
+
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+    public void showAlertDialog() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Do you want to finish ?");
         //builder.setTitle("Your result");
         builder.setCancelable(false);
@@ -539,7 +626,6 @@ public class EngToVnActivity extends AppCompatActivity {
         builder.setPositiveButton("Finish", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
                 Intent intent = new Intent(EngToVnActivity.this,ResultRememberActivity.class);
                 if(top.equals("Contracts")) {
                     intent.putStringArrayListExtra("id", wrongListContr);
@@ -551,6 +637,7 @@ public class EngToVnActivity extends AppCompatActivity {
                     intent.putStringArrayListExtra("name", wrongListMeanMar);
                 }
                 startActivity(intent);
+                //builder.setCancelable(true);
 
             }
         });
