@@ -9,8 +9,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.phamn.learningtoeic.Adapter.WronglistAdapter;
+import com.example.phamn.learningtoeic.Model.TopicVocabulary;
+import com.example.phamn.learningtoeic.Model.Vocabulary;
 import com.example.phamn.learningtoeic.Model.Wronglist;
 import com.example.phamn.learningtoeic.R;
 
@@ -37,7 +40,7 @@ public class ResultRememberActivity extends AppCompatActivity {
         arrayList1 = new ArrayList<>();
         arrayList2=new ArrayList<>();
 
-        Intent intent = this.getIntent();
+
         arrayList1 = getIntent().getStringArrayListExtra("id");
         arrayList2= getIntent().getStringArrayListExtra("name");
 
@@ -57,11 +60,27 @@ public class ResultRememberActivity extends AppCompatActivity {
        // listView.setAdapter(arrayAdapter);
         listView.setAdapter(adapter);
 
+
         txtNumlist.setText("("+wronglists.size()+")");
+        if(wronglists.size()==0)
+        {
+            Toast.makeText(this, "Exellent!You have no wrong answers", Toast.LENGTH_SHORT).show();
+        }
         btnAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ResultRememberActivity.this,RememberActivity.class);
+                /*
+                Intent intent=getIntent();
+                String top=intent.getStringExtra("topic");
+                if(top.equals("Contracts")) {
+                    intent = new Intent(ResultRememberActivity.this, TopicVocabulary.class);
+                    startActivity(intent);
+                }
+                else if(top.equals("Marketing"))
+                {
+
+                }*/
+                Intent intent = new Intent(ResultRememberActivity.this, TopicVocabularyActivity.class);
                 startActivity(intent);
 
             }

@@ -29,7 +29,7 @@
             android:layout_marginRight="20dp"
             android:layout_marginLeft="15dp"
             android:id="@+id/btn_yes"
-            android:background="@drawable/border_button1"
+            android:background="@drawable/custom_button"
             android:text="Thoát"/>
         <Button
             android:layout_width="wrap_content"

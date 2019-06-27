@@ -124,8 +124,6 @@ public class Part1Activity extends AppCompatActivity {
 
         });
 
-
-
         Intent intent = getIntent();
         serial = intent.getStringExtra("serialName");
         title = intent.getStringExtra("titleName");

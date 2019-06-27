@@ -70,19 +70,27 @@ public class NavigationActivity extends AppCompatActivity
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        /*
-        Menu m = navigationView.getMenu();
-        Menu sub = m.addSubMenu("new submenu");
-        sub.add("sub 1");
-        //MenuItem menuItem = m.add(R.id.group_series, R.id.nav_series_1, Menu.NONE, "customer");
-//        Menu subMenu = m.addSubMenu("Customer ...");
-//        subMenu.add("item 1");
-//        subMenu.add("item 2");
 
-        m.add(R.id.group_series, 1, Menu.NONE, "customer 1").setIcon(R.drawable.ic_folder);
-        m.add(R.id.group_infomation, 2, Menu.NONE, "customer 2").setIcon(R.drawable.ic_folder);
-        m.add(R.id.group_series, 3, Menu.NONE, "customer 3").setIcon(R.drawable.ic_folder);
-        */
+        Menu m = navigationView.getMenu();
+        Menu multi = m.addSubMenu("Multiple choice");
+        multi.add(R.id.group_series, 1, 0, "Series 1").setIcon(R.drawable.ic_folder);
+        multi.add(R.id.group_series, 2, 0, "Series 2").setIcon(R.drawable.ic_folder);
+        multi.add(R.id.group_series, 3, 0, "Series 3").setIcon(R.drawable.ic_folder);
+        multi.add(R.id.group_series, 4, 0, "Series 4").setIcon(R.drawable.ic_folder);
+
+        Menu study = m.addSubMenu("Study");
+        study.add(R.id.study,1,0,"Vocabulary").setIcon(R.drawable.ic_font_download);
+        study.add(R.id.study,2,0,"Tips").setIcon(R.drawable.ic_lightbulb_outline);
+        study.add(R.id.study,3,0,"Idioms").setIcon(R.drawable.ic_format_color_text);
+        study.add(R.id.study,4,0,"Practice Listening").setIcon(R.drawable.ic_hearing_black_24dp);
+
+        Menu more = m.addSubMenu("More");
+        more.add(R.id.group_infomation,1,0,"Share").setIcon(R.drawable.ic_share_black_24dp);
+        more.add(R.id.group_infomation,2,0,"Clear History").setIcon(R.drawable.ic_delete);
+        more.add(R.id.group_infomation,3,0,"Help").setIcon(R.drawable.ic_help);
+        more.add(R.id.group_infomation,4,0,"About").setIcon(R.drawable.ic_error);
+
+
         navigationView.invalidate();
 
         lvTitle = (ListView) findViewById(R.id.lv_title);
@@ -133,6 +141,94 @@ public class NavigationActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        int group = item.getGroupId();
+        switch (group)
+        {
+            case R.id.group_series:
+                switch (id)
+                {
+                    case 1:
+                        serialID = 1;
+                        mainViewModel.updateTitle(serialID);
+                        break;
+                    case 2:
+                        serialID = 2;
+                        mainViewModel.updateTitle(serialID);
+                        break;
+                    case 3:
+                        serialID = 3;
+                        mainViewModel.updateTitle(serialID);
+                        break;
+
+                    case 4:
+                        serialID = 4;
+                        mainViewModel.updateTitle(serialID);
+                        break;
+
+                }
+                break;
+            case R.id.study:
+                switch (id)
+                {
+                    case 1:
+                        Intent intent = new Intent(this, TopicVocabularyActivity.class);
+                        this.startActivity(intent);
+                        break;
+                    case 2:
+                        Intent intent1 = new Intent(this, TopicTipsActivity.class);
+                        this.startActivity(intent1);
+                        break;
+                    case 3:
+                        Intent intent2 = new Intent(this, IdiomActivity.class);
+                        this.startActivity(intent2);
+                        break;
+                    case 4:
+                        Intent intent4 = new Intent(this,PracticeActivity.class);
+                        this.startActivity(intent4);
+                        break;
+                }
+                break;
+            case R.id.group_infomation:
+                switch (id)
+                {
+                    case 1 :
+                        Intent intent5 = new Intent(this,UploadActivity.class);
+                        this.startActivity(intent5);
+                        break;
+                    case 2 :
+                        HistoryRepository repo = new HistoryRepository(getApplication());
+                        repo.deleteAllHistory();
+                        break;
+                    case 3 :
+                        final Dialog dialogHelp = new Dialog(this);
+                        dialogHelp.setContentView(R.layout.support_layout);
+                        dialogHelp.setCanceledOnTouchOutside(false);
+                        dialogHelp.show();
+                        Button btnClose = (Button) dialogHelp.findViewById(R.id.button_close);
+                        btnClose.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialogHelp.cancel();
+                            }
+                        });
+                        break;
+                    case 4 :
+                        final Dialog dialog = new Dialog(this);
+                        dialog.setContentView(R.layout.about_layout);
+                        dialog.setCanceledOnTouchOutside(false);
+                        dialog.show();
+                        Button btnClose2 = (Button) dialog.findViewById(R.id.button_close);
+                        btnClose2.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.cancel();
+                            }
+                        });
+                        break;
+                }
+                break;
+        }
+        /*
         switch (id){
             case R.id.nav_series_1:
                 serialID = 1;
@@ -191,7 +287,22 @@ public class NavigationActivity extends AppCompatActivity
                     }
                 });
                 break;
-        }
+            case 1:
+               // Toast.makeText(this, "XXXXXXXXXXx", Toast.LENGTH_SHORT).show();
+                serialID = 1;
+                mainViewModel.updateTitle(serialID);
+                break;
+            case 2:
+                //Toast.makeText(this, "XXXXXXXXXXx", Toast.LENGTH_SHORT).show();
+                serialID = 1;
+                mainViewModel.updateTitle(serialID);
+            case R.id.group_series:
+                if(id ==1){
+                    Toast.makeText(this, "HI", Toast.LENGTH_SHORT).show();
+                }
+
+
+        }*/
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

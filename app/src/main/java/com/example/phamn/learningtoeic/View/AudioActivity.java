@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.example.phamn.learningtoeic.Model.TopicVocabulary;
 import com.example.phamn.learningtoeic.R;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -30,8 +31,8 @@ public class AudioActivity extends AppCompatActivity {
     RadioButton radioButtonA,radioButtonB,radioButtonC,radioButtonD;
     SoundManager soundContracts,soundMarket;
     Random random;
-    int no=1,correct=0,incorr=0;
-    int pos;
+    int no=1,corr=0,incorr=0;
+    int pos,duplicate;
     List<TopicVocabulary> listTopic;
     TopicVocabularyActivity activity;
 
@@ -59,13 +60,17 @@ public class AudioActivity extends AppCompatActivity {
     Animation animation;
     final String[] wordContract = {"abide","agreement", "assurance","cancellation","determine","engage","establish","obligate",
             "party","provision","resolve","specific"};
-    final String[] meanContract = {"tôn trọng,tuân theo","sắp xếp","bảo đảm,chắc chắn","sự hủy bỏ","quyết định,xác định","sự hứa hẹn",
+    final String[] meanContract = {"tôn trọng,tuân theo","đồng ý,hợp đồng","bảo đảm,chắc chắn","sự hủy bỏ","quyết định,xác định","sự hứa hẹn",
             "thiết lập,thành lập","bắt buộc","đảng,buổi tiệc","sự dự trữ","giải quyết","riêng biệt"};
     final String[] wordMarket={"attract","compare","competition","consume","convince","currently","fad","inspiration","market",
             "persuasion","productive","satisfaction"};
     final String[] meanMarket={"hấp dẫn,thu hút","so sánh","tranh giành,thi đấu","tiêu thụ","thuyết phục","hiện nay","sự nhất thời",
             "truyền cảm hứng","thị trường,chợ","sự thuyết phục","sản xuất","sự hài lòng"};
     String top;
+    ArrayList<String> wrongListContr,wrongListMar;
+    ArrayList<String> wrongListMeanContr,wrongListMeanMar;
+    ArrayList<Integer> listRan =new ArrayList<>();
+    int[] number = {0,1,2,3,4,5,6,7,8,9,10,11};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +79,23 @@ public class AudioActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Learning Toeic");
         init();
         animation = AnimationUtils.loadAnimation(this,R.anim.scale_sound);
+        //random = new Random();
+
+        wrongListContr = new ArrayList<String>();
+        wrongListMeanContr=new ArrayList<String>();
+        wrongListMar=new ArrayList<>();
+        wrongListMeanMar=new ArrayList<>();
+
+        for(int i : number)
+        {
+            listRan.add(i);
+        }
+        no=listRan.size();
         random = new Random();
+        duplicate = random.nextInt(listRan.size());
+        pos=listRan.get(duplicate);
+        listRan.remove(duplicate);
+
         Intent intent = getIntent();
         top = intent.getStringExtra("topic");
 
@@ -137,8 +158,8 @@ public class AudioActivity extends AppCompatActivity {
 
                         }
                 }
-                txtNo.setText(no+"/12");
-                txtCorrect.setText("Correct:"+correct);
+                txtNo.setText("No:"+no);
+                txtCorrect.setText("Correct:"+corr);
                 txtIncorrect.setText("Incorrect:"+incorr);
             }
 
@@ -173,26 +194,6 @@ public class AudioActivity extends AppCompatActivity {
                 radioButtonD.setText(meanMarket[pos - 3]);
             }
         }
-    }
-    public void showAlertDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Time out !");
-        builder.setMessage("Do you want to try again ?");
-        builder.setCancelable(false);
-        builder.setPositiveButton("Try again", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-            }
-        });
-        builder.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-            }
-        });
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
     }
     private void soundContract()
     {
@@ -317,41 +318,47 @@ public class AudioActivity extends AppCompatActivity {
                     txtCongra.setText("Congratulation !");
                     txtCongra.setVisibility(View.VISIBLE);
                     txtCongra.startAnimation(animation);
-                    correct += 1;
-                    txtShows.setVisibility(View.VISIBLE);
+                    soundContracts.playSound(pos);
+                    corr += 1;
                     txtShows.setText(wordContract[pos]);
+                    txtShows.setVisibility(View.VISIBLE);
                 } else {
+                    txtShows.setText(wordContract[pos]);
+                    txtShows.setVisibility(View.VISIBLE);
+                    wrongListContr.add(wordContract[pos]);
+                    wrongListMeanContr.add(meanContract[pos]);
                     radioButtonA.setChecked(true);
                     radioButtonA.setBackgroundResource(R.drawable.radio_flat_selector_wrong);
-                    showAnswer();
+                    //showAnswer();
+                    soundContracts.playSound(pos);
                     txtCongra.setText("Wrong !");
-                    txtShows.setVisibility(View.VISIBLE);
-                    txtShows.setText(wordContract[pos]);
                     txtCongra.startAnimation(animation);
                     txtCongra.setVisibility(View.VISIBLE);
+                    //corr -= 1;
                     incorr += 1;
-                    correct -= 1;
                 }
-
-
             } else if (radioButtonB.isChecked()) {
                 if (radioButtonB.getText().equals(meanContract[pos])) {
                     txtCongra.setText("Congratulation !");
                     txtCongra.setVisibility(View.VISIBLE);
                     txtCongra.startAnimation(animation);
-                    correct += 1;
-                    txtShows.setVisibility(View.VISIBLE);
+                    soundContracts.playSound(pos);
+                    corr += 1;
                     txtShows.setText(wordContract[pos]);
+                    txtShows.setVisibility(View.VISIBLE);
                 } else {
+                    txtShows.setText(wordContract[pos]);
+                    txtShows.setVisibility(View.VISIBLE);
                     radioButtonB.setChecked(true);
                     radioButtonB.setBackgroundResource(R.drawable.radio_flat_selector_wrong);
-                    showAnswer();
-                    txtShows.setVisibility(View.VISIBLE);
-                    txtShows.setText(wordContract[pos]);
+                   // showAnswer();
+                    wrongListContr.add(wordContract[pos]);
+                    wrongListMeanContr.add(meanContract[pos]);
+                    soundContracts.playSound(pos);
                     txtCongra.setText("Wrong !");
                     txtCongra.startAnimation(animation);
                     txtCongra.setVisibility(View.VISIBLE);
-                    correct -= 1;
+                    //corr -= 1;
                     incorr += 1;
                 }
 
@@ -360,19 +367,25 @@ public class AudioActivity extends AppCompatActivity {
                     txtCongra.setText("Congratulation !");
                     txtCongra.setVisibility(View.VISIBLE);
                     txtCongra.startAnimation(animation);
-                    txtShows.setVisibility(View.VISIBLE);
+                    //Toast.makeText(RememberActivity.this, "true", Toast.LENGTH_SHORT).show();
+                    soundContracts.playSound(pos);
+                    corr += 1;
                     txtShows.setText(wordContract[pos]);
-                    correct += 1;
+                    txtShows.setVisibility(View.VISIBLE);
                 } else {
+                    txtShows.setText(wordContract[pos]);
+                    txtShows.setVisibility(View.VISIBLE);
                     radioButtonC.setChecked(true);
                     radioButtonC.setBackgroundResource(R.drawable.radio_flat_selector_wrong);
-                    showAnswer();
-                    txtShows.setVisibility(View.VISIBLE);
-                    txtShows.setText(wordContract[pos]);
+                    wrongListContr.add(wordContract[pos]);
+                    //wrongList.add(wordTranslate[pos]);
+                    wrongListMeanContr.add(meanContract[pos]);
+                    //showAnswer();
+                    soundContracts.playSound(pos);
                     txtCongra.setText("Wrong !");
                     txtCongra.startAnimation(animation);
                     txtCongra.setVisibility(View.VISIBLE);
-                    correct -= 1;
+                    //corr -= 1;
                     incorr += 1;
                 }
 
@@ -381,19 +394,25 @@ public class AudioActivity extends AppCompatActivity {
                     txtCongra.setText("Congratulation !");
                     txtCongra.startAnimation(animation);
                     txtCongra.setVisibility(View.VISIBLE);
-                    correct += 1;
-                    txtShows.setVisibility(View.VISIBLE);
+                    //Toast.makeText(RememberActivity.this, "true", Toast.LENGTH_SHORT).show();
+                    soundContracts.playSound(pos);
+                    corr += 1;
                     txtShows.setText(wordContract[pos]);
+                    txtShows.setVisibility(View.VISIBLE);
                 } else {
+                    txtShows.setText(wordContract[pos]);
                     txtShows.setVisibility(View.VISIBLE);
                     radioButtonD.setChecked(true);
                     radioButtonD.setBackgroundResource(R.drawable.radio_flat_selector_wrong);
-                    showAnswer();
+                    wrongListContr.add(wordContract[pos]);
+                    //wrongList.add(wordTranslate[pos]);
+                    wrongListMeanContr.add(meanContract[pos]);
+                    //showAnswer();
+                    soundContracts.playSound(pos);
                     txtCongra.setText("Wrong !");
                     txtCongra.startAnimation(animation);
                     txtCongra.setVisibility(View.VISIBLE);
-                    txtShows.setText(wordContract[pos]);
-                    correct -= 1;
+                    //corr -= 1;
                     incorr += 1;
                 }
             }
@@ -405,41 +424,47 @@ public class AudioActivity extends AppCompatActivity {
                     txtCongra.setText("Congratulation !");
                     txtCongra.setVisibility(View.VISIBLE);
                     txtCongra.startAnimation(animation);
-                    txtShows.setVisibility(View.VISIBLE);
+                    soundMarket.playSound(pos);
+                    corr += 1;
                     txtShows.setText(wordMarket[pos]);
-                    correct += 1;
+                    txtShows.setVisibility(View.VISIBLE);
                 } else {
-                    txtShows.setVisibility(View.VISIBLE);
                     txtShows.setText(wordMarket[pos]);
+                    txtShows.setVisibility(View.VISIBLE);
+                    wrongListMar.add(wordMarket[pos]);
+                    wrongListMeanMar.add(meanMarket[pos]);
                     radioButtonA.setChecked(true);
                     radioButtonA.setBackgroundResource(R.drawable.radio_flat_selector_wrong);
-                    showAnswer();
+                   // showAnswer();
+                    soundMarket.playSound(pos);
                     txtCongra.setText("Wrong !");
                     txtCongra.startAnimation(animation);
                     txtCongra.setVisibility(View.VISIBLE);
+                    //corr -= 1;
                     incorr += 1;
-                    correct -= 1;
                 }
-
-
             } else if (radioButtonB.isChecked()) {
                 if (radioButtonB.getText().equals(meanMarket[pos])) {
                     txtCongra.setText("Congratulation !");
                     txtCongra.setVisibility(View.VISIBLE);
                     txtCongra.startAnimation(animation);
-                    txtShows.setVisibility(View.VISIBLE);
+                    soundMarket.playSound(pos);
+                    corr += 1;
                     txtShows.setText(wordMarket[pos]);
-                    correct += 1;
+                    txtShows.setVisibility(View.VISIBLE);
                 } else {
-                    txtShows.setVisibility(View.VISIBLE);
                     txtShows.setText(wordMarket[pos]);
+                    txtShows.setVisibility(View.VISIBLE);
                     radioButtonB.setChecked(true);
                     radioButtonB.setBackgroundResource(R.drawable.radio_flat_selector_wrong);
-                    showAnswer();
+                    //showAnswer();
+                    wrongListMar.add(wordMarket[pos]);
+                    wrongListMeanMar.add(meanMarket[pos]);
+                    soundMarket.playSound(pos);
                     txtCongra.setText("Wrong !");
                     txtCongra.startAnimation(animation);
                     txtCongra.setVisibility(View.VISIBLE);
-                    correct -= 1;
+                   // corr -= 1;
                     incorr += 1;
                 }
 
@@ -448,19 +473,25 @@ public class AudioActivity extends AppCompatActivity {
                     txtCongra.setText("Congratulation !");
                     txtCongra.setVisibility(View.VISIBLE);
                     txtCongra.startAnimation(animation);
-                    txtShows.setVisibility(View.VISIBLE);
+                    //Toast.makeText(RememberActivity.this, "true", Toast.LENGTH_SHORT).show();
+                    soundMarket.playSound(pos);
+                    corr += 1;
                     txtShows.setText(wordMarket[pos]);
-                    correct += 1;
+                    txtShows.setVisibility(View.VISIBLE);
                 } else {
-                    txtShows.setVisibility(View.VISIBLE);
                     txtShows.setText(wordMarket[pos]);
+                    txtShows.setVisibility(View.VISIBLE);
                     radioButtonC.setChecked(true);
                     radioButtonC.setBackgroundResource(R.drawable.radio_flat_selector_wrong);
-                    showAnswer();
+                    wrongListMar.add(wordMarket[pos]);
+                    //wrongList.add(wordTranslate[pos]);
+                    wrongListMeanMar.add(meanMarket[pos]);
+                   // showAnswer();
+                    soundMarket.playSound(pos);
                     txtCongra.setText("Wrong !");
                     txtCongra.startAnimation(animation);
                     txtCongra.setVisibility(View.VISIBLE);
-                    correct -= 1;
+                    //corr -= 1;
                     incorr += 1;
                 }
 
@@ -469,24 +500,31 @@ public class AudioActivity extends AppCompatActivity {
                     txtCongra.setText("Congratulation !");
                     txtCongra.startAnimation(animation);
                     txtCongra.setVisibility(View.VISIBLE);
-                    txtShows.setVisibility(View.VISIBLE);
+                    //Toast.makeText(RememberActivity.this, "true", Toast.LENGTH_SHORT).show();
+                    soundMarket.playSound(pos);
+                    corr += 1;
                     txtShows.setText(wordMarket[pos]);
-                    correct += 1;
+                    txtShows.setVisibility(View.VISIBLE);
                 } else {
-                    txtShows.setVisibility(View.VISIBLE);
                     txtShows.setText(wordMarket[pos]);
+                    txtShows.setVisibility(View.VISIBLE);
                     radioButtonD.setChecked(true);
                     radioButtonD.setBackgroundResource(R.drawable.radio_flat_selector_wrong);
-                    showAnswer();
+                    wrongListMar.add(wordMarket[pos]);
+                    //wrongList.add(wordTranslate[pos]);
+                    wrongListMeanMar.add(meanMarket[pos]);
+                   // showAnswer();
+                    soundMarket.playSound(pos);
                     txtCongra.setText("Wrong !");
                     txtCongra.startAnimation(animation);
                     txtCongra.setVisibility(View.VISIBLE);
-                    correct -= 1;
+                    //corr -= 1;
                     incorr += 1;
                 }
             }
-
         }
+
+
     }
     public void showAnswer()
     {
@@ -527,13 +565,22 @@ public class AudioActivity extends AppCompatActivity {
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
-                ChangeQues();
+                if(listRan.size()>0) {
+                    ChangeQues();
+                }
+                else {
+                    showFinishAlertDialog();
+                }
             }
         }, 2000);
     }
     public void ChangeQues()
     {
-        pos = random.nextInt(12);
+       // pos = random.nextInt(12);
+        duplicate = random.nextInt(listRan.size());
+        pos=listRan.get(duplicate);
+        listRan.remove(duplicate);
+        no-=1;
         int butArray[] = new int[4];
         butArray[0] = radioButtonA.getId();
         butArray[1]= radioButtonB.getId();
@@ -652,14 +699,82 @@ public class AudioActivity extends AppCompatActivity {
         radioGroup.clearCheck();
         txtCongra.setVisibility(View.INVISIBLE);
         txtShows.setVisibility(View.INVISIBLE);
-        no+=1;
+        //no+=1;
 
+    }
+    public void showFinishAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Congratulation.You have completed this topic.");
+        //builder.setTitle("Your result");
+        builder.setCancelable(false);
+        builder.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //dialogInterface.dismiss();
+                //onRestart();
+                // onResume();
+                finish();
+
+            }
+        });
+        builder.setPositiveButton("Result", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                Intent intent = new Intent(AudioActivity.this,ResultRememberActivity.class);
+                if(top.equals("Contracts")) {
+                    intent.putStringArrayListExtra("id", wrongListContr);
+                    intent.putStringArrayListExtra("name", wrongListMeanContr);
+                }
+                else if(top.equals("Marketing"))
+                {
+                    intent.putStringArrayListExtra("id", wrongListMar);
+                    intent.putStringArrayListExtra("name", wrongListMeanMar);
+                }
+                startActivity(intent);
+
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+    public void showAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Do you want to finish ?");
+        //builder.setTitle("Your result");
+        builder.setCancelable(false);
+        builder.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //dialogInterface.dismiss();
+                finish();
+            }
+        });
+        builder.setPositiveButton("Finish", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(AudioActivity.this,ResultRememberActivity.class);
+                if(top.equals("Contracts")) {
+                    intent.putStringArrayListExtra("id", wrongListContr);
+                    intent.putStringArrayListExtra("name", wrongListMeanContr);
+                }
+                else if(top.equals("Marketing"))
+                {
+                    intent.putStringArrayListExtra("id", wrongListMar);
+                    intent.putStringArrayListExtra("name", wrongListMeanMar);
+                }
+                startActivity(intent);
+
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                this.finish();
+                showAlertDialog();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
