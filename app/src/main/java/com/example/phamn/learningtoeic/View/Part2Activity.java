@@ -78,7 +78,7 @@ public class Part2Activity extends AppCompatActivity {
         title = intent.getStringExtra("titleName");
         serial = "Serial" + intent.getIntExtra("serialID", 1);
         audio = intent.getStringExtra("audio");
-        Toast.makeText(this, "" + audio, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "" + audio, Toast.LENGTH_SHORT).show();
         partID = intent.getIntExtra("partID", - 1);
 //        Toast.makeText(this, "title: " + title + " ,serial: " + serial, Toast.LENGTH_LONG).show();
         part2ViewModel = ViewModelProviders.of(this).get(Part2ViewModel.class);

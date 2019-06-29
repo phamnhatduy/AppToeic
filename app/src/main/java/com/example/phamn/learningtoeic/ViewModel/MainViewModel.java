@@ -42,12 +42,13 @@ public class MainViewModel extends AndroidViewModel {
         super(application);
         repo = new HistoryRepository(application);
         listHistory = repo.getListAllHistory();
+        getAllSerial(application);
         getAllTitle(application);
     }
 
     public void getAllSerial(final Application application) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://myhost2018.000webhostapp.com/")
+                .baseUrl("https://myhost2019.000webhostapp.com/src/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         APIService apiService = retrofit.create(APIService.class);
@@ -96,7 +97,6 @@ public class MainViewModel extends AndroidViewModel {
                 t.setTitleName(titleOnline.get(i).getTitleName());
                 t.setPart1Audio(titleOnline.get(i).getAudio());
                 t.setPart2Audio(titleOnline.get(i + 1).getAudio());
-                Toast.makeText(getApplication(), "" + titleOnline.get(i + 1).getAudio(), Toast.LENGTH_SHORT).show();
                 t.setPart3Audio(titleOnline.get(i + 2).getAudio());
                 t.setPart4Audio(titleOnline.get(i + 3).getAudio());
                 t.setPart1ID(titleOnline.get(i).getPartID());

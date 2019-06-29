@@ -17,6 +17,9 @@ public interface APIService {
     @GET("SerialJSON.php")
     Call<List<Serial>> getAllSerial();
 
+    @GET("TitleJSON.php")
+    Call<List<Title>> getAllTitle();
+
     @GET("part1.php?")
     Call<List<QuestionPart1>> getAllQuestionPart1(@Query("PartID") int partID);
 
@@ -28,13 +31,10 @@ public interface APIService {
 
     @GET("part4.php?")
     Call<List<QuestionPart4>> getAllQuestionPart4(@Query("PartID") int partID);
+
 //    @GET("JSON.php")
 //    Call<List<QuestionPart1>> getAllQuestionPart1();
-
-    @GET("JSON.php")
-    Call<List<Title>> getAllTitle();
-
-
+//
 //    @GET("JSON.php")
 //    Call<List<QuestionPart2>> getAllQuestionPart2();
 //
