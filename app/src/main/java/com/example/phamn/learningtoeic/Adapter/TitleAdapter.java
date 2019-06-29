@@ -98,7 +98,7 @@ public class TitleAdapter extends ArrayAdapter<TitleOnPhone> {
                     intent.putExtra("partID", listTitle.get(position).getPart2ID());
                     intent.putExtra("audio", listTitle.get(position).getPart2Audio());
                     getContext().startActivity(intent);
-                    //Toast.makeText(context, "" + listTitle.get(position).getPart1Audio(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(context, "" + listTitle.get(position).getPart2Audio(), Toast.LENGTH_SHORT).show();
                 }
             });
             viewHolder.btnPart3.setOnClickListener(new View.OnClickListener() {

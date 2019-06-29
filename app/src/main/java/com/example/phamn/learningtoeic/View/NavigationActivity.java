@@ -74,24 +74,24 @@ public class NavigationActivity extends AppCompatActivity
 
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         liveDataListener();
-        Menu m = navigationView.getMenu();
-        Menu multi = m.addSubMenu("Multiple choice");
-        multi.add(R.id.group_series, 1, 0, "Series 1").setIcon(R.drawable.ic_folder);
-        multi.add(R.id.group_series, 2, 0, "Series 2").setIcon(R.drawable.ic_folder);
-        multi.add(R.id.group_series, 3, 0, "Series 3").setIcon(R.drawable.ic_folder);
-        multi.add(R.id.group_series, 4, 0, "Series 4").setIcon(R.drawable.ic_folder);
-
-        Menu study = m.addSubMenu("Study");
-        study.add(R.id.study,1,0,"Vocabulary").setIcon(R.drawable.ic_font_download);
-        study.add(R.id.study,2,0,"Tips").setIcon(R.drawable.ic_lightbulb_outline);
-        study.add(R.id.study,3,0,"Idioms").setIcon(R.drawable.ic_format_color_text);
-        study.add(R.id.study,4,0,"Practice Listening").setIcon(R.drawable.ic_hearing_black_24dp);
-
-        Menu more = m.addSubMenu("More");
-        more.add(R.id.group_infomation,1,0,"Share").setIcon(R.drawable.ic_share_black_24dp);
-        more.add(R.id.group_infomation,2,0,"Clear History").setIcon(R.drawable.ic_delete);
-        more.add(R.id.group_infomation,3,0,"Help").setIcon(R.drawable.ic_help);
-        more.add(R.id.group_infomation,4,0,"About").setIcon(R.drawable.ic_error);
+//        Menu m = navigationView.getMenu();
+//        Menu multi = m.addSubMenu("Multiple choice");
+//        multi.add(R.id.group_series, 1, 0, "Series 1").setIcon(R.drawable.ic_folder);
+//        multi.add(R.id.group_series, 2, 0, "Series 2").setIcon(R.drawable.ic_folder);
+//        multi.add(R.id.group_series, 3, 0, "Series 3").setIcon(R.drawable.ic_folder);
+//        multi.add(R.id.group_series, 4, 0, "Series 4").setIcon(R.drawable.ic_folder);
+//
+//        Menu study = m.addSubMenu("Study");
+//        study.add(R.id.study,1,0,"Vocabulary").setIcon(R.drawable.ic_font_download);
+//        study.add(R.id.study,2,0,"Tips").setIcon(R.drawable.ic_lightbulb_outline);
+//        study.add(R.id.study,3,0,"Idioms").setIcon(R.drawable.ic_format_color_text);
+//        study.add(R.id.study,4,0,"Practice Listening").setIcon(R.drawable.ic_hearing_black_24dp);
+//
+//        Menu more = m.addSubMenu("More");
+//        more.add(R.id.group_infomation,1,0,"Share").setIcon(R.drawable.ic_share_black_24dp);
+//        more.add(R.id.group_infomation,2,0,"Clear History").setIcon(R.drawable.ic_delete);
+//        more.add(R.id.group_infomation,3,0,"Help").setIcon(R.drawable.ic_help);
+//        more.add(R.id.group_infomation,4,0,"About").setIcon(R.drawable.ic_error);
 
 
         navigationView.invalidate();
@@ -142,31 +142,33 @@ public class NavigationActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+//        Toast.makeText(this, "" + item.getTitle() + ", " + item.getItemId(), Toast.LENGTH_SHORT).show();
         int group = item.getGroupId();
         switch (group)
         {
             case R.id.group_series:
-                switch (id)
-                {
-                    case 1:
-                        serialID = 1;
-                        mainViewModel.updateTitle(serialID);
-                        break;
-                    case 2:
-                        serialID = 2;
-                        mainViewModel.updateTitle(serialID);
-                        break;
-                    case 3:
-                        serialID = 3;
-                        mainViewModel.updateTitle(serialID);
-                        break;
-
-                    case 4:
-                        serialID = 4;
-                        mainViewModel.updateTitle(serialID);
-                        break;
-
-                }
+                mainViewModel.updateTitle(item.getItemId());
+//                switch (id)
+//                {
+//                    case 1:
+//                        serialID = 14;
+//                        mainViewModel.updateTitle(serialID);
+//                        break;
+//                    case 2:
+//                        serialID = 2;
+//                        mainViewModel.updateTitle(serialID);
+//                        break;
+//                    case 3:
+//                        serialID = 3;
+//                        mainViewModel.updateTitle(serialID);
+//                        break;
+//
+//                    case 4:
+//                        serialID = 4;
+//                        mainViewModel.updateTitle(serialID);
+//                        break;
+//
+//                }
                 break;
             case R.id.study:
                 switch (id)
@@ -330,14 +332,31 @@ public class NavigationActivity extends AppCompatActivity
         mainViewModel.getListAllSerial().observe(this, new Observer<List<Serial>>() {
             @Override
             public void onChanged(@Nullable List<Serial> serials) {
+                Menu m = navigationView.getMenu();
+                Menu multi = m.addSubMenu("Multiple choice");
+                for(Serial s : serials){
+                    multi.add(R.id.group_series, s.getSerialID(), 0, s.getSerialName()).setIcon(R.drawable.ic_folder);
+                    //Toast.makeText(NavigationActivity.this, "" + s.getSerialName(), Toast.LENGTH_SHORT).show();
+                }
 
+                Menu study = m.addSubMenu("Study");
+                study.add(R.id.study,1,0,"Vocabulary").setIcon(R.drawable.ic_font_download);
+                study.add(R.id.study,2,0,"Tips").setIcon(R.drawable.ic_lightbulb_outline);
+                study.add(R.id.study,3,0,"Idioms").setIcon(R.drawable.ic_format_color_text);
+                study.add(R.id.study,4,0,"Practice Listening").setIcon(R.drawable.ic_hearing_black_24dp);
+
+                Menu more = m.addSubMenu("More");
+                more.add(R.id.group_infomation,1,0,"Share").setIcon(R.drawable.ic_share_black_24dp);
+                more.add(R.id.group_infomation,2,0,"Clear History").setIcon(R.drawable.ic_delete);
+                more.add(R.id.group_infomation,3,0,"Help").setIcon(R.drawable.ic_help);
+                more.add(R.id.group_infomation,4,0,"About").setIcon(R.drawable.ic_error);
             }
         });
         mainViewModel.getListTitleOfSerial().observe(this, new Observer<List<TitleOnPhone>>() {
             @Override
             public void onChanged(@Nullable List<TitleOnPhone> titles) {
 
-                listTOP = titles;
+                //listTOP = titles;
                 //Toast.makeText(getApplicationContext(), "" + listTOP.size() + ", " + listTOP.get(0).getPart2ID(), Toast.LENGTH_SHORT).show();
                 if (listTitle == null) {
                     listTitle = new ArrayList<>();
@@ -354,7 +373,6 @@ public class NavigationActivity extends AppCompatActivity
                     title.setPart2Audio(titles.get(i).getPart2Audio());
                     title.setPart3Audio(titles.get(i).getPart3Audio());
                     title.setPart4Audio(titles.get(i).getPart4Audio());
-                    Toast.makeText(NavigationActivity.this, "" + titles.get(i).getPart2Audio(), Toast.LENGTH_SHORT).show();
                     title.setPart1ID(titles.get(i).getPart1ID());
                     title.setPart2ID(titles.get(i).getPart2ID());
                     title.setPart3ID(titles.get(i).getPart3ID());
@@ -476,6 +494,10 @@ public class NavigationActivity extends AppCompatActivity
                         TitleOnPhone title = new TitleOnPhone();
                         title.setSerialID(list.get(i).getSerialID());
                         title.setSerialName(list.get(i).getSerialName());
+                        title.setPart1Audio(list.get(i).getPart1Audio());
+                        title.setPart2Audio(list.get(i).getPart2Audio());
+                        title.setPart3Audio(list.get(i).getPart3Audio());
+                        title.setPart4Audio(list.get(i).getPart4Audio());
                         title.setTitleName(list.get(i).getTitleName());
                         title.setPart1ID(list.get(i).getPart1ID());
                         title.setPart2ID(list.get(i).getPart2ID());
