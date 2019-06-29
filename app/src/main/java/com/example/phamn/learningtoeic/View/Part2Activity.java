@@ -65,6 +65,7 @@ public class Part2Activity extends AppCompatActivity {
     String serial = "Serial1";
     String title = "Test1";
     String audio = "";
+    int partID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,8 +78,11 @@ public class Part2Activity extends AppCompatActivity {
         title = intent.getStringExtra("titleName");
         serial = "Serial" + intent.getIntExtra("serialID", 1);
         audio = intent.getStringExtra("audio");
+        Toast.makeText(this, "" + audio, Toast.LENGTH_SHORT).show();
+        partID = intent.getIntExtra("partID", - 1);
 //        Toast.makeText(this, "title: " + title + " ,serial: " + serial, Toast.LENGTH_LONG).show();
         part2ViewModel = ViewModelProviders.of(this).get(Part2ViewModel.class);
+        part2ViewModel.setPartID(partID);
         part2ViewModel.setTitleName(serial, title);
         liveDataListener();
 
@@ -226,7 +230,7 @@ public class Part2Activity extends AppCompatActivity {
     }
 
     public void initAudio(){
-        String url = "https://myhost2018.000webhostapp.com/Serial1/" + title + "/Audio/" + title + "_Part2.m4a";
+        String url = audio;
         //String url = "https://myhost2018.000webhostapp.com/Serial1/Test1/Audio/Test1_Part2.m4a";
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         try {

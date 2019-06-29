@@ -21,6 +21,7 @@ import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.phamn.learningtoeic.Model.History;
 import com.example.phamn.learningtoeic.Model.Part4OnPhone;
@@ -82,6 +83,8 @@ public class Part4Activity extends AppCompatActivity {
     String serial = "";
     String title = "";
     String audio = "";
+    int partID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,8 +97,11 @@ public class Part4Activity extends AppCompatActivity {
         title = intent.getStringExtra("titleName");
         serial = "Serial" + intent.getIntExtra("serialID", 1);
         audio = intent.getStringExtra("audio");
+        Toast.makeText(this, "" + audio, Toast.LENGTH_SHORT).show();
+        partID = intent.getIntExtra("partID", - 1);
 
         part4ViewModel = ViewModelProviders.of(this).get(Part4ViewModel.class);
+        part4ViewModel.setPartID(partID);
         part4ViewModel.setTitleName(serial, title);
         liveDataListener();
 
@@ -317,7 +323,7 @@ public class Part4Activity extends AppCompatActivity {
     }
 
     public void initAudio(){
-        String url = "https://myhost2018.000webhostapp.com/Serial1/" + title + "/Audio/" + title + "_Part4.m4a";
+        String url = audio;
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         try {
             mediaPlayer.setDataSource(url);

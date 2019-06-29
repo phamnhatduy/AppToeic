@@ -33,20 +33,21 @@ public class Part1ViewModel extends AndroidViewModel{
     public MutableLiveData<Integer> currentIndex = new MutableLiveData<>();
     public MutableLiveData<String> title = new MutableLiveData<>();
     public MutableLiveData<String> serial = new MutableLiveData<>();
-
+    public MutableLiveData<Integer> partID = new MutableLiveData<>();
     public Part1ViewModel(@NonNull Application application) {
         super(application);
         currentIndex.setValue(0);
     }
 
-    public void getAllQuestion() {
+    public void getAllQuestion(int partID) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://myhost2018.000webhostapp.com/" + serial.getValue() + "/" + title.getValue() + "/Part1/")
+                //.baseUrl("https://myhost2018.000webhostapp.com/" + serial.getValue() + "/" + title.getValue() + "/Part1/")
 //                .baseUrl("https://myhost2018.000webhostapp.com/Serial1/Test1/Part1/")
+                .baseUrl("https://myhost2019.000webhostapp.com/src/JSON/")// + partID.getValue())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         APIService apiService = retrofit.create(APIService.class);
-        Call<List<QuestionPart1>> call = apiService.getAllQuestionPart1();
+        Call<List<QuestionPart1>> call = apiService.getAllQuestionPart1(partID);
         call.enqueue(new Callback<List<QuestionPart1>>() {
             @Override
             public void onResponse(Call<List<QuestionPart1>> call, Response<List<QuestionPart1>> response) {
@@ -105,6 +106,11 @@ public class Part1ViewModel extends AndroidViewModel{
         return title;
     }
 
+    public void setPartID(int partID){
+        this.partID.setValue(partID);
+        getAllQuestion(partID);
+    }
+
     public void setTitleName(String serial, String title) {
         if(title != null)
             this.title.setValue(title);
@@ -114,7 +120,7 @@ public class Part1ViewModel extends AndroidViewModel{
             this.serial.setValue(serial);
         else
             this.serial.setValue("Serial1");
-        getAllQuestion();
+        getAllQuestion(partID.getValue());
     }
 
     public MutableLiveData<Part1OnPhone> getQuestion() {

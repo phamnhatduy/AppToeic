@@ -52,6 +52,7 @@ public class NavigationActivity extends AppCompatActivity
     List<History> listHistory;
     int serialID = 1;
     NavigationView navigationView;
+    List<TitleOnPhone> listTOP = new ArrayList<TitleOnPhone>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +72,8 @@ public class NavigationActivity extends AppCompatActivity
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        liveDataListener();
         Menu m = navigationView.getMenu();
         Menu multi = m.addSubMenu("Multiple choice");
         multi.add(R.id.group_series, 1, 0, "Series 1").setIcon(R.drawable.ic_folder);
@@ -96,8 +99,6 @@ public class NavigationActivity extends AppCompatActivity
         lvTitle = (ListView) findViewById(R.id.lv_title);
 
 
-        mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-        liveDataListener();
 
 
 
@@ -335,6 +336,9 @@ public class NavigationActivity extends AppCompatActivity
         mainViewModel.getListTitleOfSerial().observe(this, new Observer<List<TitleOnPhone>>() {
             @Override
             public void onChanged(@Nullable List<TitleOnPhone> titles) {
+
+                listTOP = titles;
+                //Toast.makeText(getApplicationContext(), "" + listTOP.size() + ", " + listTOP.get(0).getPart2ID(), Toast.LENGTH_SHORT).show();
                 if (listTitle == null) {
                     listTitle = new ArrayList<>();
                     titleAdapter = new TitleAdapter(getApplication(), R.layout.item_title_listview, listTitle);
@@ -350,6 +354,7 @@ public class NavigationActivity extends AppCompatActivity
                     title.setPart2Audio(titles.get(i).getPart2Audio());
                     title.setPart3Audio(titles.get(i).getPart3Audio());
                     title.setPart4Audio(titles.get(i).getPart4Audio());
+                    Toast.makeText(NavigationActivity.this, "" + titles.get(i).getPart2Audio(), Toast.LENGTH_SHORT).show();
                     title.setPart1ID(titles.get(i).getPart1ID());
                     title.setPart2ID(titles.get(i).getPart2ID());
                     title.setPart3ID(titles.get(i).getPart3ID());

@@ -7,6 +7,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.widget.Toast;
 
 import com.example.phamn.learningtoeic.Model.History;
 import com.example.phamn.learningtoeic.Model.Serial;
@@ -66,7 +67,7 @@ public class MainViewModel extends AndroidViewModel {
 
     public void getAllTitle(final Application application) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://myhost2018.000webhostapp.com/")
+                .baseUrl("https://myhost2019.000webhostapp.com/src/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         APIService apiService = retrofit.create(APIService.class);
@@ -75,7 +76,7 @@ public class MainViewModel extends AndroidViewModel {
             @Override
             public void onResponse(Call<List<Title>> call, Response<List<Title>> response) {
                 titleOnline = response.body();
-                updateTitle(1);
+                updateTitle(titleOnline.get(0).getSerialID());
             }
 
             @Override
@@ -95,6 +96,7 @@ public class MainViewModel extends AndroidViewModel {
                 t.setTitleName(titleOnline.get(i).getTitleName());
                 t.setPart1Audio(titleOnline.get(i).getAudio());
                 t.setPart2Audio(titleOnline.get(i + 1).getAudio());
+                Toast.makeText(getApplication(), "" + titleOnline.get(i + 1).getAudio(), Toast.LENGTH_SHORT).show();
                 t.setPart3Audio(titleOnline.get(i + 2).getAudio());
                 t.setPart4Audio(titleOnline.get(i + 3).getAudio());
                 t.setPart1ID(titleOnline.get(i).getPartID());
