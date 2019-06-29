@@ -75,6 +75,7 @@ public class Part1Activity extends AppCompatActivity {
     boolean isTesting = true; // reviewing -> isTesting = false
     String serial = "";
     String serialName = "";
+    int partID;
     String audio = "";
     String title = "";
     String result = "";
@@ -128,9 +129,11 @@ public class Part1Activity extends AppCompatActivity {
         serial = intent.getStringExtra("serialName");
         title = intent.getStringExtra("titleName");
         audio = intent.getStringExtra("audio");
+        partID = intent.getIntExtra("partID", - 1);
         //serial = "Serial1";
         //dùng livedata
         part1ViewModel = ViewModelProviders.of(this).get(Part1ViewModel.class);
+        part1ViewModel.setPartID(partID);
         part1ViewModel.setTitleName(serial, title);
         liveDataListener();
 
@@ -303,7 +306,8 @@ public class Part1Activity extends AppCompatActivity {
 //    }
     public void initAudio(){
         //String url = "https://myhost2018.000webhostapp.com/" + serial + "/Test1/Audio/Test1_Part1.m4a";
-        String url = "https://myhost2018.000webhostapp.com/Serial1/" + title + "/Audio/"+ title +"_Part1.m4a";
+        //String url = "https://myhost2018.000webhostapp.com/Serial1/" + title + "/Audio/"+ title +"_Part1.m4a";
+        String url = audio;
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         try {
             mediaPlayer.setDataSource(url);

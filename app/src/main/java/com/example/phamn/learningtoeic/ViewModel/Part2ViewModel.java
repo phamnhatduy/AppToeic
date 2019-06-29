@@ -28,6 +28,7 @@ public class Part2ViewModel extends AndroidViewModel {
     public List<String> stringList = new ArrayList<>();
     public MutableLiveData<String> titleName = new MutableLiveData<>();
     public MutableLiveData<String> serialID = new MutableLiveData<>();
+    public MutableLiveData<Integer> partID = new MutableLiveData<>();
 
 
     public Part2ViewModel(@NonNull Application application) {
@@ -39,13 +40,13 @@ public class Part2ViewModel extends AndroidViewModel {
         listAnswerChosen.setValue(stringList);
     }
 
-    public void getAllQuestion() {
+    public void getAllQuestion(int partID) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://myhost2018.000webhostapp.com/Serial1/" + titleName.getValue() + "/Part2/")
+                .baseUrl("https://myhost2019.000webhostapp.com/src/JSON/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         APIService apiService = retrofit.create(APIService.class);
-        Call<List<QuestionPart2>> call = apiService.getAllQuestionPart2();
+        Call<List<QuestionPart2>> call = apiService.getAllQuestionPart2(partID);
         call.enqueue(new Callback<List<QuestionPart2>>() {
             @Override
             public void onResponse(Call<List<QuestionPart2>> call, Response<List<QuestionPart2>> response) {
@@ -99,6 +100,11 @@ public class Part2ViewModel extends AndroidViewModel {
         return titleName;
     }
 
+    public void setPartID(int partID){
+        this.partID.setValue(partID);
+        getAllQuestion(partID);
+    }
+
     public void setTitleName(String serialID, String titleName) {
         if(titleName != null)
             this.titleName.setValue(titleName);
@@ -108,7 +114,7 @@ public class Part2ViewModel extends AndroidViewModel {
             this.serialID.setValue(serialID);
         else
             this.serialID.setValue("Serial1");
-        getAllQuestion();
+        getAllQuestion(partID.getValue());
     }
 
     public MutableLiveData<Part2OnPhone> getQuestion() {

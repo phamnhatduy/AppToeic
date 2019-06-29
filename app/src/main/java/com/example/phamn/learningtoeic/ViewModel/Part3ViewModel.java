@@ -28,18 +28,19 @@ public class Part3ViewModel extends AndroidViewModel {
     public MutableLiveData<Integer> currentIndex = new MutableLiveData<>();
     public MutableLiveData<String> titleName = new MutableLiveData<>();
     public MutableLiveData<String> serial = new MutableLiveData<>();
+    public MutableLiveData<Integer> partID = new MutableLiveData<>();
 
     public Part3ViewModel(@NonNull Application application) {
         super(application);
     }
 
-    public void getAllQuestion() {
+    public void getAllQuestion(int partID) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://myhost2018.000webhostapp.com/Serial1/" + titleName.getValue() + "/Part3/")
+                .baseUrl("https://myhost2019.000webhostapp.com/src/JSON/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         APIService apiService = retrofit.create(APIService.class);
-        Call<List<QuestionPart3>> call = apiService.getAllQuestionPart3();
+        Call<List<QuestionPart3>> call = apiService.getAllQuestionPart3(partID);
         call.enqueue(new Callback<List<QuestionPart3>>() {
             @Override
             public void onResponse(Call<List<QuestionPart3>> call, Response<List<QuestionPart3>> response) {
@@ -124,6 +125,11 @@ public class Part3ViewModel extends AndroidViewModel {
         return titleName;
     }
 
+    public void setPartID(int partID){
+        this.partID.setValue(partID);
+        getAllQuestion(partID);
+    }
+
     public void setTitleName(String serialID, String titleName) {
         if(titleName != null)
             this.titleName.setValue(titleName);
@@ -133,7 +139,7 @@ public class Part3ViewModel extends AndroidViewModel {
             this.serial.setValue(serialID);
         else
             this.serial.setValue("Serial1");
-        getAllQuestion();
+        getAllQuestion(partID.getValue());
     }
 
     public MutableLiveData<List<Part3OnPhone>> getListAllQuestion() {
