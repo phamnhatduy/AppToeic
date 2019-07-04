@@ -89,29 +89,76 @@ public class MainViewModel extends AndroidViewModel {
 
     public void convertTitle(){
         list.clear();
-        for (int i = 0; i < titleOnline.size() ; i++) {
-            if(i % 4 == 0) {
-                TitleOnPhone t = new TitleOnPhone();
-                t.setSerialID(titleOnline.get(i).getSerialID());
-                t.setSerialName(titleOnline.get(i).getSerialName());
-                t.setTitleName(titleOnline.get(i).getTitleName());
-                t.setPart1Audio(titleOnline.get(i).getAudio());
-                t.setPart2Audio(titleOnline.get(i + 1).getAudio());
-                t.setPart3Audio(titleOnline.get(i + 2).getAudio());
-                t.setPart4Audio(titleOnline.get(i + 3).getAudio());
-                t.setPart1ID(titleOnline.get(i).getPartID());
-                t.setPart2ID(titleOnline.get(i + 1).getPartID());
-                t.setPart3ID(titleOnline.get(i + 2).getPartID());
-                t.setPart4ID(titleOnline.get(i + 3).getPartID());
-                t.setTime1(titleOnline.get(i).getTime());
-                t.setTime2(titleOnline.get(i + 1).getTime());
-                t.setTime3(titleOnline.get(i + 2).getTime());
-                t.setTime4(titleOnline.get(i + 3).getTime());
-                t.setNumberOfQuestions1(titleOnline.get(i).getNumberOfQuestions());
-                t.setNumberOfQuestions2(titleOnline.get(i + 1).getNumberOfQuestions());
-                t.setNumberOfQuestions3(titleOnline.get(i + 2).getNumberOfQuestions());
-                t.setNumberOfQuestions4(titleOnline.get(i + 3).getNumberOfQuestions());
-                list.add(t);
+        int t = 1;
+        String str = "";
+        List<String> lS = new ArrayList<>();
+        for(int i = 0; i < titleOnline.size(); i++){
+            if(!str.contains("" + titleOnline.get(i).getSerialID() + titleOnline.get(i).getTitleName())){
+                str += titleOnline.get(i).getSerialID() + titleOnline.get(i).getTitleName() + ",";
+                TitleOnPhone title = new TitleOnPhone();
+                title.setTitleName(titleOnline.get(i).getTitleName());
+                title.setSerialName(titleOnline.get(i).getSerialName());
+                title.setSerialID(titleOnline.get(i).getSerialID());
+                if(titleOnline.get(i).getPartName().equals("Part1")){
+                    title.setPart1ID(titleOnline.get(i).getPartID());
+                    title.setPart1Audio(titleOnline.get(i).getAudio());
+                    title.setTime1(titleOnline.get(i).getTime());
+                    title.setNumberOfQuestions1(titleOnline.get(i).getNumberOfQuestions());
+                }
+                if(titleOnline.get(i).getPartName().equals("Part2")){
+                    title.setPart2ID(titleOnline.get(i).getPartID());
+                    title.setPart2Audio(titleOnline.get(i).getAudio());
+                    title.setTime2(titleOnline.get(i).getTime());
+                    title.setNumberOfQuestions2(titleOnline.get(i).getNumberOfQuestions());
+                }
+                if(titleOnline.get(i).getPartName().equals("Part3")){
+                    title.setPart3ID(titleOnline.get(i).getPartID());
+                    title.setPart3Audio(titleOnline.get(i).getAudio());
+                    title.setTime3(titleOnline.get(i).getTime());
+                    title.setNumberOfQuestions3(titleOnline.get(i).getNumberOfQuestions());
+                }
+                if(titleOnline.get(i).getPartName().equals("Part4")){
+                    title.setPart4ID(titleOnline.get(i).getPartID());
+                    title.setPart4Audio(titleOnline.get(i).getAudio());
+                    title.setTime4(titleOnline.get(i).getTime());
+                    title.setNumberOfQuestions4(titleOnline.get(i).getNumberOfQuestions());
+                }
+                list.add(title);
+                lS.add(titleOnline.get(i).getSerialID() + titleOnline.get(i).getTitleName());
+            }
+            else{
+                for(int k = 0; k < lS.size(); k++){
+                    if((titleOnline.get(i).getSerialID() + titleOnline.get(i).getTitleName()).equals(lS.get(k))){
+                        if(titleOnline.get(i).getPartName().equals("Part1")){
+                            list.get(k).setPart1ID(titleOnline.get(i).getPartID());
+                            list.get(k).setPart1Audio(titleOnline.get(i).getAudio());
+                            list.get(k).setTime1(titleOnline.get(i).getTime());
+                            list.get(k).setNumberOfQuestions1(titleOnline.get(i).getNumberOfQuestions());
+                            break;
+                        }
+                        if(titleOnline.get(i).getPartName().equals("Part2")){
+                            list.get(k).setPart2ID(titleOnline.get(i).getPartID());
+                            list.get(k).setPart2Audio(titleOnline.get(i).getAudio());
+                            list.get(k).setTime2(titleOnline.get(i).getTime());
+                            list.get(k).setNumberOfQuestions2(titleOnline.get(i).getNumberOfQuestions());
+                            break;
+                        }
+                        if(titleOnline.get(i).getPartName().equals("Part3")){
+                            list.get(k).setPart3ID(titleOnline.get(i).getPartID());
+                            list.get(k).setPart3Audio(titleOnline.get(i).getAudio());
+                            list.get(k).setTime3(titleOnline.get(i).getTime());
+                            list.get(k).setNumberOfQuestions3(titleOnline.get(i).getNumberOfQuestions());
+                            break;
+                        }
+                        if(titleOnline.get(i).getPartName().equals("Part4")){
+                            list.get(k).setPart4ID(titleOnline.get(i).getPartID());
+                            list.get(k).setPart4Audio(titleOnline.get(i).getAudio());
+                            list.get(k).setTime4(titleOnline.get(i).getTime());
+                            list.get(k).setNumberOfQuestions4(titleOnline.get(i).getNumberOfQuestions());
+                            break;
+                        }
+                    }
+                }
             }
         }
         listAllTitle.setValue(list);
