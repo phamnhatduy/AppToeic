@@ -136,7 +136,6 @@ public class NavigationActivity extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -355,15 +354,16 @@ public class NavigationActivity extends AppCompatActivity
         mainViewModel.getListTitleOfSerial().observe(this, new Observer<List<TitleOnPhone>>() {
             @Override
             public void onChanged(@Nullable List<TitleOnPhone> titles) {
-
-                //listTOP = titles;
-                //Toast.makeText(getApplicationContext(), "" + listTOP.size() + ", " + listTOP.get(0).getPart2ID(), Toast.LENGTH_SHORT).show();
+                if(listTitle != null){
+                    listTitle.clear();// = new ArrayList<>();
+                    lvTitle.setAdapter(titleAdapter);
+                    titleAdapter.notifyDataSetChanged();
+                }
                 if (listTitle == null) {
                     listTitle = new ArrayList<>();
                     titleAdapter = new TitleAdapter(getApplication(), R.layout.item_title_listview, listTitle);
                     lvTitle.setAdapter(titleAdapter);
                 }
-                listTitle.clear();
                 for (int i = 0; i < titles.size(); i++) {
                     TitleOnPhone title = new TitleOnPhone();
                     title.setSerialID(titles.get(i).getSerialID());

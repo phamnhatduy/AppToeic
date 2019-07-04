@@ -68,7 +68,26 @@ public class TitleAdapter extends ArrayAdapter<TitleOnPhone> {
             viewHolder.tvDate2 = (TextView) convertView.findViewById(R.id.tv_date_time2);
             viewHolder.tvDate3 = (TextView) convertView.findViewById(R.id.tv_date_time3);
             viewHolder.tvDate4 = (TextView) convertView.findViewById(R.id.tv_date_time4);
-
+            if(listTitle.get(position).getPart1Audio() == null || listTitle.get(position).getPart1ID() == 0){
+                viewHolder.btnPart1.setVisibility(View.INVISIBLE);
+                viewHolder.tvScore1.setVisibility(View.INVISIBLE);
+                viewHolder.tvDate1.setVisibility(View.INVISIBLE);
+            }
+            if(listTitle.get(position).getPart2Audio() == null || listTitle.get(position).getPart2ID() == 0){
+                viewHolder.btnPart2.setVisibility(View.INVISIBLE);
+                viewHolder.tvScore2.setVisibility(View.INVISIBLE);
+                viewHolder.tvDate2.setVisibility(View.INVISIBLE);
+            }
+            if(listTitle.get(position).getPart3Audio() == null || listTitle.get(position).getPart3ID() == 0){
+                viewHolder.btnPart3.setVisibility(View.INVISIBLE);
+                viewHolder.tvScore3.setVisibility(View.INVISIBLE);
+                viewHolder.tvDate3.setVisibility(View.INVISIBLE);
+            }
+            if(listTitle.get(position).getPart4Audio() == null || listTitle.get(position).getPart4ID() == 0){
+                viewHolder.btnPart4.setVisibility(View.INVISIBLE);
+                viewHolder.tvScore4.setVisibility(View.INVISIBLE);
+                viewHolder.tvDate4.setVisibility(View.INVISIBLE);
+            }
             viewHolder.btnPart1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -168,7 +187,6 @@ public class TitleAdapter extends ArrayAdapter<TitleOnPhone> {
         TextView tvTitleName;
         TextView tvScore1, tvScore2, tvScore3, tvScore4;
         TextView tvDate1, tvDate2, tvDate3, tvDate4;
-        TextView tvNumberOfQuestions1, tvNumberOfQuestions2, tvNumberOfQuestions3, tvNumberOfQuestions4;
         Button btnPart1, btnPart2, btnPart3, btnPart4;
     }
 }
