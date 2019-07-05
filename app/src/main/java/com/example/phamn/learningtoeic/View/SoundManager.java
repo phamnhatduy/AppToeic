@@ -42,4 +42,8 @@ public class SoundManager {
         mSoundPool.play(mSoundPoolMap.get(index), streamVolume, streamVolume,
                 1, 0, 0f);
     }
+    public void release()
+    {
+        mSoundPool.release();
+    }
 }
