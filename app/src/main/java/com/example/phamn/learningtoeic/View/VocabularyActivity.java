@@ -26,7 +26,8 @@ public class VocabularyActivity extends AppCompatActivity {
     List<List<Vocabulary>> listTopic;
     Button btnEng,btnVn,btnAudio;
     //
-    SoundManager soundContract,soundMarket;
+    SoundManager soundContract,soundMarket,soundWarr,soundBussiness,soundConfere,soundCompu,
+            soundTechno,soundProce,soundElec,soundCorrec;;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,18 +67,42 @@ public class VocabularyActivity extends AppCompatActivity {
             @Override
             public void onItemClick(String pos,int i) {
                 //Toast.makeText(VocabularyActivity.this, arrayList.toString(), Toast.LENGTH_SHORT).show();
-                Toast.makeText(VocabularyActivity.this, pos+"/"+i, Toast.LENGTH_SHORT).show();
-
-
-                if(topic.equals("Contracts")) {
-                    soundContract.playSound(i);
+                //Toast.makeText(VocabularyActivity.this, pos + "/" + i, Toast.LENGTH_SHORT).show();
+                switch (topic) {
+                    case "Contracts":
+                        soundContract.playSound(i);
+                        break;
+                    case "Marketing":
+                        soundMarket.playSound(i);
+                        break;
+                    case "Warranties":
+                        soundWarr.playSound(i);
+                        break;
+                    case "Business Planning":
+                        soundBussiness.playSound(i);
+                        break;
+                    case "Conferences":
+                        soundConfere.playSound(i);
+                        break;
+                    case "Computers & Internet":
+                        soundCompu.playSound(i);
+                        break;
+                    case "Office Technology":
+                        soundTechno.playSound(i);
+                        break;
+                    case "Office Procedures":
+                        soundProce.playSound(i);
+                        break;
+                    case "Electronics":
+                        soundElec.playSound(i);
+                        break;
+                    case "Correspondence":
+                        soundCorrec.playSound(i);
+                        break;
                 }
-                else if(topic.equals("Marketing"))
-                {
-                    soundMarket.playSound(i);
-                }
-
             }
+
+
         });
         btnVn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,8 +162,118 @@ public class VocabularyActivity extends AppCompatActivity {
         soundMarket.addSound(9,R.raw.persuasion);
         soundMarket.addSound(10,R.raw.productive);
         soundMarket.addSound(11,R.raw.satisfaction);
-
-
+        soundWarr = new SoundManager();
+        soundWarr.initSounds(getBaseContext());
+        soundWarr.addSound(0,R.raw.characteristic);
+        soundWarr.addSound(1,R.raw.consequence);
+        soundWarr.addSound(2,R.raw.consider);
+        soundWarr.addSound(3,R.raw.cover);
+        soundWarr.addSound(4,R.raw.expiration);
+        soundWarr.addSound(5,R.raw.frequently);
+        soundWarr.addSound(6,R.raw.imply);
+        soundWarr.addSound(7,R.raw.promise);
+        soundWarr.addSound(8,R.raw.protect);
+        soundWarr.addSound(9,R.raw.reputation);
+        soundWarr.addSound(10,R.raw.require);
+        soundWarr.addSound(11,R.raw.variety);
+        soundBussiness = new SoundManager();
+        soundBussiness.initSounds(getBaseContext());
+        soundBussiness.addSound(0,R.raw.address);
+        soundBussiness.addSound(1,R.raw.avoid);
+        soundBussiness.addSound(2,R.raw.demonstrate);
+        soundBussiness.addSound(3,R.raw.develop);
+        soundBussiness.addSound(4,R.raw.evaluate);
+        soundBussiness.addSound(5,R.raw.gather);
+        soundBussiness.addSound(6,R.raw.offer);
+        soundBussiness.addSound(7,R.raw.primarily);
+        soundBussiness.addSound(8,R.raw.risk);
+        soundBussiness.addSound(9,R.raw.strategy);
+        soundBussiness.addSound(10,R.raw.strong);
+        soundBussiness.addSound(11,R.raw.substitution);
+        soundConfere= new SoundManager();
+        soundConfere.initSounds(getBaseContext());
+        soundConfere.addSound(0,R.raw.accommodate);
+        soundConfere.addSound(1,R.raw.arrangement);
+        soundConfere.addSound(2,R.raw.association);
+        soundConfere.addSound(3,R.raw.attend);
+        soundConfere.addSound(4,R.raw.intouch);
+        soundConfere.addSound(5,R.raw.hold);
+        soundConfere.addSound(6,R.raw.location);
+        soundConfere.addSound(7,R.raw.overcrowded);
+        soundConfere.addSound(8,R.raw.register);
+        soundConfere.addSound(9,R.raw.select);
+        soundConfere.addSound(10,R.raw.session);
+        soundConfere.addSound(11,R.raw.takepart);
+        soundTechno = new SoundManager();
+        soundTechno.initSounds(getBaseContext());
+        soundTechno.addSound(0,R.raw.affordable);
+        soundTechno.addSound(1,R.raw.needed);
+        soundTechno.addSound(2,R.raw.inchargeof);
+        soundTechno.addSound(3,R.raw.capacity);
+        soundTechno.addSound(4,R.raw.durable);
+        soundTechno.addSound(5,R.raw.initiative);
+        soundTechno.addSound(6,R.raw.physically);
+        soundTechno.addSound(7,R.raw.provider);
+        soundTechno.addSound(8,R.raw.recur);
+        soundTechno.addSound(9,R.raw.reduction);
+        soundTechno.addSound(10,R.raw.stay);
+        soundTechno.addSound(11,R.raw.stock);
+        soundCompu = new SoundManager();
+        soundCompu.initSounds(getBaseContext());
+        soundCompu.addSound(0,R.raw.access);
+        soundCompu.addSound(1,R.raw.allocate);
+        soundCompu.addSound(2,R.raw.compatible);
+        soundCompu.addSound(3,R.raw.delete);
+        soundCompu.addSound(4,R.raw.display);
+        soundCompu.addSound(5,R.raw.duplicate);
+        soundCompu.addSound(6,R.raw.failure);
+        soundCompu.addSound(7,R.raw.figureout);
+        soundCompu.addSound(8,R.raw.ignore);
+        soundCompu.addSound(9,R.raw.search);
+        soundCompu.addSound(10,R.raw.shutdown);
+        soundCompu.addSound(11,R.raw.warning);
+        soundProce=new SoundManager();
+        soundProce.initSounds(getBaseContext());
+        soundProce.addSound(0,R.raw.appreciation);
+        soundProce.addSound(1,R.raw.madeof);
+        soundProce.addSound(2,R.raw.bringin);
+        soundProce.addSound(3,R.raw.casually);
+        soundProce.addSound(4,R.raw.code);
+        soundProce.addSound(5,R.raw.expose);
+        soundProce.addSound(6,R.raw.glimpse);
+        soundProce.addSound(7,R.raw.outof);
+        soundProce.addSound(8,R.raw.outdated);
+        soundProce.addSound(9,R.raw.practice);
+        soundProce.addSound(10,R.raw.reinforce);
+        soundProce.addSound(11,R.raw.verbally);
+        soundElec=new SoundManager();
+        soundElec.initSounds(getBaseContext());
+        soundElec.addSound(0,R.raw.disk);
+        soundElec.addSound(1,R.raw.facilitate);
+        soundElec.addSound(2,R.raw.network);
+        soundElec.addSound(3,R.raw.popularity);
+        soundElec.addSound(4,R.raw.process);
+        soundElec.addSound(5,R.raw.replace);
+        soundElec.addSound(6,R.raw.revalution);
+        soundElec.addSound(7,R.raw.sharp);
+        soundElec.addSound(8,R.raw.skill);
+        soundElec.addSound(9,R.raw.software);
+        soundElec.addSound(10,R.raw.store);
+        soundElec.addSound(11,R.raw.technically);
+        soundCorrec=new SoundManager();
+        soundCorrec.initSounds(getBaseContext());
+        soundCorrec.addSound(0,R.raw.assemble);
+        soundCorrec.addSound(1,R.raw.beforehand);
+        soundCorrec.addSound(2,R.raw.complication);
+        soundCorrec.addSound(3,R.raw.courier);
+        soundCorrec.addSound(4,R.raw.express);
+        soundCorrec.addSound(5,R.raw.fold);
+        soundCorrec.addSound(6,R.raw.layout);
+        soundCorrec.addSound(7,R.raw.mention);
+        soundCorrec.addSound(8,R.raw.petition);
+        soundCorrec.addSound(9,R.raw.proof);
+        soundCorrec.addSound(10,R.raw.register);
+        soundCorrec.addSound(11,R.raw.revise);
     }
 
     public List<Vocabulary> getListVocab(String topic) {
@@ -245,6 +380,20 @@ public class VocabularyActivity extends AppCompatActivity {
                 return listTopic.get(49);
         }
         return listTopic.get(0);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        soundContract.release();
+        soundMarket.release();
+        soundProce.release();
+        soundCorrec.release();
+        soundElec.release();
+        soundTechno.release();
+        soundBussiness.release();
+        soundWarr.release();
+        soundConfere.release();
     }
 
     public void initListTopic(){

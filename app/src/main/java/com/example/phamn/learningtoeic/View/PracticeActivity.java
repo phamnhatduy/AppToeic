@@ -40,7 +40,7 @@ public class PracticeActivity extends AppCompatActivity {
     SharedPreferences preferences;
     int[] number  = {0,1,2,3,4};
     ArrayList<Integer> listRan =new ArrayList<>();
-    MediaPlayer mediaPlayer;
+    MediaPlayer mediaPlayer,mediaPlayerHint;
     final String[] quesData = {"Traffic is ____ freely on the motorway.","This photo ___ us a busy rush hour scene.",
             "Several people can be seen ___ to cross the road.","It looks as if it is ___ to rain.",
             "The ___ are all brightly coloured."};
@@ -49,7 +49,6 @@ public class PracticeActivity extends AppCompatActivity {
             "You can only see four ___ clearly.","You can see one man getting off the ___."};
     final String[] ansData = {"flowing","shows","trying","going","buildings"};
     final String[] ansData2 ={"cyclist","motorboats","deep","boats","tram"};
-    final String[] fullansData={"Traffic is flowing freely on the motorway.","This photo shows us a busy rush hour scene."};
     final String[] transData={"Giao thông đang lưu thông tự do trên đường cao tốc.",
             "Bức ảnh này cho chúng ta thấy một khung cảnh giờ cao điểm bận rộn.",
             "Một số người có thể được nhìn thấy đang cố gắng băng qua đường",
@@ -63,7 +62,7 @@ public class PracticeActivity extends AppCompatActivity {
     final String[] transData3 ={"Người đàn ông trông thật đau khổ.","Người đàn ông mặc áo vàng trơn.","Bệnh nhân sắp bật khóc.",
     "Người mua sắm mặc đồ đen.","Người điểu khiển không đội nón."};
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_practice);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -75,6 +74,7 @@ public class PracticeActivity extends AppCompatActivity {
             txtHighScore.setText("HighScore:" + highScore);
         }
         final Animation animation = AnimationUtils.loadAnimation(this,R.anim.scale_sound);
+        //check random
         for(int j : number)
         {
             listRan.add(j);
@@ -83,6 +83,7 @@ public class PracticeActivity extends AppCompatActivity {
         duplicate = random.nextInt(listRan.size());
         i=listRan.get(duplicate);
         listRan.remove(duplicate);
+        // set question
         if(txtLevel.getText().equals("Level 1")) {
             txtQues.setText(quesData[i]);
         }else if(txtLevel.getText().equals("Level 2")){
@@ -134,18 +135,21 @@ public class PracticeActivity extends AppCompatActivity {
 
 
         imgStart.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-                if(txtLevel.getText().equals("Level 1")) {
-                    mediaPlayer = MediaPlayer.create(PracticeActivity.this, playQues1.get(i));
-                }
-                else if(txtLevel.getText().equals("Level 2"))
+                String level = txtLevel.getText().toString().trim();
+                switch (level)
                 {
-                    mediaPlayer=MediaPlayer.create(PracticeActivity.this,playQues2.get(i));
-                }
-                else if(txtLevel.getText().equals("Level 3"))
-                {
-                    mediaPlayer=MediaPlayer.create(PracticeActivity.this,playQues3.get(i));
+                    case "Level 1":
+                        mediaPlayer = MediaPlayer.create(PracticeActivity.this, playQues1.get(i));
+                        break;
+                    case "Level 2":
+                        mediaPlayer= MediaPlayer.create(PracticeActivity.this,playQues2.get(i));
+                        break;
+                    case "Level 3":
+                        mediaPlayer= MediaPlayer.create(PracticeActivity.this,playQues3.get(i));
+                        break;
                 }
                 mediaPlayer.start();
                 v.startAnimation(animation);
@@ -154,203 +158,273 @@ public class PracticeActivity extends AppCompatActivity {
         });
 
         btnConfirm.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 String ans = edtAns.getText().toString().trim();
+                String level = txtLevel.getText().toString().trim();
                 countClick+=1;
                 if (ans.equals(" ")) {
                    toastShow(v);
                 }
                 if(countClick==1)
                 {
-                    //txtTrans.setVisibility(View.INVISIBLE);
-                    if(txtLevel.getText().equals("Level 1")) {
-                        if (ans.equalsIgnoreCase(ansData[i])) {
-                            txtTrans.setText(transData[i]);
-                            txtTrans.setVisibility(View.VISIBLE);
-                            txtCongra.setVisibility(View.VISIBLE);
-                            txtCongra.startAnimation(animation);
-                            score+=1;
-                            saveScore();
-                            //Toast.makeText(PracticeActivity.this, "true", Toast.LENGTH_SHORT).show();
-                        } else {
-                            toastShowWrong(v);
-                            //Toast.makeText(PracticeActivity.this, "false", Toast.LENGTH_SHORT).show();
-                            txtTrans.setText(edtAns.getText().toString());
-                            txtTrans.setVisibility(View.VISIBLE);
-                            edtAns.getText().clear();
-                        }
-                    }
-                    if(txtLevel.getText().equals("Level 2"))
+                    switch (level)
                     {
-                        if (ans.equalsIgnoreCase(ansData2[i])) {
-                            score+=1;
-                            saveScore();
-                            txtTrans.setText(transData2[i]);
-                            txtTrans.setVisibility(View.VISIBLE);
-                            txtCongra.setVisibility(View.VISIBLE);
-                            //Toast.makeText(PracticeActivity.this, "true", Toast.LENGTH_SHORT).show();
-                        } else {
-                            toastShowWrong(v);
-                            //Toast.makeText(PracticeActivity.this, "false", Toast.LENGTH_SHORT).show();
-                            txtTrans.setText(edtAns.getText().toString());
-                            txtTrans.setVisibility(View.VISIBLE);
-                            edtAns.getText().clear();
-                        }
+                        case "Level 1":
+                            if (ans.equalsIgnoreCase(ansData[i])) {
+                                txtTrans.setText(transData[i]);
+                                txtTrans.setVisibility(View.VISIBLE);
+                                txtCongra.setVisibility(View.VISIBLE);
+                                txtCongra.startAnimation(animation);
+                                score+=1;
+                                saveScore();
+                            } else {
+                                toastShowWrong(v);
+                                txtTrans.setText(edtAns.getText().toString());
+                                txtTrans.setVisibility(View.VISIBLE);
+                                edtAns.getText().clear();
+                            }
+                            break;
+                        case "Level 2":
+                            if (ans.equalsIgnoreCase(ansData2[i])) {
+                                score+=1;
+                                saveScore();
+                                txtTrans.setText(transData2[i]);
+                                txtTrans.setVisibility(View.VISIBLE);
+                                txtCongra.setVisibility(View.VISIBLE);
+                            } else {
+                                toastShowWrong(v);
+                                txtTrans.setText(edtAns.getText().toString());
+                                txtTrans.setVisibility(View.VISIBLE);
+                                edtAns.getText().clear();
+                            }
+                        case "Level 3":
+                            if (ans.equalsIgnoreCase(ansData3[i])) {
+                                score+=1;
+                                saveScore();
+                                txtTrans.setText(transData3[i]);
+                                txtTrans.setVisibility(View.VISIBLE);
+                                txtCongra.setVisibility(View.VISIBLE);
+                            } else {
+                                toastShowWrong(v);
+                                txtTrans.setText(edtAns.getText().toString());
+                                txtTrans.setVisibility(View.VISIBLE);
+                                edtAns.getText().clear();
+                            }
                     }
                 }
-                if(countClick==2)
+                else if(countClick==2)
                 {
-
                     imgAns.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            String level = txtLevel.getText().toString().trim();
                             v.startAnimation(animation);
-                            if(txtLevel.getText().equals("Level 1"))
+                            switch (level)
                             {
-                                mediaPlayer = MediaPlayer.create(PracticeActivity.this,playAns1.get(i));
-                               // mediaPlayer.start();
+                                case "Level 1":
+                                    mediaPlayerHint = MediaPlayer.create(PracticeActivity.this,playAns1.get(i));
+                                    break;
+                                case "Level 2":
+                                    mediaPlayerHint = MediaPlayer.create(PracticeActivity.this,playAns2.get(i));
+                                    break;
+                                case "Level 3":
+                                    mediaPlayerHint = MediaPlayer.create(PracticeActivity.this,ansQues3.get(i));
+                                    break;
 
                             }
-                            if(txtLevel.getText().equals("Level 2"))
-                            {
-                                mediaPlayer = MediaPlayer.create(PracticeActivity.this,playAns2.get(i));
-                                //mediaPlayer.start();
+                            mediaPlayerHint.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                                @Override
+                                public void onCompletion(MediaPlayer mp) {
+                                    String level = txtLevel.getText().toString().trim();
+                                    switch (level)
+                                    {
+                                        case "Level 1":
+                                            mediaPlayerHint = MediaPlayer.create(PracticeActivity.this,playAns1.get(i));
+                                            break;
+                                        case "Level 2":
+                                            mediaPlayerHint = MediaPlayer.create(PracticeActivity.this,playAns2.get(i));
+                                            break;
+                                        case "Level 3":
+                                            mediaPlayerHint = MediaPlayer.create(PracticeActivity.this,ansQues3.get(i));
+                                            break;
 
-                            }
-                            mediaPlayer.start();
+                                    }
+                                }
+                            });
+                           // mediaPlayer.reset();
+                            mediaPlayerHint.start();
                         }
                     });
-                    if(txtLevel.getText().equals("Level 1"))
+                    switch (level)
                     {
-                        if(ans.equals(""))
-                        {
-                            imgAns.setVisibility(View.VISIBLE);
-                        }
-                        else if(ans.equalsIgnoreCase(ansData[i]))
-                        {
-                            txtTrans.setText(transData[i]);
-                            txtTrans.setVisibility(View.VISIBLE);
-                            txtCongra.setVisibility(View.VISIBLE);
-                            //Toast.makeText(PracticeActivity.this, "true", Toast.LENGTH_SHORT).show();
-                        }
-                        else
-                        {
-                            toastShowWrong(v);
-                            imgAns.setVisibility(View.VISIBLE);
-                            txtTrans.setText(edtAns.getText().toString());
-                            txtTrans.setVisibility(View.VISIBLE);
-                            //Toast.makeText(PracticeActivity.this, "false", Toast.LENGTH_SHORT).show();
-                            edtAns.getText().clear();
-                        }
-                    }
-                    if(txtLevel.getText().equals("Level 2"))
-                    {
-                        if(ans.equals(""))
-                        {
-                            imgAns.setVisibility(View.VISIBLE);
-                        }
-                        else if(ans.equalsIgnoreCase(ansData2[i]))
-                        {
-                            txtTrans.setText(transData2[i]);
-                            txtTrans.setVisibility(View.VISIBLE);
-                            txtCongra.setVisibility(View.VISIBLE);
-                           //Toast.makeText(PracticeActivity.this, "true", Toast.LENGTH_SHORT).show();
-                        }
-                        else
-                        {
-                            toastShowWrong(v);
-                            imgAns.setVisibility(View.VISIBLE);
-                            txtTrans.setText(edtAns.getText().toString());
-                            txtTrans.setVisibility(View.VISIBLE);
-                           // Toast.makeText(PracticeActivity.this, "false", Toast.LENGTH_SHORT).show();
-                            edtAns.getText().clear();
-                        }
+                        case "Level 1":
+                            if(ans.equals(""))
+                            {
+                                imgAns.setVisibility(View.VISIBLE);
+                            }
+                            else if(ans.equalsIgnoreCase(ansData[i]))
+                            {
+                                txtTrans.setText(transData[i]);
+                                txtTrans.setVisibility(View.VISIBLE);
+                                txtCongra.setVisibility(View.VISIBLE);
+                            }
+                            else
+                            {
+                                toastShowWrong(v);
+                                imgAns.setVisibility(View.VISIBLE);
+                                txtTrans.setText(edtAns.getText().toString());
+                                txtTrans.setVisibility(View.VISIBLE);
+                                edtAns.getText().clear();
+                            }
+                            break;
+                        case "Level 2":
+                            if(ans.equals(""))
+                            {
+                                imgAns.setVisibility(View.VISIBLE);
+                            }
+                            else if(ans.equalsIgnoreCase(ansData2[i]))
+                            {
+                                txtTrans.setText(transData2[i]);
+                                txtTrans.setVisibility(View.VISIBLE);
+                                txtCongra.setVisibility(View.VISIBLE);
+                            }
+                            else
+                            {
+                                toastShowWrong(v);
+                                imgAns.setVisibility(View.VISIBLE);
+                                txtTrans.setText(edtAns.getText().toString());
+                                txtTrans.setVisibility(View.VISIBLE);
+                                edtAns.getText().clear();
+                            }
+                            break;
+                        case "Level 3":
+                            if(ans.equals(""))
+                            {
+                                imgAns.setVisibility(View.VISIBLE);
+                            }
+                            else if(ans.equalsIgnoreCase(ansData3[i]))
+                            {
+                                txtTrans.setText(transData3[i]);
+                                txtTrans.setVisibility(View.VISIBLE);
+                                txtCongra.setVisibility(View.VISIBLE);
+                            }
+                            else
+                            {
+                                toastShowWrong(v);
+                                imgAns.setVisibility(View.VISIBLE);
+                                txtTrans.setText(edtAns.getText().toString());
+                                txtTrans.setVisibility(View.VISIBLE);
+                                edtAns.getText().clear();
+                            }
+                            break;
                     }
                 }
-                if(countClick ==3)
+                else if(countClick==3)
                 {
-                    if(txtLevel.getText().equals("Level 1")) {
-
-                        if (ans.equals("")) {
-                            imgAns.setVisibility(View.VISIBLE);
-                            txtTrans.setText(transData[i]);
-                            txtTrans.setVisibility(View.VISIBLE);
-                            // Toast.makeText(PracticeActivity.this, "Please insert", Toast.LENGTH_SHORT).show();
-                        } else if (ans.equalsIgnoreCase(ansData[i])) {
-                            txtTrans.setText(transData[i]);
-                            txtTrans.setVisibility(View.VISIBLE);
-                            txtCongra.setVisibility(View.VISIBLE);
-                           // Toast.makeText(PracticeActivity.this, "true", Toast.LENGTH_SHORT).show();
-                        } else {
-                            toastShowWrong(v);
-                            imgAns.setVisibility(View.VISIBLE);
-                            txtTrans.setText(transData[i]);
-                            txtTrans.setVisibility(View.VISIBLE);
-                            //Toast.makeText(PracticeActivity.this, "false", Toast.LENGTH_SHORT).show();
-                            edtAns.getText().clear();
-                        }
-                    }
-                    if(txtLevel.getText().equals("Level 2"))
+                    switch (level)
                     {
-
-                        if (ans.equals("")) {
-                            imgAns.setVisibility(View.VISIBLE);
-                            txtTrans.setText(transData2[i]);
-                            txtTrans.setVisibility(View.VISIBLE);
-                            // Toast.makeText(PracticeActivity.this, "Please insert", Toast.LENGTH_SHORT).show();
-                        } else if (ans.equalsIgnoreCase(ansData2[i])) {
-                           // Toast.makeText(PracticeActivity.this, "true", Toast.LENGTH_SHORT).show();
-                            txtTrans.setText(transData2[i]);
-                            txtCongra.setVisibility(View.VISIBLE);
-                            txtTrans.setVisibility(View.VISIBLE);
-                        } else {
-                            toastShowWrong(v);
-                            imgAns.setVisibility(View.VISIBLE);
-                            txtTrans.setText(transData2[i]);
-                            txtTrans.setVisibility(View.VISIBLE);
-                            //Toast.makeText(PracticeActivity.this, "false", Toast.LENGTH_SHORT).show();
-                            edtAns.getText().clear();
-                        }
+                        case "Level 1":
+                            if (ans.equals("")) {
+                                imgAns.setVisibility(View.VISIBLE);
+                                txtTrans.setText(transData[i]);
+                                txtTrans.setVisibility(View.VISIBLE);
+                            } else if (ans.equalsIgnoreCase(ansData[i])) {
+                                txtTrans.setText(transData[i]);
+                                txtTrans.setVisibility(View.VISIBLE);
+                                txtCongra.setVisibility(View.VISIBLE);
+                            } else {
+                                toastShowWrong(v);
+                                imgAns.setVisibility(View.VISIBLE);
+                                txtTrans.setText(transData[i]);
+                                txtTrans.setVisibility(View.VISIBLE);
+                                edtAns.getText().clear();
+                            }
+                            break;
+                        case "Level 2":
+                            if (ans.equals("")) {
+                                imgAns.setVisibility(View.VISIBLE);
+                                txtTrans.setText(transData2[i]);
+                                txtTrans.setVisibility(View.VISIBLE);
+                            } else if (ans.equalsIgnoreCase(ansData2[i])) {
+                                txtTrans.setText(transData2[i]);
+                                txtCongra.setVisibility(View.VISIBLE);
+                                txtTrans.setVisibility(View.VISIBLE);
+                            } else {
+                                toastShowWrong(v);
+                                imgAns.setVisibility(View.VISIBLE);
+                                txtTrans.setText(transData2[i]);
+                                txtTrans.setVisibility(View.VISIBLE);
+                                edtAns.getText().clear();
+                            }
+                            break;
+                        case "Level 3":
+                            if (ans.equals("")) {
+                                imgAns.setVisibility(View.VISIBLE);
+                                txtTrans.setText(transData3[i]);
+                                txtTrans.setVisibility(View.VISIBLE);
+                            } else if (ans.equalsIgnoreCase(ansData2[i])) {
+                                txtTrans.setText(transData3[i]);
+                                txtCongra.setVisibility(View.VISIBLE);
+                                txtTrans.setVisibility(View.VISIBLE);
+                            } else {
+                                toastShowWrong(v);
+                                imgAns.setVisibility(View.VISIBLE);
+                                txtTrans.setText(transData3[i]);
+                                txtTrans.setVisibility(View.VISIBLE);
+                                edtAns.getText().clear();
+                            }
+                            break;
                     }
                 }
-                if(countClick>=4)
+                else if(countClick>=4)
                 {
-                    if(txtLevel.getText().equals("Level 1")) {
-                        if (ans.equals("")) {
-                            txtTrans.setText(ansData[i]);
-                            txtTrans.setVisibility(View.VISIBLE);
-                            // Toast.makeText(PracticeActivity.this, "Please insert", Toast.LENGTH_SHORT).show();
-                        } else if (ans.equalsIgnoreCase(ansData[i])) {
-                            txtCongra.setVisibility(View.VISIBLE);
-                           // Toast.makeText(PracticeActivity.this, "true", Toast.LENGTH_SHORT).show();
-                        } else {
-                            toastShowWrong(v);
-                            txtTrans.setText(ansData[i]);
-                            txtTrans.setVisibility(View.VISIBLE);
-                           // Toast.makeText(PracticeActivity.this, "false", Toast.LENGTH_SHORT).show();
-                            edtAns.getText().clear();
-                        }
-                    }
-                    if(txtLevel.getText().equals("Level 2"))
+                    switch (level)
                     {
+                        case "Level 1":
+                            if (ans.equals("")) {
+                                txtTrans.setText(ansData[i]);
+                                txtTrans.setVisibility(View.VISIBLE);
+                            } else if (ans.equalsIgnoreCase(ansData[i])) {
+                                txtCongra.setVisibility(View.VISIBLE);
+                            } else {
+                                toastShowWrong(v);
+                                txtTrans.setText(ansData[i]);
+                                txtTrans.setVisibility(View.VISIBLE);
+                                edtAns.getText().clear();
+                            }
+                            break;
+                        case "Level 2":
+                            if (ans.equals("")) {
+                                txtTrans.setText(ansData2[i]);
+                                txtTrans.setVisibility(View.VISIBLE);
+                            } else if (ans.equalsIgnoreCase(ansData2[i])) {
+                                txtCongra.setVisibility(View.VISIBLE);
+                            } else {
+                                toastShowWrong(v);
+                                txtTrans.setText(ansData2[i]);
+                                txtTrans.setVisibility(View.VISIBLE);
+                                Toast.makeText(PracticeActivity.this, "false", Toast.LENGTH_SHORT).show();
+                                edtAns.getText().clear();
+                            }
+                            break;
+                        case "Level 3":
+                            if (ans.equals("")) {
+                                txtTrans.setText(ansData3[i]);
+                                txtTrans.setVisibility(View.VISIBLE);
+                            } else if (ans.equalsIgnoreCase(ansData3[i])) {
+                                txtCongra.setVisibility(View.VISIBLE);
+                            } else {
+                                toastShowWrong(v);
+                                txtTrans.setText(ansData3[i]);
+                                txtTrans.setVisibility(View.VISIBLE);
+                                edtAns.getText().clear();
+                            }
+                            break;
 
-                        if (ans.equals("")) {
-                            txtTrans.setText(ansData2[i]);
-                            txtTrans.setVisibility(View.VISIBLE);
-                            //Toast.makeText(PracticeActivity.this, "Please insert", Toast.LENGTH_SHORT).show();
-                        } else if (ans.equalsIgnoreCase(ansData2[i])) {
-                            txtCongra.setVisibility(View.VISIBLE);
-                           // Toast.makeText(PracticeActivity.this, "true", Toast.LENGTH_SHORT).show();
-                        } else {
-                            txtTrans.setText(ansData2[i]);
-                            txtTrans.setVisibility(View.VISIBLE);
-                            Toast.makeText(PracticeActivity.this, "false", Toast.LENGTH_SHORT).show();
-                            edtAns.getText().clear();
-                        }
                     }
                 }
-
                 txtScore.setText("Score:"+score);
             }
 
@@ -359,13 +433,45 @@ public class PracticeActivity extends AppCompatActivity {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int level =0;
                 int current = progressQues.getProgress();
                 countClick=0;
-                 checkDuplicate();
+                checkDuplicate();
                 duplicate=random.nextInt(listRan.size());
                 i=listRan.get(duplicate);
                 listRan.remove(duplicate);
+                String le = txtLevel.getText().toString();
+                switch (le)
+                {
+                    case "Level 1":
+                        if( current<progressQues.getMax())
+                        {
+                            txtQues.setText(quesData[i]);
+                        }
+                        else if(current>=progressQues.getMax()){
+                            current = 0;
+                            txtLevel.setText("Level 2");
+                            txtQues.setText(quesData2[i]);
+                        }
+                       break;
+                    case "Level 2":
+                        if( current<progressQues.getMax())
+                        {
+                            txtQues.setText(quesData2[i]);
+                        }
+                        else if(current>=progressQues.getMax()) {
+                            current = 0;
+                            txtLevel.setText("Level 3");
+                            txtQues.setText(quesData3[i]);
+                        }
+                        break;
+                    case "Level 3":
+                        if( current<progressQues.getMax())
+                        {
+                            txtQues.setText(quesData3[i]);
+                        }
+                        break;
+                }
+                /*
                 if(txtLevel.getText().equals("Level 1") && current<progressQues.getMax()) {
                     txtQues.setText(quesData[i]);
 
@@ -380,7 +486,7 @@ public class PracticeActivity extends AppCompatActivity {
                 else if(txtLevel.getText().equals("Level 2") &&current <progressQues.getMax())
                 {
                     txtQues.setText(quesData2[i]);
-                }
+                }*/
                 progressQues.setProgress(current+20);
                 txtTrans.setVisibility(View.INVISIBLE);
                 edtAns.getText().clear();
@@ -388,7 +494,6 @@ public class PracticeActivity extends AppCompatActivity {
                 imgAns.setVisibility(View.INVISIBLE);
             }
         });
-
     }
     private void toastShow(View view)
     {
