@@ -33,8 +33,6 @@ public class AudioActivity extends AppCompatActivity {
     Random random;
     int no=1,corr=0,incorr=0;
     int pos,duplicate;
-    List<TopicVocabulary> listTopic;
-    TopicVocabularyActivity activity;
 
     final String[] wordAnswer = {"abide","accommodate","address","agreement","arrangement","association",
             "assurance","attend","attract","avoid","cancellation","characteristic","compare","competition","consequence",
