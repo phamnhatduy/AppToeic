@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,7 +54,10 @@ public class TitleAdapter extends ArrayAdapter<TitleOnPhone> {
             viewHolder = new ViewHolder();
             convertView = LayoutInflater.from(context).inflate(R.layout.item_title_listview, parent, false);
             viewHolder.tvTitleName = (TextView) convertView.findViewById(R.id.tv_TitleName);
-
+            viewHolder.constraint1=convertView.findViewById(R.id.constraint_t1);
+            viewHolder.constraint2=convertView.findViewById(R.id.constraint_t2);
+            viewHolder.constraint3=convertView.findViewById(R.id.constraint_t3);
+            viewHolder.constraint4=convertView.findViewById(R.id.constraint_t4);
             viewHolder.btnPart1 = (Button) convertView.findViewById(R.id.button_part1);
             viewHolder.btnPart2 = (Button) convertView.findViewById(R.id.button_part2);
             viewHolder.btnPart3 = (Button) convertView.findViewById(R.id.button_part3);
@@ -88,6 +92,62 @@ public class TitleAdapter extends ArrayAdapter<TitleOnPhone> {
                 viewHolder.tvScore4.setVisibility(View.INVISIBLE);
                 viewHolder.tvDate4.setVisibility(View.INVISIBLE);
             }
+            viewHolder.constraint1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getContext(), Part1Activity.class);
+                    intent.putExtra("serialName", listTitle.get(position).getSerialName());
+                    intent.putExtra("titleName", listTitle.get(position).getTitleName());
+                    intent.putExtra("time", "" + listTitle.get(position).getTime1());
+                    intent.putExtra("numberOfQuestion", listTitle.get(position).getNumberOfQuestions1());
+                    intent.putExtra("partID", listTitle.get(position).getPart1ID());
+                    intent.putExtra("audio", listTitle.get(position).getPart1Audio());
+//                    getContext().startActivity(intent);
+                    ((Activity)parent.getContext()).startActivityForResult(intent, 99);
+                }
+            });
+            viewHolder.constraint2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getContext(), Part2Activity.class);
+                    intent.putExtra("serialName", listTitle.get(position).getSerialName());
+                    intent.putExtra("titleName", listTitle.get(position).getTitleName());
+                    intent.putExtra("time", "" + listTitle.get(position).getTime2());
+                    intent.putExtra("numberOfQuestion", listTitle.get(position).getNumberOfQuestions2());
+                    intent.putExtra("serialID", listTitle.get(position).getSerialID());
+                    intent.putExtra("partID", listTitle.get(position).getPart2ID());
+                    intent.putExtra("audio", listTitle.get(position).getPart2Audio());
+                    getContext().startActivity(intent);
+                }
+            });
+            viewHolder.constraint3.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getContext(), Part3Activity.class);
+                    intent.putExtra("serialName", listTitle.get(position).getSerialName());
+                    intent.putExtra("titleName", listTitle.get(position).getTitleName());
+                    intent.putExtra("time", "" + listTitle.get(position).getTime3());
+                    intent.putExtra("numberOfQuestion", listTitle.get(position).getNumberOfQuestions3());
+                    intent.putExtra("serialID", "" + listTitle.get(position).getSerialID());
+                    intent.putExtra("partID", listTitle.get(position).getPart3ID());
+                    intent.putExtra("audio", listTitle.get(position).getPart3Audio());
+                    getContext().startActivity(intent);
+                }
+            });
+            viewHolder.constraint4.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getContext(), Part4Activity.class);
+                    intent.putExtra("serialName", listTitle.get(position).getSerialName());
+                    intent.putExtra("titleName", listTitle.get(position).getTitleName());
+                    intent.putExtra("time", "" + listTitle.get(position).getTime4());
+                    intent.putExtra("numberOfQuestion", listTitle.get(position).getNumberOfQuestions4());
+                    intent.putExtra("serialID", listTitle.get(position).getSerialID());
+                    intent.putExtra("partID", listTitle.get(position).getPart4ID());
+                    intent.putExtra("audio", listTitle.get(position).getPart4Audio());
+                    getContext().startActivity(intent);
+                }
+            });
             viewHolder.btnPart1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -188,5 +248,6 @@ public class TitleAdapter extends ArrayAdapter<TitleOnPhone> {
         TextView tvScore1, tvScore2, tvScore3, tvScore4;
         TextView tvDate1, tvDate2, tvDate3, tvDate4;
         Button btnPart1, btnPart2, btnPart3, btnPart4;
+        ConstraintLayout constraint1,constraint2,constraint3,constraint4;
     }
 }

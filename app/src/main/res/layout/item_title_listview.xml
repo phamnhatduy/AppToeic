@@ -6,6 +6,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#FFFFFF"
     android:orientation="vertical">
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -62,7 +63,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="2dp"
         android:layout_marginRight="2dp"
-        android:background="@drawable/border_title1">
+        android:id="@+id/constraint_t1"
+        android:background="@drawable/button_effect">
 
         <Button
             android:id="@+id/button_part1"
@@ -74,7 +76,7 @@
             android:layout_marginBottom="3dp"
             android:text="Part 1"
             android:textColor="#333333"
-            android:background="@drawable/border_button4"
+            android:background="@drawable/border_part1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -116,19 +118,20 @@
         android:layout_marginTop="1dp"
         android:layout_marginLeft="2dp"
         android:layout_marginRight="2dp"
-        android:background="@drawable/border_title2">
+        android:id="@+id/constraint_t2"
+        android:background="@drawable/button_effect2">
 
         <Button
             android:id="@+id/button_part2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
             android:layout_marginStart="4dp"
-            android:layout_marginTop="3dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="8dp"
             android:layout_marginBottom="3dp"
+            android:background="@drawable/border_part2"
             android:text="Part 2"
             android:textColor="#333333"
-            android:background="@drawable/border_button4"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -169,7 +172,8 @@
         android:layout_marginTop="1dp"
         android:layout_marginLeft="2dp"
         android:layout_marginRight="2dp"
-        android:background="@drawable/border_title1">
+        android:id="@+id/constraint_t3"
+        android:background="@drawable/button_effect">
 
         <Button
             android:id="@+id/button_part3"
@@ -181,7 +185,7 @@
             android:layout_marginBottom="3dp"
             android:text="Part 3"
             android:textColor="#333333"
-            android:background="@drawable/border_button4"
+            android:background="@drawable/border_part1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -223,8 +227,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="1dp"
         android:layout_marginLeft="2dp"
+        android:id="@+id/constraint_t4"
         android:layout_marginRight="2dp"
-        android:background="@drawable/border_title2">
+        android:background="@drawable/button_effect2">
 
         <Button
             android:id="@+id/button_part4"
@@ -236,7 +241,7 @@
             android:layout_marginBottom="3dp"
             android:text="Part 4"
             android:textColor="#333333"
-            android:background="@drawable/border_button4"
+            android:background="@drawable/border_part2"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

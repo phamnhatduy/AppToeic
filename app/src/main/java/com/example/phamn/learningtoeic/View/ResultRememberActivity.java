@@ -54,10 +54,10 @@ public class ResultRememberActivity extends AppCompatActivity {
         //wronglists.add(new Wronglist(arrayList2.toString()));
         adapter = new WronglistAdapter(this,R.layout.list_wrong,wronglists);
         //arrayList.add("AAAAAAAAAA");
-      // ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
-                // android.R.layout.simple_dropdown_item_1line
-               //,arrayList);
-       // listView.setAdapter(arrayAdapter);
+        // ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
+        // android.R.layout.simple_dropdown_item_1line
+        //,arrayList);
+        // listView.setAdapter(arrayAdapter);
         listView.setAdapter(adapter);
 
 
@@ -86,15 +86,20 @@ public class ResultRememberActivity extends AppCompatActivity {
             }
         });
     }
-
+/*
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                this.finish();
-                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
+    }*/
+        /*
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        return super.onOptionsItemSelected(item);
+    }*/
 }

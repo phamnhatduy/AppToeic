@@ -14,7 +14,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:text="Dịch vụ hổ trợ"
+        android:text="Support"
         android:textSize="28dp"
         android:textStyle="bold"
         android:textColor="#444444"/>
@@ -47,7 +47,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="30dp"
             android:layout_marginBottom="10dp"
-            android:text="Đóng"
+            android:text="Close"
             android:textColor="#333333"
             android:id="@+id/button_close"
             android:textSize="10dp"/>

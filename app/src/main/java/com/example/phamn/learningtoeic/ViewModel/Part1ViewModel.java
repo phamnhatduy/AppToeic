@@ -86,7 +86,7 @@ public class Part1ViewModel extends AndroidViewModel{
             question.setValue(listQuestion.getValue().get(currentIndex.getValue()));
         }
         else
-            Toast.makeText(getApplication(), "đây là câu cuối", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplication(), "First question", Toast.LENGTH_SHORT).show();
     }
 
     public void previousQuestion(){
@@ -95,7 +95,7 @@ public class Part1ViewModel extends AndroidViewModel{
             question.setValue(listQuestion.getValue().get(currentIndex.getValue()));
         }
         else
-            Toast.makeText(getApplication(), "đây là câu đầu", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplication(), "Last question", Toast.LENGTH_SHORT).show();
     }
 
     public void changeAnswer(String answer){

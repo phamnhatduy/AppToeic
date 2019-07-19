@@ -40,7 +40,7 @@ public class PracticeActivity extends AppCompatActivity {
     SharedPreferences preferences;
     int[] number  = {0,1,2,3,4};
     ArrayList<Integer> listRan =new ArrayList<>();
-    MediaPlayer mediaPlayer,mediaPlayerHint;
+    MediaPlayer mediaPlayer;
     final String[] quesData = {"Traffic is ____ freely on the motorway.","This photo ___ us a busy rush hour scene.",
             "Several people can be seen ___ to cross the road.","It looks as if it is ___ to rain.",
             "The ___ are all brightly coloured."};
@@ -60,9 +60,10 @@ public class PracticeActivity extends AppCompatActivity {
             "The patient is about to ___ into tears","The shopper is ___ in black.","The operator is ___."};
     final String[] ansData3 ={"looking","shirt","burst","dressed","bareheaded"};
     final String[] transData3 ={"Người đàn ông trông thật đau khổ.","Người đàn ông mặc áo vàng trơn.","Bệnh nhân sắp bật khóc.",
-    "Người mua sắm mặc đồ đen.","Người điểu khiển không đội nón."};
+            "Người mua sắm mặc đồ đen.","Người điểu khiển không đội nón."};
+    Animation aniRepeat,animation;
     @Override
-    protected void onCreate(final Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_practice);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -73,8 +74,8 @@ public class PracticeActivity extends AppCompatActivity {
         if(highScore>=score) {
             txtHighScore.setText("HighScore:" + highScore);
         }
-        final Animation animation = AnimationUtils.loadAnimation(this,R.anim.scale_sound);
-        //check random
+        animation = AnimationUtils.loadAnimation(this,R.anim.scale_sound);
+        aniRepeat = AnimationUtils.loadAnimation(this,R.anim.scale_sound_repeat);
         for(int j : number)
         {
             listRan.add(j);
@@ -83,7 +84,6 @@ public class PracticeActivity extends AppCompatActivity {
         duplicate = random.nextInt(listRan.size());
         i=listRan.get(duplicate);
         listRan.remove(duplicate);
-        // set question
         if(txtLevel.getText().equals("Level 1")) {
             txtQues.setText(quesData[i]);
         }else if(txtLevel.getText().equals("Level 2")){
@@ -135,21 +135,18 @@ public class PracticeActivity extends AppCompatActivity {
 
 
         imgStart.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
-                String level = txtLevel.getText().toString().trim();
-                switch (level)
+                if(txtLevel.getText().equals("Level 1")) {
+                    mediaPlayer = MediaPlayer.create(PracticeActivity.this, playQues1.get(i));
+                }
+                else if(txtLevel.getText().equals("Level 2"))
                 {
-                    case "Level 1":
-                        mediaPlayer = MediaPlayer.create(PracticeActivity.this, playQues1.get(i));
-                        break;
-                    case "Level 2":
-                        mediaPlayer= MediaPlayer.create(PracticeActivity.this,playQues2.get(i));
-                        break;
-                    case "Level 3":
-                        mediaPlayer= MediaPlayer.create(PracticeActivity.this,playQues3.get(i));
-                        break;
+                    mediaPlayer=MediaPlayer.create(PracticeActivity.this,playQues2.get(i));
+                }
+                else if(txtLevel.getText().equals("Level 3"))
+                {
+                    mediaPlayer=MediaPlayer.create(PracticeActivity.this,playQues3.get(i));
                 }
                 mediaPlayer.start();
                 v.startAnimation(animation);
@@ -158,16 +155,15 @@ public class PracticeActivity extends AppCompatActivity {
         });
 
         btnConfirm.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 String ans = edtAns.getText().toString().trim();
-                String level = txtLevel.getText().toString().trim();
+                final String level = txtLevel.getText().toString().trim();
                 countClick+=1;
                 if (ans.equals(" ")) {
-                   toastShow(v);
+                    toastShow(v);
                 }
-                if(countClick==1)
+                if(countClick == 1)
                 {
                     switch (level)
                     {
@@ -193,12 +189,15 @@ public class PracticeActivity extends AppCompatActivity {
                                 txtTrans.setText(transData2[i]);
                                 txtTrans.setVisibility(View.VISIBLE);
                                 txtCongra.setVisibility(View.VISIBLE);
+                                //Toast.makeText(PracticeActivity.this, "true", Toast.LENGTH_SHORT).show();
                             } else {
                                 toastShowWrong(v);
+                                //Toast.makeText(PracticeActivity.this, "false", Toast.LENGTH_SHORT).show();
                                 txtTrans.setText(edtAns.getText().toString());
                                 txtTrans.setVisibility(View.VISIBLE);
                                 edtAns.getText().clear();
                             }
+                            break;
                         case "Level 3":
                             if (ans.equalsIgnoreCase(ansData3[i])) {
                                 score+=1;
@@ -206,55 +205,36 @@ public class PracticeActivity extends AppCompatActivity {
                                 txtTrans.setText(transData3[i]);
                                 txtTrans.setVisibility(View.VISIBLE);
                                 txtCongra.setVisibility(View.VISIBLE);
+                                //Toast.makeText(PracticeActivity.this, "true", Toast.LENGTH_SHORT).show();
                             } else {
                                 toastShowWrong(v);
+                                //Toast.makeText(PracticeActivity.this, "false", Toast.LENGTH_SHORT).show();
                                 txtTrans.setText(edtAns.getText().toString());
                                 txtTrans.setVisibility(View.VISIBLE);
                                 edtAns.getText().clear();
                             }
+                            break;
                     }
                 }
-                else if(countClick==2)
+                else if(countClick == 2)
                 {
                     imgAns.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            String level = txtLevel.getText().toString().trim();
                             v.startAnimation(animation);
                             switch (level)
                             {
                                 case "Level 1":
-                                    mediaPlayerHint = MediaPlayer.create(PracticeActivity.this,playAns1.get(i));
+                                    mediaPlayer = MediaPlayer.create(PracticeActivity.this,playAns1.get(i));
                                     break;
                                 case "Level 2":
-                                    mediaPlayerHint = MediaPlayer.create(PracticeActivity.this,playAns2.get(i));
+                                    mediaPlayer = MediaPlayer.create(PracticeActivity.this,playAns2.get(i));
                                     break;
                                 case "Level 3":
-                                    mediaPlayerHint = MediaPlayer.create(PracticeActivity.this,ansQues3.get(i));
+                                    mediaPlayer=MediaPlayer.create(PracticeActivity.this,ansQues3.get(i));
                                     break;
-
                             }
-                            mediaPlayerHint.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                                @Override
-                                public void onCompletion(MediaPlayer mp) {
-                                    String level = txtLevel.getText().toString().trim();
-                                    switch (level)
-                                    {
-                                        case "Level 1":
-                                            mediaPlayerHint = MediaPlayer.create(PracticeActivity.this,playAns1.get(i));
-                                            break;
-                                        case "Level 2":
-                                            mediaPlayerHint = MediaPlayer.create(PracticeActivity.this,playAns2.get(i));
-                                            break;
-                                        case "Level 3":
-                                            mediaPlayerHint = MediaPlayer.create(PracticeActivity.this,ansQues3.get(i));
-                                            break;
-
-                                    }
-                                }
-                            });
-                           // mediaPlayer.reset();
-                            mediaPlayerHint.start();
+                            mediaPlayer.start();
                         }
                     });
                     switch (level)
@@ -269,6 +249,7 @@ public class PracticeActivity extends AppCompatActivity {
                                 txtTrans.setText(transData[i]);
                                 txtTrans.setVisibility(View.VISIBLE);
                                 txtCongra.setVisibility(View.VISIBLE);
+                                //Toast.makeText(PracticeActivity.this, "true", Toast.LENGTH_SHORT).show();
                             }
                             else
                             {
@@ -276,6 +257,7 @@ public class PracticeActivity extends AppCompatActivity {
                                 imgAns.setVisibility(View.VISIBLE);
                                 txtTrans.setText(edtAns.getText().toString());
                                 txtTrans.setVisibility(View.VISIBLE);
+                                //Toast.makeText(PracticeActivity.this, "false", Toast.LENGTH_SHORT).show();
                                 edtAns.getText().clear();
                             }
                             break;
@@ -289,6 +271,7 @@ public class PracticeActivity extends AppCompatActivity {
                                 txtTrans.setText(transData2[i]);
                                 txtTrans.setVisibility(View.VISIBLE);
                                 txtCongra.setVisibility(View.VISIBLE);
+                                //Toast.makeText(PracticeActivity.this, "true", Toast.LENGTH_SHORT).show();
                             }
                             else
                             {
@@ -296,6 +279,7 @@ public class PracticeActivity extends AppCompatActivity {
                                 imgAns.setVisibility(View.VISIBLE);
                                 txtTrans.setText(edtAns.getText().toString());
                                 txtTrans.setVisibility(View.VISIBLE);
+                                // Toast.makeText(PracticeActivity.this, "false", Toast.LENGTH_SHORT).show();
                                 edtAns.getText().clear();
                             }
                             break;
@@ -309,6 +293,7 @@ public class PracticeActivity extends AppCompatActivity {
                                 txtTrans.setText(transData3[i]);
                                 txtTrans.setVisibility(View.VISIBLE);
                                 txtCongra.setVisibility(View.VISIBLE);
+                                //Toast.makeText(PracticeActivity.this, "true", Toast.LENGTH_SHORT).show();
                             }
                             else
                             {
@@ -316,12 +301,13 @@ public class PracticeActivity extends AppCompatActivity {
                                 imgAns.setVisibility(View.VISIBLE);
                                 txtTrans.setText(edtAns.getText().toString());
                                 txtTrans.setVisibility(View.VISIBLE);
+                                // Toast.makeText(PracticeActivity.this, "false", Toast.LENGTH_SHORT).show();
                                 edtAns.getText().clear();
                             }
-                            break;
+
                     }
                 }
-                else if(countClick==3)
+                else if(countClick ==3)
                 {
                     switch (level)
                     {
@@ -330,15 +316,18 @@ public class PracticeActivity extends AppCompatActivity {
                                 imgAns.setVisibility(View.VISIBLE);
                                 txtTrans.setText(transData[i]);
                                 txtTrans.setVisibility(View.VISIBLE);
+                                // Toast.makeText(PracticeActivity.this, "Please insert", Toast.LENGTH_SHORT).show();
                             } else if (ans.equalsIgnoreCase(ansData[i])) {
                                 txtTrans.setText(transData[i]);
                                 txtTrans.setVisibility(View.VISIBLE);
                                 txtCongra.setVisibility(View.VISIBLE);
+                                // Toast.makeText(PracticeActivity.this, "true", Toast.LENGTH_SHORT).show();
                             } else {
                                 toastShowWrong(v);
                                 imgAns.setVisibility(View.VISIBLE);
                                 txtTrans.setText(transData[i]);
                                 txtTrans.setVisibility(View.VISIBLE);
+                                //Toast.makeText(PracticeActivity.this, "false", Toast.LENGTH_SHORT).show();
                                 edtAns.getText().clear();
                             }
                             break;
@@ -347,7 +336,9 @@ public class PracticeActivity extends AppCompatActivity {
                                 imgAns.setVisibility(View.VISIBLE);
                                 txtTrans.setText(transData2[i]);
                                 txtTrans.setVisibility(View.VISIBLE);
+                                // Toast.makeText(PracticeActivity.this, "Please insert", Toast.LENGTH_SHORT).show();
                             } else if (ans.equalsIgnoreCase(ansData2[i])) {
+                                // Toast.makeText(PracticeActivity.this, "true", Toast.LENGTH_SHORT).show();
                                 txtTrans.setText(transData2[i]);
                                 txtCongra.setVisibility(View.VISIBLE);
                                 txtTrans.setVisibility(View.VISIBLE);
@@ -356,6 +347,7 @@ public class PracticeActivity extends AppCompatActivity {
                                 imgAns.setVisibility(View.VISIBLE);
                                 txtTrans.setText(transData2[i]);
                                 txtTrans.setVisibility(View.VISIBLE);
+                                //Toast.makeText(PracticeActivity.this, "false", Toast.LENGTH_SHORT).show();
                                 edtAns.getText().clear();
                             }
                             break;
@@ -364,7 +356,9 @@ public class PracticeActivity extends AppCompatActivity {
                                 imgAns.setVisibility(View.VISIBLE);
                                 txtTrans.setText(transData3[i]);
                                 txtTrans.setVisibility(View.VISIBLE);
-                            } else if (ans.equalsIgnoreCase(ansData2[i])) {
+                                // Toast.makeText(PracticeActivity.this, "Please insert", Toast.LENGTH_SHORT).show();
+                            } else if (ans.equalsIgnoreCase(ansData3[i])) {
+                                // Toast.makeText(PracticeActivity.this, "true", Toast.LENGTH_SHORT).show();
                                 txtTrans.setText(transData3[i]);
                                 txtCongra.setVisibility(View.VISIBLE);
                                 txtTrans.setVisibility(View.VISIBLE);
@@ -373,9 +367,12 @@ public class PracticeActivity extends AppCompatActivity {
                                 imgAns.setVisibility(View.VISIBLE);
                                 txtTrans.setText(transData3[i]);
                                 txtTrans.setVisibility(View.VISIBLE);
+                                //Toast.makeText(PracticeActivity.this, "false", Toast.LENGTH_SHORT).show();
                                 edtAns.getText().clear();
                             }
                             break;
+
+
                     }
                 }
                 else if(countClick>=4)
@@ -386,12 +383,15 @@ public class PracticeActivity extends AppCompatActivity {
                             if (ans.equals("")) {
                                 txtTrans.setText(ansData[i]);
                                 txtTrans.setVisibility(View.VISIBLE);
+                                // Toast.makeText(PracticeActivity.this, "Please insert", Toast.LENGTH_SHORT).show();
                             } else if (ans.equalsIgnoreCase(ansData[i])) {
                                 txtCongra.setVisibility(View.VISIBLE);
+                                // Toast.makeText(PracticeActivity.this, "true", Toast.LENGTH_SHORT).show();
                             } else {
                                 toastShowWrong(v);
                                 txtTrans.setText(ansData[i]);
                                 txtTrans.setVisibility(View.VISIBLE);
+                                // Toast.makeText(PracticeActivity.this, "false", Toast.LENGTH_SHORT).show();
                                 edtAns.getText().clear();
                             }
                             break;
@@ -399,13 +399,14 @@ public class PracticeActivity extends AppCompatActivity {
                             if (ans.equals("")) {
                                 txtTrans.setText(ansData2[i]);
                                 txtTrans.setVisibility(View.VISIBLE);
+                                //Toast.makeText(PracticeActivity.this, "Please insert", Toast.LENGTH_SHORT).show();
                             } else if (ans.equalsIgnoreCase(ansData2[i])) {
                                 txtCongra.setVisibility(View.VISIBLE);
+                                // Toast.makeText(PracticeActivity.this, "true", Toast.LENGTH_SHORT).show();
                             } else {
                                 toastShowWrong(v);
                                 txtTrans.setText(ansData2[i]);
                                 txtTrans.setVisibility(View.VISIBLE);
-                                Toast.makeText(PracticeActivity.this, "false", Toast.LENGTH_SHORT).show();
                                 edtAns.getText().clear();
                             }
                             break;
@@ -413,18 +414,20 @@ public class PracticeActivity extends AppCompatActivity {
                             if (ans.equals("")) {
                                 txtTrans.setText(ansData3[i]);
                                 txtTrans.setVisibility(View.VISIBLE);
+                                //Toast.makeText(PracticeActivity.this, "Please insert", Toast.LENGTH_SHORT).show();
                             } else if (ans.equalsIgnoreCase(ansData3[i])) {
                                 txtCongra.setVisibility(View.VISIBLE);
+                                // Toast.makeText(PracticeActivity.this, "true", Toast.LENGTH_SHORT).show();
                             } else {
                                 toastShowWrong(v);
-                                txtTrans.setText(ansData3[i]);
+                                txtTrans.setText(ansData2[i]);
                                 txtTrans.setVisibility(View.VISIBLE);
                                 edtAns.getText().clear();
                             }
                             break;
-
                     }
                 }
+
                 txtScore.setText("Score:"+score);
             }
 
@@ -439,54 +442,38 @@ public class PracticeActivity extends AppCompatActivity {
                 duplicate=random.nextInt(listRan.size());
                 i=listRan.get(duplicate);
                 listRan.remove(duplicate);
-                String le = txtLevel.getText().toString();
-                switch (le)
+                String level = txtLevel.getText().toString();
+                switch (level)
                 {
                     case "Level 1":
-                        if( current<progressQues.getMax())
-                        {
+                        if(current<progressQues.getMax())
                             txtQues.setText(quesData[i]);
-                        }
-                        else if(current>=progressQues.getMax()){
+                        else {
                             current = 0;
                             txtLevel.setText("Level 2");
                             txtQues.setText(quesData2[i]);
                         }
-                       break;
+                        break;
                     case "Level 2":
-                        if( current<progressQues.getMax())
+                        if(current<progressQues.getMax())
                         {
                             txtQues.setText(quesData2[i]);
                         }
-                        else if(current>=progressQues.getMax()) {
+                        else {
                             current = 0;
                             txtLevel.setText("Level 3");
                             txtQues.setText(quesData3[i]);
                         }
                         break;
                     case "Level 3":
-                        if( current<progressQues.getMax())
+                        if(current<progressQues.getMax())
                         {
                             txtQues.setText(quesData3[i]);
                         }
+
                         break;
-                }
-                /*
-                if(txtLevel.getText().equals("Level 1") && current<progressQues.getMax()) {
-                    txtQues.setText(quesData[i]);
 
                 }
-                else if(current>=progressQues.getMax())
-                {
-                        current = 0;
-                        txtLevel.setText("Level 2");
-                        txtQues.setText(quesData2[i]);
-
-                }
-                else if(txtLevel.getText().equals("Level 2") &&current <progressQues.getMax())
-                {
-                    txtQues.setText(quesData2[i]);
-                }*/
                 progressQues.setProgress(current+20);
                 txtTrans.setVisibility(View.INVISIBLE);
                 edtAns.getText().clear();
@@ -494,6 +481,7 @@ public class PracticeActivity extends AppCompatActivity {
                 imgAns.setVisibility(View.INVISIBLE);
             }
         });
+
     }
     private void toastShow(View view)
     {
@@ -514,7 +502,7 @@ public class PracticeActivity extends AppCompatActivity {
         view = inflater.inflate(R.layout.toast_layout,null);
 
         TextView text = view.findViewById(R.id.txt_toast);
-        text.setText("Wrong!");
+        text.setText("Wrong");
         Toast toast = new Toast(getApplicationContext());
         toast.setGravity(Gravity.BOTTOM, 0, 0);
         toast.setDuration(Toast.LENGTH_SHORT);
@@ -523,12 +511,12 @@ public class PracticeActivity extends AppCompatActivity {
     }
     private  void checkDuplicate()
     {
-            if(listRan.size()==0) {
-                for(int j:number)
-                {
-                    listRan.add(j);
-                }
+        if(listRan.size()==0) {
+            for(int j:number)
+            {
+                listRan.add(j);
             }
+        }
 
     }
     private void saveScore()
@@ -566,5 +554,9 @@ public class PracticeActivity extends AppCompatActivity {
         }
     }
 
-
+    @Override
+    protected void onStart() {
+        imgStart.setAnimation(aniRepeat);
+        super.onStart();
+    }
 }

@@ -30,13 +30,13 @@
             android:layout_marginLeft="15dp"
             android:id="@+id/btn_yes"
             android:background="@drawable/custom_button"
-            android:text="Thoát"/>
+            android:text="Exit"/>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="15dp"
             android:background="@drawable/border_button3"
             android:id="@+id/btn_no"
-            android:text="Ở lại"/>
+            android:text="Stay"/>
     </LinearLayout>
 </LinearLayout>

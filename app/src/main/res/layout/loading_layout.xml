@@ -8,7 +8,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Đang lấy dữ liệu..."
+        android:text="Loading..."
         android:textSize="25dp"
         android:id="@+id/tv_loading"
         android:layout_marginBottom="15dp"/>
@@ -23,13 +23,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20dp"
-            android:text="Số câu hỏi: 10"
+            android:text="Total question: 10"
             android:id="@+id/tv_question"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20dp"
-            android:text="Thời gian: 5:00"
+            android:text="Time: 5:00"
             android:id="@+id/tv_time"/>
     <Button
         android:layout_marginTop="10dp"
@@ -38,6 +38,6 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:id="@+id/btn_start"
-        android:text="Làm bài ngay"
+        android:text="Start"
         android:background="@drawable/border_button1"/>
 </LinearLayout>
