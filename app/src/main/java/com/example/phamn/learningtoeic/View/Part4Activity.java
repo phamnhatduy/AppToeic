@@ -84,7 +84,7 @@ public class Part4Activity extends AppCompatActivity {
     String title = "";
     String audio = "";
     int partID;
-
+    Animation animation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,7 +92,7 @@ public class Part4Activity extends AppCompatActivity {
 
         setContentView(R.layout.activity_part4);
         ButterKnife.bind(this);
-
+        animation=AnimationUtils.loadAnimation(this,R.anim.scale_sound_repeat);
         Intent intent = getIntent();
         title = intent.getStringExtra("titleName");
         serial = "Serial" + intent.getIntExtra("serialID", 1);
@@ -134,7 +134,7 @@ public class Part4Activity extends AppCompatActivity {
             public void onClick(View v) {
                 mediaPlayer.pause();
                 btnPause.setBackgroundResource(R.drawable.ic_play_arrow);
-                showNoticeDialog("Bạn có muốn thoát?");
+                showNoticeDialog("Do you want to exit?");
             }
         });
 
@@ -301,16 +301,17 @@ public class Part4Activity extends AppCompatActivity {
             dialogLoading.show();
         }
         else {  // tải thành công
+            btnStart.setAnimation(animation);
             ivLoading.clearAnimation();
             ivLoading.setImageResource(R.drawable.success);
             TextView tvLoading = dialogLoading.findViewById(R.id.tv_loading);
-            tvLoading.setText("Lấy dữ liệu hoàn tất!");
+            tvLoading.setText("Finished loading!");
             btnStart.setVisibility(View.VISIBLE);
             tvNumberOfQuestion.setVisibility(View.VISIBLE);
             tvTime.setVisibility(View.VISIBLE);
 
-            tvNumberOfQuestion.setText("Số câu hỏi: "+ getIntent().getIntExtra("numberOfQuestion", 10));
-            tvTime.setText("Thời gian: " + getIntent().getStringExtra("time"));
+            tvNumberOfQuestion.setText("Total question: "+ getIntent().getIntExtra("numberOfQuestion", 10));
+            tvTime.setText("Time: " + getIntent().getStringExtra("time"));
 
             btnStart.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -672,6 +673,6 @@ public class Part4Activity extends AppCompatActivity {
         //super.onBackPressed();
         mediaPlayer.pause();
         btnPause.setBackgroundResource(R.drawable.ic_play_arrow);
-        showNoticeDialog("Bạn có muốn thoát?");
+        showNoticeDialog("Do you want to exit?");
     }
 }

@@ -16,12 +16,17 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.example.phamn.learningtoeic.Model.Vocabulary;
 import com.example.phamn.learningtoeic.R;
 
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
@@ -29,36 +34,15 @@ public class EngToVnActivity extends AppCompatActivity {
 
     TextView txtQues;
     TextView txtCongra;
-    TextView txtNo,txtCorr,txtIncorr;
+    TextView txtNo,txtCorr,txtIncorr,txtTitle;
     RadioGroup radioGroup1;
     RadioButton radioButtonA,radioButtonB,radioButtonC,radioButtonD;
     int pos,duplicate;
     int no=1,corr=0,incorr=0;
     SoundManager soundManager;
-    SoundManager soundContracts,soundMarket;
+    SoundManager soundContracts,soundMarket,soundWarranties,soundBusiness,soundConfere;
     Random random;
-    ProgressBar progressBar;
-    final String[] wordAnswer = {"abide","accommodate","address","agreement","arrangement","association",
-            "assurance","attend","attract","avoid","cancellation","characteristic","compare","competition","consequence",
-            "consider","consume","convince","cover","currently","demonstrate","determine","develop","engage","establish",
-            "evaluate","expiration","fad","frequently","gather","hold","imply","inspiration","location","market","obligate",
-            "offer","overcrowded","party","persuasion","primarily","productive","promise","protect","provision","register",
-            "reputation","require","resolve","risk","satisfaction","select","session","specific","strategy","strong","substitution",
-            "variety"};
-    final String[] wordTranslate = {"tôn trọng,tuân theo","điều tiết, điều chỉnh","địa chỉ",
-            "hợp đồng","sắp xếp","liên kết","bảo đảm,chắc chắn",
-            "tham dự","hấp dẫn,thu hút","tránh","sự hủy bỏ","đặc thù,đặc trưng",
-            "so sánh","tranh giành,thi đấu","kết quả","cân nhắc,suy xét",
-            "tiêu thụ","thuyết phục","che,phủ","hiện nay","bày tỏ",
-            "quyết định,xác định","phát triển","sự hứa hẹn","thiết lập,thành lập,",
-            "đánh giá, ước lượng","sự hết hạn","sự nhất thời","thường xuyên",
-            "tập hợp","giữ","ẩn ý","truyền cảm hứng","vị trí",
-            "thị trường,chợ","bắt buộc","đề xuất","chật ních","đảng,buổi tiệc",
-            "sự thuyết phục","trước hết","sản xuất","lời hứa","bảo vệ",
-            "sự dự trữ","đăng ký,danh sách","danh tiếng","yêu cầu","giải quyết",
-            "rủi ro","sự hài lòng","chọn lựa","phiên,kỳ","riêng biệt",
-            "chiến lược","khoẻ,mạnh","sự thay thế","đa dạng"
-    };
+
     final String[] wordContract = {"abide","agreement", "assurance","cancellation","determine","engage","establish","obligate",
             "party","provision","resolve","specific"};
     final String[] meanContract = {"tôn trọng,tuân theo","đồng ý,hợp đồng","bảo đảm,chắc chắn","sự hủy bỏ","quyết định,xác định","sự hứa hẹn",
@@ -67,9 +51,22 @@ public class EngToVnActivity extends AppCompatActivity {
             "persuasion","productive","satisfaction"};
     final String[] meanMarket={"hấp dẫn,thu hút","so sánh","tranh giành,thi đấu","tiêu thụ","thuyết phục","hiện nay","sự nhất thời",
             "truyền cảm hứng","thị trường,chợ","sự thuyết phục","sản xuất","sự hài lòng"};
+    final String[] wordWarranties={"characteristic","consequence","consider","cover","expiration","frequently","imply","promise","protect",
+            "reputation","require","variety"};
+    final String[] meanWarranties={"đặc thù,đặc trưng","kết quả","cân nhắc,suy xét","che,phủ","sự hết hạn","sự nhất thời","thường xuyên","ẩn ý",
+            "lời hứa","bảo vệ", "danh tiếng","yêu, cầu","đa dạng"};
+    final String[] wordBussiness ={"address","avoid","demonstrate","develop","evaluate","gather","offer","primarily","risk","strategy","strong",
+            "substitution"};
+    final String[] meanBussiness ={"địa chỉ","tránh","bày tỏ","phát triển","đánh giá, ước lượng","tập hợp","đề xuất","trước hết","rủi ro","chiến lược",
+            "khoẻ,mạnh","sự thay thế"};
+    final String[] wordConfere={"accommodate","arrangement","association","attend","get in touch","hold","location","overcrowded","register","select",
+            "session","take part in"};
+    final String[] meanConfere={"điều tiết,điều chỉnh","sắp xếp","liên kết","tham dự","giữ liên lạc","giữ","vị trí","chật ních","đăng ký","chọn lựa",
+            "phiên,kỳ","tham dự"};
+
     String top;
-    ArrayList<String> wrongListContr,wrongListMar;
-    ArrayList<String> wrongListMeanContr,wrongListMeanMar;
+    ArrayList<String> wrongListContr,wrongListMar,wrongListWarran,wrongListBusiness,wrongListConfere;
+    ArrayList<String> wrongListMeanContr,wrongListMeanMar,wrongListMeanWarr,wrongListMeanBusiness,wrongListMeanConfere;
     Animation animation;
     ArrayList<Integer> listRan =new ArrayList<>();
     int[] number = {0,1,2,3,4,5,6,7,8,9,10,11};
@@ -80,24 +77,36 @@ public class EngToVnActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Vocabulary Quizzes");
         animation = AnimationUtils.loadAnimation(this,R.anim.scale_sound);
-
+        //anh xa
         txtQues=findViewById(R.id.txt_question);
         txtCongra=findViewById(R.id.txt_congra_remem);
         radioGroup1=findViewById(R.id.radio_group_ans1);
         txtNo=findViewById(R.id.txt_no);
         txtCorr=findViewById(R.id.txt_correct);
         txtIncorr=findViewById(R.id.txt_incorrect);
-        soundContract();
-        soundMarketing();
+        txtTitle=findViewById(R.id.txt_title);
         radioButtonA=findViewById(R.id.radio_a);
         radioButtonB=findViewById(R.id.radio_b);
         radioButtonC=findViewById(R.id.radio_c);
         radioButtonD=findViewById(R.id.radio_d);
+        //tao am thanh
+        soundContract();
+        soundMarketing();
+        soundWarranties();
+        soundBusiness();
+        soundConfere();
+        //tao mang
         wrongListContr = new ArrayList<String>();
         wrongListMeanContr=new ArrayList<String>();
         wrongListMar=new ArrayList<>();
         wrongListMeanMar=new ArrayList<>();
-
+        wrongListWarran=new ArrayList<>();
+        wrongListMeanWarr=new ArrayList<>();
+        wrongListBusiness=new ArrayList<>();
+        wrongListMeanBusiness=new ArrayList<>();
+        wrongListConfere=new ArrayList<>();
+        wrongListMeanConfere=new ArrayList<>();
+        //check random
         for(int i : number)
         {
             listRan.add(i);
@@ -111,13 +120,14 @@ public class EngToVnActivity extends AppCompatActivity {
         {
             for(int i:number){listRan.add(i);}
         }
-       // pos = random.nextInt(12);
-
+        // pos = random.nextInt(12);
 
         //txtQues.setText(wordTranslate[pos]);
+        //nhan intent
         Intent intent=getIntent();
         top=intent.getStringExtra("topic");
         if(top.equals("Contracts")) {
+            //txtQues.setText(contract[pos]);
             txtQues.setText(wordContract[pos]);
             checkRandom();
         }
@@ -126,11 +136,27 @@ public class EngToVnActivity extends AppCompatActivity {
             txtQues.setText(wordMarket[pos]);
             checkRandom();
         }
+        else if(top.equals("Warranties"))
+        {
+            txtQues.setText(wordWarranties[pos]);
+            checkRandom();
+        }
+        else if(top.equals("Business Planning"))
+        {
+            txtQues.setText(wordBussiness[pos]);
+            checkRandom();
+        }
+        else if(top.equals("Conferences"))
+        {
+            txtQues.setText(wordConfere[pos]);
+            checkRandom();
+        }
 
         radioGroup1.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
+                txtTitle.setVisibility(View.INVISIBLE);
                 switch (radioGroup1.getCheckedRadioButtonId())
                 {
 
@@ -139,28 +165,28 @@ public class EngToVnActivity extends AppCompatActivity {
                             CompareAns();
                             delay();
                         }
-                            break;
+                        break;
 
                     case R.id.radio_b:
                         if(radioButtonB.isChecked()) {
                             CompareAns();
                             delay();
                         }
-                            break;
+                        break;
 
                     case R.id.radio_c:
-                            if(radioButtonC.isChecked()) {
-                                CompareAns();
-                                delay();
-                            }
-                            break;
+                        if(radioButtonC.isChecked()) {
+                            CompareAns();
+                            delay();
+                        }
+                        break;
 
                     case R.id.radio_d:
-                            if(radioButtonD.isChecked()) {
-                                CompareAns();
-                                delay();
-                            }
-                           break;
+                        if(radioButtonD.isChecked()) {
+                            CompareAns();
+                            delay();
+                        }
+                        break;
 
                 }
 
@@ -198,7 +224,49 @@ public class EngToVnActivity extends AppCompatActivity {
                 radioButtonC.setText(meanMarket[pos - 2]);
                 radioButtonD.setText(meanMarket[pos - 3]);
             }
+        }else if(top.equals("Warranties"))
+        {
+            if (pos <= 8) {
+                radioButtonA.setText(meanWarranties[pos]);
+                radioButtonB.setText(meanWarranties[pos + 1]);
+                radioButtonC.setText(meanWarranties[pos + 2]);
+                radioButtonD.setText(meanWarranties[pos + 3]);
+            } else {
+                radioButtonA.setText(meanWarranties[pos - 1]);
+                radioButtonB.setText(meanWarranties[pos]);
+                radioButtonC.setText(meanWarranties[pos - 2]);
+                radioButtonD.setText(meanWarranties[pos - 3]);
+            }
         }
+        else if(top.equals("Business Planning"))
+        {
+            if (pos <= 8) {
+                radioButtonA.setText(meanBussiness[pos]);
+                radioButtonB.setText(meanBussiness[pos + 1]);
+                radioButtonC.setText(meanBussiness[pos + 2]);
+                radioButtonD.setText(meanBussiness[pos + 3]);
+            } else {
+                radioButtonA.setText(meanBussiness[pos - 1]);
+                radioButtonB.setText(meanBussiness[pos]);
+                radioButtonC.setText(meanBussiness[pos - 2]);
+                radioButtonD.setText(meanBussiness[pos - 3]);
+            }
+        }
+        else if(top.equals("Conferences"))
+        {
+            if (pos <= 8) {
+                radioButtonA.setText(meanConfere[pos]);
+                radioButtonB.setText(meanConfere[pos + 1]);
+                radioButtonC.setText(meanConfere[pos + 2]);
+                radioButtonD.setText(meanConfere[pos + 3]);
+            } else {
+                radioButtonA.setText(meanConfere[pos - 1]);
+                radioButtonB.setText(meanConfere[pos]);
+                radioButtonC.setText(meanConfere[pos - 2]);
+                radioButtonD.setText(meanConfere[pos - 3]);
+            }
+        }
+
     }
     public void CompareAns()
     {
@@ -220,7 +288,7 @@ public class EngToVnActivity extends AppCompatActivity {
                     txtCongra.setText(meanContract[pos]);
                     txtCongra.startAnimation(animation);
                     txtCongra.setVisibility(View.VISIBLE);
-                   // corr -= 1;
+                    // corr -= 1;
                     incorr += 1;
                 }
             } else if (radioButtonB.isChecked()) {
@@ -233,7 +301,7 @@ public class EngToVnActivity extends AppCompatActivity {
                 } else {
                     radioButtonB.setChecked(true);
                     radioButtonB.setBackgroundResource(R.drawable.radio_flat_selector_wrong);
-                   // showAnswer();
+                    // showAnswer();
                     wrongListContr.add(wordContract[pos]);
                     wrongListMeanContr.add(meanContract[pos]);
                     soundContracts.playSound(pos);
@@ -263,7 +331,7 @@ public class EngToVnActivity extends AppCompatActivity {
                     txtCongra.setText(meanContract[pos]);
                     txtCongra.startAnimation(animation);
                     txtCongra.setVisibility(View.VISIBLE);
-                   //corr -= 1;
+                    //corr -= 1;
                     incorr += 1;
                 }
 
@@ -291,7 +359,7 @@ public class EngToVnActivity extends AppCompatActivity {
                 }
             }
             else {
-               // showAnswer();
+                // showAnswer();
             }
         }
         else if(top.equals("Marketing"))
@@ -384,6 +452,270 @@ public class EngToVnActivity extends AppCompatActivity {
                 }
             }
         }
+        else if(top.equals("Warranties"))
+        {
+            if (radioButtonA.isChecked()) {
+                if (radioButtonA.getText().equals(meanWarranties[pos])) {
+                    txtCongra.setText("Congratulation !");
+                    txtCongra.setVisibility(View.VISIBLE);
+                    txtCongra.startAnimation(animation);
+                    soundWarranties.playSound(pos);
+                    corr += 1;
+                } else {
+                    wrongListWarran.add(wordWarranties[pos]);
+                    wrongListMeanWarr.add(meanWarranties[pos]);
+                    radioButtonA.setChecked(true);
+                    radioButtonA.setBackgroundResource(R.drawable.radio_flat_selector_wrong);
+                    //showAnswer();
+                    soundWarranties.playSound(pos);
+                    txtCongra.setText(meanWarranties[pos]);
+                    txtCongra.startAnimation(animation);
+                    txtCongra.setVisibility(View.VISIBLE);
+                    //corr -= 1;
+                    incorr += 1;
+                }
+            } else if (radioButtonB.isChecked()) {
+                if (radioButtonB.getText().equals(meanWarranties[pos])) {
+                    txtCongra.setText("Congratulation !");
+                    txtCongra.setVisibility(View.VISIBLE);
+                    txtCongra.startAnimation(animation);
+                    soundWarranties.playSound(pos);
+                    corr += 1;
+                } else {
+                    radioButtonB.setChecked(true);
+                    radioButtonB.setBackgroundResource(R.drawable.radio_flat_selector_wrong);
+                    //showAnswer();
+                    wrongListWarran.add(wordWarranties[pos]);
+                    wrongListMeanWarr.add(meanWarranties[pos]);
+                    soundWarranties.playSound(pos);
+                    txtCongra.setText(meanWarranties[pos]);
+                    txtCongra.startAnimation(animation);
+                    txtCongra.setVisibility(View.VISIBLE);
+                    //corr -= 1;
+                    incorr += 1;
+                }
+
+            } else if (radioButtonC.isChecked()) {
+                if (radioButtonC.getText().equals(meanWarranties[pos])) {
+                    txtCongra.setText("Congratulation !");
+                    txtCongra.setVisibility(View.VISIBLE);
+                    txtCongra.startAnimation(animation);
+                    //Toast.makeText(RememberActivity.this, "true", Toast.LENGTH_SHORT).show();
+                    soundWarranties.playSound(pos);
+                    corr += 1;
+                } else {
+                    radioButtonC.setChecked(true);
+                    radioButtonC.setBackgroundResource(R.drawable.radio_flat_selector_wrong);
+                    wrongListWarran.add(wordWarranties[pos]);
+                    wrongListMeanWarr.add(meanWarranties[pos]);
+                    //showAnswer();
+                    soundWarranties.playSound(pos);
+                    txtCongra.setText(meanWarranties[pos]);
+                    txtCongra.startAnimation(animation);
+                    txtCongra.setVisibility(View.VISIBLE);
+                    //corr -= 1;
+                    incorr += 1;
+                }
+
+            } else if (radioButtonD.isChecked()) {
+                if (radioButtonD.getText().equals(meanWarranties[pos])) {
+                    txtCongra.setText("Congratulation !");
+                    txtCongra.startAnimation(animation);
+                    txtCongra.setVisibility(View.VISIBLE);
+                    //Toast.makeText(RememberActivity.this, "true", Toast.LENGTH_SHORT).show();
+                    soundWarranties.playSound(pos);
+                    corr += 1;
+                } else {
+                    radioButtonD.setChecked(true);
+                    radioButtonD.setBackgroundResource(R.drawable.radio_flat_selector_wrong);
+                    wrongListWarran.add(wordWarranties[pos]);
+                    wrongListMeanWarr.add(meanWarranties[pos]);
+                    //showAnswer();
+                    soundWarranties.playSound(pos);
+                    txtCongra.setText(meanWarranties[pos]);
+                    txtCongra.startAnimation(animation);
+                    txtCongra.setVisibility(View.VISIBLE);
+                    //corr -= 1;
+                    incorr += 1;
+                }
+            }
+        }
+        else if(top.equals("Business Planning"))
+        {
+            if (radioButtonA.isChecked()) {
+                if (radioButtonA.getText().equals(meanBussiness[pos])) {
+                    txtCongra.setText("Congratulation !");
+                    txtCongra.setVisibility(View.VISIBLE);
+                    txtCongra.startAnimation(animation);
+                    soundBusiness.playSound(pos);
+                    corr += 1;
+                } else {
+                    wrongListBusiness.add(wordBussiness[pos]);
+                    wrongListMeanBusiness.add(meanBussiness[pos]);
+                    radioButtonA.setChecked(true);
+                    radioButtonA.setBackgroundResource(R.drawable.radio_flat_selector_wrong);
+                    //showAnswer();
+                    soundBusiness.playSound(pos);
+                    txtCongra.setText(meanBussiness[pos]);
+                    txtCongra.startAnimation(animation);
+                    txtCongra.setVisibility(View.VISIBLE);
+                    //corr -= 1;
+                    incorr += 1;
+                }
+            } else if (radioButtonB.isChecked()) {
+                if (radioButtonB.getText().equals(meanBussiness[pos])) {
+                    txtCongra.setText("Congratulation !");
+                    txtCongra.setVisibility(View.VISIBLE);
+                    txtCongra.startAnimation(animation);
+                    soundBusiness.playSound(pos);
+                    corr += 1;
+                } else {
+                    radioButtonB.setChecked(true);
+                    radioButtonB.setBackgroundResource(R.drawable.radio_flat_selector_wrong);
+                    //showAnswer();
+                    wrongListBusiness.add(wordBussiness[pos]);
+                    wrongListMeanBusiness.add(meanBussiness[pos]);
+                    soundBusiness.playSound(pos);
+                    txtCongra.setText(meanBussiness[pos]);
+                    txtCongra.startAnimation(animation);
+                    txtCongra.setVisibility(View.VISIBLE);
+                    //corr -= 1;
+                    incorr += 1;
+                }
+
+            } else if (radioButtonC.isChecked()) {
+                if (radioButtonC.getText().equals(meanBussiness[pos])) {
+                    txtCongra.setText("Congratulation !");
+                    txtCongra.setVisibility(View.VISIBLE);
+                    txtCongra.startAnimation(animation);
+                    //Toast.makeText(RememberActivity.this, "true", Toast.LENGTH_SHORT).show();
+                    soundBusiness.playSound(pos);
+                    corr += 1;
+                } else {
+                    radioButtonC.setChecked(true);
+                    radioButtonC.setBackgroundResource(R.drawable.radio_flat_selector_wrong);
+                    wrongListBusiness.add(wordBussiness[pos]);
+                    wrongListMeanBusiness.add(meanBussiness[pos]);
+                    //showAnswer();
+                    soundBusiness.playSound(pos);
+                    txtCongra.setText(meanBussiness[pos]);
+                    txtCongra.startAnimation(animation);
+                    txtCongra.setVisibility(View.VISIBLE);
+                    //corr -= 1;
+                    incorr += 1;
+                }
+
+            } else if (radioButtonD.isChecked()) {
+                if (radioButtonD.getText().equals(meanBussiness[pos])) {
+                    txtCongra.setText("Congratulation !");
+                    txtCongra.startAnimation(animation);
+                    txtCongra.setVisibility(View.VISIBLE);
+                    //Toast.makeText(RememberActivity.this, "true", Toast.LENGTH_SHORT).show();
+                    soundBusiness.playSound(pos);
+                    corr += 1;
+                } else {
+                    radioButtonD.setChecked(true);
+                    radioButtonD.setBackgroundResource(R.drawable.radio_flat_selector_wrong);
+                    wrongListBusiness.add(wordBussiness[pos]);
+                    wrongListMeanBusiness.add(meanBussiness[pos]);
+                    //showAnswer();
+                    soundBusiness.playSound(pos);
+                    txtCongra.setText(meanBussiness[pos]);
+                    txtCongra.startAnimation(animation);
+                    txtCongra.setVisibility(View.VISIBLE);
+                    //corr -= 1;
+                    incorr += 1;
+                }
+            }
+        }
+        else if(top.equals("Conferences"))
+        {
+            if (radioButtonA.isChecked()) {
+                if (radioButtonA.getText().equals(meanConfere[pos])) {
+                    txtCongra.setText("Congratulation !");
+                    txtCongra.setVisibility(View.VISIBLE);
+                    txtCongra.startAnimation(animation);
+                    soundConfere.playSound(pos);
+                    corr += 1;
+                } else {
+                    wrongListConfere.add(wordConfere[pos]);
+                    wrongListMeanConfere.add(meanConfere[pos]);
+                    radioButtonA.setChecked(true);
+                    radioButtonA.setBackgroundResource(R.drawable.radio_flat_selector_wrong);
+                    //showAnswer();
+                    soundConfere.playSound(pos);
+                    txtCongra.setText(meanConfere[pos]);
+                    txtCongra.startAnimation(animation);
+                    txtCongra.setVisibility(View.VISIBLE);
+                    //corr -= 1;
+                    incorr += 1;
+                }
+            } else if (radioButtonB.isChecked()) {
+                if (radioButtonB.getText().equals(meanConfere[pos])) {
+                    txtCongra.setText("Congratulation !");
+                    txtCongra.setVisibility(View.VISIBLE);
+                    txtCongra.startAnimation(animation);
+                    soundConfere.playSound(pos);
+                    corr += 1;
+                } else {
+                    radioButtonB.setChecked(true);
+                    radioButtonB.setBackgroundResource(R.drawable.radio_flat_selector_wrong);
+                    //showAnswer();
+                    wrongListConfere.add(wordConfere[pos]);
+                    wrongListMeanConfere.add(meanConfere[pos]);
+                    soundConfere.playSound(pos);
+                    txtCongra.setText(meanConfere[pos]);
+                    txtCongra.startAnimation(animation);
+                    txtCongra.setVisibility(View.VISIBLE);
+                    //corr -= 1;
+                    incorr += 1;
+                }
+
+            } else if (radioButtonC.isChecked()) {
+                if (radioButtonC.getText().equals(meanConfere[pos])) {
+                    txtCongra.setText("Congratulation !");
+                    txtCongra.setVisibility(View.VISIBLE);
+                    txtCongra.startAnimation(animation);
+                    //Toast.makeText(RememberActivity.this, "true", Toast.LENGTH_SHORT).show();
+                    soundConfere.playSound(pos);
+                    corr += 1;
+                } else {
+                    radioButtonC.setChecked(true);
+                    radioButtonC.setBackgroundResource(R.drawable.radio_flat_selector_wrong);
+                    wrongListConfere.add(wordConfere[pos]);
+                    wrongListMeanConfere.add(meanConfere[pos]);
+                    //showAnswer();
+                    soundConfere.playSound(pos);
+                    txtCongra.setText(meanConfere[pos]);
+                    txtCongra.startAnimation(animation);
+                    txtCongra.setVisibility(View.VISIBLE);
+                    //corr -= 1;
+                    incorr += 1;
+                }
+
+            } else if (radioButtonD.isChecked()) {
+                if (radioButtonD.getText().equals(meanConfere[pos])) {
+                    txtCongra.setText("Congratulation !");
+                    txtCongra.startAnimation(animation);
+                    txtCongra.setVisibility(View.VISIBLE);
+                    //Toast.makeText(RememberActivity.this, "true", Toast.LENGTH_SHORT).show();
+                    soundConfere.playSound(pos);
+                    corr += 1;
+                } else {
+                    radioButtonD.setChecked(true);
+                    radioButtonD.setBackgroundResource(R.drawable.radio_flat_selector_wrong);
+                    wrongListConfere.add(wordConfere[pos]);
+                    wrongListMeanConfere.add(meanConfere[pos]);
+                    //showAnswer();
+                    soundConfere.playSound(pos);
+                    txtCongra.setText(meanConfere[pos]);
+                    txtCongra.startAnimation(animation);
+                    txtCongra.setVisibility(View.VISIBLE);
+                    //corr -= 1;
+                    incorr += 1;
+                }
+            }
+        }
 
 
     }
@@ -439,14 +771,12 @@ public class EngToVnActivity extends AppCompatActivity {
     public void ChangeQues()
     {
 
-       // pos = random.nextInt(12);
+        // pos = random.nextInt(12);
         //random = new Random();
         duplicate = random.nextInt(listRan.size());
         pos=listRan.get(duplicate);
         listRan.remove(duplicate);
         no-=1;
-
-
         // txtQues.setText(wordTranslate[pos]);
         int butArray[] = new int[4];
         butArray[0] = radioButtonA.getId();
@@ -560,6 +890,166 @@ public class EngToVnActivity extends AppCompatActivity {
                 }
             }
         }
+        else if(top.equals("Warranties"))
+        {
+            txtQues.setText(wordWarranties[pos]);
+            if (ra == 0) {
+                if (pos <= 8) {
+                    radioButtonA.setText(meanWarranties[pos]);
+                    radioButtonB.setText(meanWarranties[pos + 1]);
+                    radioButtonC.setText(meanWarranties[pos + 2]);
+                    radioButtonD.setText(meanWarranties[pos + 3]);
+                } else {
+                    radioButtonA.setText(meanWarranties[pos]);
+                    radioButtonB.setText(meanWarranties[pos - 1]);
+                    radioButtonC.setText(meanWarranties[pos - 2]);
+                    radioButtonD.setText(meanWarranties[pos - 3]);
+                }
+            } else if (ra == 1) {
+                if (pos <= 8) {
+                    radioButtonA.setText(meanWarranties[pos + 1]);
+                    radioButtonB.setText(meanWarranties[pos]);
+                    radioButtonC.setText(meanWarranties[pos + 2]);
+                    radioButtonD.setText(meanWarranties[pos + 3]);
+                } else {
+                    radioButtonA.setText(meanWarranties[pos - 1]);
+                    radioButtonB.setText(meanWarranties[pos]);
+                    radioButtonC.setText(meanWarranties[pos - 2]);
+                    radioButtonD.setText(meanWarranties[pos - 3]);
+                }
+            } else if (ra == 2) {
+                if (pos <= 8) {
+                    radioButtonA.setText(meanWarranties[pos + 1]);
+                    radioButtonB.setText(meanWarranties[pos + 2]);
+                    radioButtonC.setText(meanWarranties[pos]);
+                    radioButtonD.setText(meanWarranties[pos + 3]);
+                } else {
+                    radioButtonA.setText(meanWarranties[pos - 1]);
+                    radioButtonB.setText(meanWarranties[pos - 2]);
+                    radioButtonC.setText(meanWarranties[pos]);
+                    radioButtonD.setText(meanWarranties[pos - 3]);
+                }
+            } else if (ra == 3) {
+                if (pos <= 8) {
+                    radioButtonA.setText(meanWarranties[pos + 3]);
+                    radioButtonB.setText(meanWarranties[pos + 1]);
+                    radioButtonC.setText(meanWarranties[pos + 2]);
+                    radioButtonD.setText(meanWarranties[pos]);
+                } else {
+                    radioButtonA.setText(meanWarranties[pos - 1]);
+                    radioButtonB.setText(meanWarranties[pos - 3]);
+                    radioButtonC.setText(meanWarranties[pos - 2]);
+                    radioButtonD.setText(meanWarranties[pos]);
+                }
+            }
+        }
+        else if(top.equals("Business Planning"))
+        {
+            txtQues.setText(wordBussiness[pos]);
+            if (ra == 0) {
+                if (pos <= 8) {
+                    radioButtonA.setText(meanBussiness[pos]);
+                    radioButtonB.setText(meanBussiness[pos + 1]);
+                    radioButtonC.setText(meanBussiness[pos + 2]);
+                    radioButtonD.setText(meanBussiness[pos + 3]);
+                } else {
+                    radioButtonA.setText(meanBussiness[pos]);
+                    radioButtonB.setText(meanBussiness[pos - 1]);
+                    radioButtonC.setText(meanBussiness[pos - 2]);
+                    radioButtonD.setText(meanBussiness[pos - 3]);
+                }
+            } else if (ra == 1) {
+                if (pos <= 8) {
+                    radioButtonA.setText(meanBussiness[pos + 1]);
+                    radioButtonB.setText(meanBussiness[pos]);
+                    radioButtonC.setText(meanBussiness[pos + 2]);
+                    radioButtonD.setText(meanBussiness[pos + 3]);
+                } else {
+                    radioButtonA.setText(meanBussiness[pos - 1]);
+                    radioButtonB.setText(meanBussiness[pos]);
+                    radioButtonC.setText(meanBussiness[pos - 2]);
+                    radioButtonD.setText(meanBussiness[pos - 3]);
+                }
+            } else if (ra == 2) {
+                if (pos <= 8) {
+                    radioButtonA.setText(meanBussiness[pos + 1]);
+                    radioButtonB.setText(meanBussiness[pos + 2]);
+                    radioButtonC.setText(meanBussiness[pos]);
+                    radioButtonD.setText(meanBussiness[pos + 3]);
+                } else {
+                    radioButtonA.setText(meanBussiness[pos - 1]);
+                    radioButtonB.setText(meanBussiness[pos - 2]);
+                    radioButtonC.setText(meanBussiness[pos]);
+                    radioButtonD.setText(meanBussiness[pos - 3]);
+                }
+            } else if (ra == 3) {
+                if (pos <= 8) {
+                    radioButtonA.setText(meanBussiness[pos + 3]);
+                    radioButtonB.setText(meanBussiness[pos + 1]);
+                    radioButtonC.setText(meanBussiness[pos + 2]);
+                    radioButtonD.setText(meanBussiness[pos]);
+                } else {
+                    radioButtonA.setText(meanBussiness[pos - 1]);
+                    radioButtonB.setText(meanBussiness[pos - 3]);
+                    radioButtonC.setText(meanBussiness[pos - 2]);
+                    radioButtonD.setText(meanBussiness[pos]);
+                }
+            }
+        }
+        else if(top.equals("Conferences"))
+        {
+            txtQues.setText(wordConfere[pos]);
+            if (ra == 0) {
+                if (pos <= 8) {
+                    radioButtonA.setText(meanConfere[pos]);
+                    radioButtonB.setText(meanConfere[pos + 1]);
+                    radioButtonC.setText(meanConfere[pos + 2]);
+                    radioButtonD.setText(meanConfere[pos + 3]);
+                } else {
+                    radioButtonA.setText(meanConfere[pos]);
+                    radioButtonB.setText(meanConfere[pos - 1]);
+                    radioButtonC.setText(meanConfere[pos - 2]);
+                    radioButtonD.setText(meanConfere[pos - 3]);
+                }
+            } else if (ra == 1) {
+                if (pos <= 8) {
+                    radioButtonA.setText(meanConfere[pos + 1]);
+                    radioButtonB.setText(meanConfere[pos]);
+                    radioButtonC.setText(meanConfere[pos + 2]);
+                    radioButtonD.setText(meanConfere[pos + 3]);
+                } else {
+                    radioButtonA.setText(meanConfere[pos - 1]);
+                    radioButtonB.setText(meanConfere[pos]);
+                    radioButtonC.setText(meanConfere[pos - 2]);
+                    radioButtonD.setText(meanConfere[pos - 3]);
+                }
+            } else if (ra == 2) {
+                if (pos <= 8) {
+                    radioButtonA.setText(meanConfere[pos + 1]);
+                    radioButtonB.setText(meanConfere[pos + 2]);
+                    radioButtonC.setText(meanConfere[pos]);
+                    radioButtonD.setText(meanConfere[pos + 3]);
+                } else {
+                    radioButtonA.setText(meanConfere[pos - 1]);
+                    radioButtonB.setText(meanConfere[pos - 2]);
+                    radioButtonC.setText(meanConfere[pos]);
+                    radioButtonD.setText(meanConfere[pos - 3]);
+                }
+            } else if (ra == 3) {
+                if (pos <= 8) {
+                    radioButtonA.setText(meanConfere[pos + 3]);
+                    radioButtonB.setText(meanConfere[pos + 1]);
+                    radioButtonC.setText(meanConfere[pos + 2]);
+                    radioButtonD.setText(meanConfere[pos]);
+                } else {
+                    radioButtonA.setText(meanConfere[pos - 1]);
+                    radioButtonB.setText(meanBussiness[pos - 3]);
+                    radioButtonC.setText(meanConfere[pos - 2]);
+                    radioButtonD.setText(meanBussiness[pos]);
+                }
+            }
+        }
+
         radioButtonA.setBackgroundResource(R.drawable.radio_flat_selector);
         radioButtonB.setBackgroundResource(R.drawable.radio_flat_selector);
         radioButtonC.setBackgroundResource(R.drawable.radio_flat_selector);
@@ -567,7 +1057,7 @@ public class EngToVnActivity extends AppCompatActivity {
 
         radioGroup1.clearCheck();
         txtCongra.setVisibility(View.INVISIBLE);
-       // no+=1;
+        // no+=1;
         if(no==12)
         {
             //Toast.makeText(this, "Stop", Toast.LENGTH_SHORT).show();
@@ -584,7 +1074,7 @@ public class EngToVnActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 //dialogInterface.dismiss();
                 //onRestart();
-               // onResume();
+                // onResume();
                 finish();
 
             }
@@ -603,6 +1093,21 @@ public class EngToVnActivity extends AppCompatActivity {
                 {
                     intent.putStringArrayListExtra("id", wrongListMar);
                     intent.putStringArrayListExtra("name", wrongListMeanMar);
+                }
+                else if(top.equals("Warranties"))
+                {
+                    intent.putStringArrayListExtra("id", wrongListWarran);
+                    intent.putStringArrayListExtra("name", wrongListMeanWarr);
+                }
+                else if(top.equals("Business Planning"))
+                {
+                    intent.putStringArrayListExtra("id", wrongListBusiness);
+                    intent.putStringArrayListExtra("name", wrongListMeanBusiness);
+                }
+                else if(top.equals("Conferences"))
+                {
+                    intent.putStringArrayListExtra("id", wrongListConfere);
+                    intent.putStringArrayListExtra("name", wrongListMeanConfere);
                 }
                 startActivity(intent);
 
@@ -635,6 +1140,21 @@ public class EngToVnActivity extends AppCompatActivity {
                 {
                     intent.putStringArrayListExtra("id", wrongListMar);
                     intent.putStringArrayListExtra("name", wrongListMeanMar);
+                }
+                else if(top.equals("Warranties"))
+                {
+                    intent.putStringArrayListExtra("id", wrongListWarran);
+                    intent.putStringArrayListExtra("name", wrongListMeanWarr);
+                }
+                else if(top.equals("Business Planning"))
+                {
+                    intent.putStringArrayListExtra("id", wrongListBusiness);
+                    intent.putStringArrayListExtra("name", wrongListMeanBusiness);
+                }
+                else if(top.equals("Conferences"))
+                {
+                    intent.putStringArrayListExtra("id", wrongListConfere);
+                    intent.putStringArrayListExtra("name", wrongListMeanConfere);
                 }
                 startActivity(intent);
                 //builder.setCancelable(true);
@@ -679,6 +1199,59 @@ public class EngToVnActivity extends AppCompatActivity {
         soundMarket.addSound(11,R.raw.satisfaction);
 
     }
+    private void soundWarranties()
+    {
+        soundWarranties= new SoundManager();
+        soundWarranties.initSounds(getBaseContext());
+        soundWarranties.addSound(0,R.raw.characteristic);
+        soundWarranties.addSound(1,R.raw.consequence);
+        soundWarranties.addSound(2,R.raw.consider);
+        soundWarranties.addSound(3,R.raw.cover);
+        soundWarranties.addSound(4,R.raw.expiration);
+        soundWarranties.addSound(5,R.raw.frequently);
+        soundWarranties.addSound(6,R.raw.imply);
+        soundWarranties.addSound(7,R.raw.promise);
+        soundWarranties.addSound(8,R.raw.protect);
+        soundWarranties.addSound(9,R.raw.reputation);
+        soundWarranties.addSound(10,R.raw.require);
+        soundWarranties.addSound(11,R.raw.variety);
+    }
+    private void soundBusiness()
+    {
+        soundBusiness = new SoundManager();
+        soundBusiness.initSounds(getBaseContext());
+        soundBusiness.addSound(0,R.raw.address);
+        soundBusiness.addSound(1,R.raw.avoid);
+        soundBusiness.addSound(2,R.raw.demonstrate);
+        soundBusiness.addSound(3,R.raw.develop);
+        soundBusiness.addSound(4,R.raw.evaluate);
+        soundBusiness.addSound(5,R.raw.gather);
+        soundBusiness.addSound(6,R.raw.offer);
+        soundBusiness.addSound(7,R.raw.primarily);
+        soundBusiness.addSound(8,R.raw.risk);
+        soundBusiness.addSound(9,R.raw.strategy);
+        soundBusiness.addSound(10,R.raw.strong);
+        soundBusiness.addSound(11,R.raw.substitution);
+    }
+    private void soundConfere()
+    {
+        soundConfere= new SoundManager();
+        soundConfere.initSounds(getBaseContext());
+        soundConfere.addSound(0,R.raw.accommodate);
+        soundConfere.addSound(1,R.raw.arrangement);
+        soundConfere.addSound(2,R.raw.association);
+        soundConfere.addSound(3,R.raw.attend);
+        soundConfere.addSound(4,R.raw.intouch);
+        soundConfere.addSound(5,R.raw.hold);
+        soundConfere.addSound(6,R.raw.location);
+        soundConfere.addSound(7,R.raw.overcrowded);
+        soundConfere.addSound(8,R.raw.register);
+        soundConfere.addSound(9,R.raw.select);
+        soundConfere.addSound(10,R.raw.session);
+        soundConfere.addSound(11,R.raw.takepart);
+
+    }
+
     public void soundPlay()
     {
         soundManager = new SoundManager();
@@ -754,4 +1327,5 @@ public class EngToVnActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
 }
