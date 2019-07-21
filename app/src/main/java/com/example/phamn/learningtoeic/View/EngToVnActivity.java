@@ -1328,4 +1328,15 @@ public class EngToVnActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onPause() {
+        finish();
+        super.onPause();
+    }
+
+    @Override
+    protected void onRestart() {
+        finish();
+        super.onRestart();
+    }
 }

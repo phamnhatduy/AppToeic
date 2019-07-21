@@ -64,29 +64,20 @@ public class ResultRememberActivity extends AppCompatActivity {
         txtNumlist.setText("("+wronglists.size()+")");
         if(wronglists.size()==0)
         {
-            Toast.makeText(this, "Exellent!You have no wrong answers", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Exellent! You have no wrong answers", Toast.LENGTH_SHORT).show();
         }
         btnAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                finish();
                 /*
-                Intent intent=getIntent();
-                String top=intent.getStringExtra("topic");
-                if(top.equals("Contracts")) {
-                    intent = new Intent(ResultRememberActivity.this, TopicVocabulary.class);
-                    startActivity(intent);
-                }
-                else if(top.equals("Marketing"))
-                {
-
-                }*/
                 Intent intent = new Intent(ResultRememberActivity.this, TopicVocabularyActivity.class);
-                startActivity(intent);
+                startActivity(intent);*/
 
             }
         });
     }
-/*
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -95,7 +86,7 @@ public class ResultRememberActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }*/
+    }
         /*
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

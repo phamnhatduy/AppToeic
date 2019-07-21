@@ -1297,6 +1297,11 @@ public class VnToEngActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+    @Override
+    protected void onRestart() {
+        finish();
+        super.onRestart();
+    }
 
 
 }
