@@ -1294,4 +1294,9 @@ public class AudioActivity extends AppCompatActivity {
         imgSpreaker.setAnimation(aniRepeat);
         super.onStart();
     }
+    @Override
+    protected void onRestart() {
+        finish();
+        super.onRestart();
+    }
 }

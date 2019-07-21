@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,7 +43,7 @@ public class TopicVocabularyAdapter extends RecyclerView.Adapter<TopicVocabulary
     public void onBindViewHolder(ViewHolder holder, final int position) {
         holder.tvTopic.setText(listTopic.get(position).getTopic());
         holder.image.setImageResource(listTopic.get(position).getImageID());
-        holder.tvTopic.setOnClickListener(new View.OnClickListener() {
+        holder.listTop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, VocabularyActivity.class);
@@ -50,6 +51,15 @@ public class TopicVocabularyAdapter extends RecyclerView.Adapter<TopicVocabulary
                 context.startActivity(intent);
             }
         });
+        /*
+        holder.tvTopic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, VocabularyActivity.class);
+                intent.putExtra("topic", "" + listTopic.get(position).getTopic());
+                context.startActivity(intent);
+            }
+        });*/
 
     }
 
@@ -62,10 +72,13 @@ public class TopicVocabularyAdapter extends RecyclerView.Adapter<TopicVocabulary
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvTopic;
         ImageView image;
+        LinearLayout listTop;
         public ViewHolder(View itemView) {
             super(itemView);
             image = (ImageView) itemView.findViewById(R.id.iv_topic_vocab);
             tvTopic = (TextView) itemView.findViewById(R.id.tv_topic_vocab);
+            listTop=itemView.findViewById(R.id.list_top);
+
         }
     }
 }
