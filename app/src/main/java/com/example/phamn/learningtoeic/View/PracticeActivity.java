@@ -69,8 +69,8 @@ public class PracticeActivity extends AppCompatActivity {
     final String[] ansData4={"scraping","listening","kneeling","grooves","uniforms"};
     final String[] transData4={"Người đàn ông đang cạo tuyết khỏi anh ta.","Bác sĩ đang nghe nhạc.","Người thợ lợp đang quỳ trên sàn nhà.",
     "Bạn có thể thấy các rãnh trong keo dán gạch.","Mọi người đều mặc đồng phục màu trắng."};
-    final String[] quesData5={" One shopper is seen going up the escalator.","The woman is crying.","Nobody is using the stairs."
-    ,"All the boxes are rectangular in shape.","The car is a righthand drive model."};
+    final String[] quesData5={" One shopper is seen going up the ___.","The woman is ___.","Nobody is using the ___."
+    ,"All the boxes are ___ in shape.","The car is a ___ drive model."};
     final String[] ansData5={"escalator","crying","stairs"," rectangular","righthand"};
     final String[] transData5={"Một người mua sắm được nhìn thấy đi lên thang cuốn","Người phụ nữ đang khóc.",
             "Tất cả các hộp có hình chữ nhật.","Chiếc xe là một mô hình tay lái bên phải."};
@@ -217,8 +217,9 @@ public class PracticeActivity extends AppCompatActivity {
                             if (ans.equalsIgnoreCase(ansData[i])) {
                                 txtTrans.setText(transData[i]);
                                 txtTrans.setVisibility(View.VISIBLE);
-                                txtCongra.setVisibility(View.VISIBLE);
-                                txtCongra.startAnimation(animation);
+                                toastShowTrue(v);
+                                //txtCongra.setVisibility(View.VISIBLE);
+                                //txtCongra.startAnimation(animation);
                                 score+=1;
                                 saveScore();
                             } else {
@@ -234,7 +235,8 @@ public class PracticeActivity extends AppCompatActivity {
                                 saveScore();
                                 txtTrans.setText(transData2[i]);
                                 txtTrans.setVisibility(View.VISIBLE);
-                                txtCongra.setVisibility(View.VISIBLE);
+                                toastShowTrue(v);
+                               // txtCongra.setVisibility(View.VISIBLE);
                                 //Toast.makeText(PracticeActivity.this, "true", Toast.LENGTH_SHORT).show();
                             } else {
                                 toastShowWrong(v);
@@ -250,7 +252,8 @@ public class PracticeActivity extends AppCompatActivity {
                                 saveScore();
                                 txtTrans.setText(transData3[i]);
                                 txtTrans.setVisibility(View.VISIBLE);
-                                txtCongra.setVisibility(View.VISIBLE);
+                                toastShowTrue(v);
+                                //txtCongra.setVisibility(View.VISIBLE);
                                 //Toast.makeText(PracticeActivity.this, "true", Toast.LENGTH_SHORT).show();
                             } else {
                                 toastShowWrong(v);
@@ -266,7 +269,8 @@ public class PracticeActivity extends AppCompatActivity {
                                 saveScore();
                                 txtTrans.setText(transData4[i]);
                                 txtTrans.setVisibility(View.VISIBLE);
-                                txtCongra.setVisibility(View.VISIBLE);
+                                toastShowTrue(v);
+                                //txtCongra.setVisibility(View.VISIBLE);
                                 //Toast.makeText(PracticeActivity.this, "true", Toast.LENGTH_SHORT).show();
                             } else {
                                 toastShowWrong(v);
@@ -282,7 +286,8 @@ public class PracticeActivity extends AppCompatActivity {
                                 saveScore();
                                 txtTrans.setText(transData5[i]);
                                 txtTrans.setVisibility(View.VISIBLE);
-                                txtCongra.setVisibility(View.VISIBLE);
+                                toastShowTrue(v);
+                               // txtCongra.setVisibility(View.VISIBLE);
                                 //Toast.makeText(PracticeActivity.this, "true", Toast.LENGTH_SHORT).show();
                             } else {
                                 toastShowWrong(v);
@@ -332,7 +337,8 @@ public class PracticeActivity extends AppCompatActivity {
                             {
                                 txtTrans.setText(transData[i]);
                                 txtTrans.setVisibility(View.VISIBLE);
-                                txtCongra.setVisibility(View.VISIBLE);
+                                toastShowTrue(v);
+                                //txtCongra.setVisibility(View.VISIBLE);
                                 //Toast.makeText(PracticeActivity.this, "true", Toast.LENGTH_SHORT).show();
                             }
                             else
@@ -354,7 +360,8 @@ public class PracticeActivity extends AppCompatActivity {
                             {
                                 txtTrans.setText(transData2[i]);
                                 txtTrans.setVisibility(View.VISIBLE);
-                                txtCongra.setVisibility(View.VISIBLE);
+                                toastShowTrue(v);
+                               // txtCongra.setVisibility(View.VISIBLE);
                                 //Toast.makeText(PracticeActivity.this, "true", Toast.LENGTH_SHORT).show();
                             }
                             else
@@ -376,7 +383,8 @@ public class PracticeActivity extends AppCompatActivity {
                             {
                                 txtTrans.setText(transData3[i]);
                                 txtTrans.setVisibility(View.VISIBLE);
-                                txtCongra.setVisibility(View.VISIBLE);
+                                toastShowTrue(v);
+                                //txtCongra.setVisibility(View.VISIBLE);
                                 //Toast.makeText(PracticeActivity.this, "true", Toast.LENGTH_SHORT).show();
                             }
                             else
@@ -398,7 +406,8 @@ public class PracticeActivity extends AppCompatActivity {
                             {
                                 txtTrans.setText(transData4[i]);
                                 txtTrans.setVisibility(View.VISIBLE);
-                                txtCongra.setVisibility(View.VISIBLE);
+                                toastShowTrue(v);
+                               // txtCongra.setVisibility(View.VISIBLE);
                                 //Toast.makeText(PracticeActivity.this, "true", Toast.LENGTH_SHORT).show();
                             }
                             else
@@ -420,7 +429,8 @@ public class PracticeActivity extends AppCompatActivity {
                             {
                                 txtTrans.setText(transData5[i]);
                                 txtTrans.setVisibility(View.VISIBLE);
-                                txtCongra.setVisibility(View.VISIBLE);
+                                toastShowTrue(v);
+                                //txtCongra.setVisibility(View.VISIBLE);
                                 //Toast.makeText(PracticeActivity.this, "true", Toast.LENGTH_SHORT).show();
                             }
                             else
@@ -449,7 +459,8 @@ public class PracticeActivity extends AppCompatActivity {
                             } else if (ans.equalsIgnoreCase(ansData[i])) {
                                 txtTrans.setText(transData[i]);
                                 txtTrans.setVisibility(View.VISIBLE);
-                                txtCongra.setVisibility(View.VISIBLE);
+                                toastShowTrue(v);
+                                //txtCongra.setVisibility(View.VISIBLE);
                                 // Toast.makeText(PracticeActivity.this, "true", Toast.LENGTH_SHORT).show();
                             } else {
                                 toastShowWrong(v);
@@ -469,7 +480,8 @@ public class PracticeActivity extends AppCompatActivity {
                             } else if (ans.equalsIgnoreCase(ansData2[i])) {
                                 // Toast.makeText(PracticeActivity.this, "true", Toast.LENGTH_SHORT).show();
                                 txtTrans.setText(transData2[i]);
-                                txtCongra.setVisibility(View.VISIBLE);
+                                toastShowTrue(v);
+                                //txtCongra.setVisibility(View.VISIBLE);
                                 txtTrans.setVisibility(View.VISIBLE);
                             } else {
                                 toastShowWrong(v);
@@ -489,7 +501,8 @@ public class PracticeActivity extends AppCompatActivity {
                             } else if (ans.equalsIgnoreCase(ansData3[i])) {
                                 // Toast.makeText(PracticeActivity.this, "true", Toast.LENGTH_SHORT).show();
                                 txtTrans.setText(transData3[i]);
-                                txtCongra.setVisibility(View.VISIBLE);
+                                toastShowTrue(v);
+                               // txtCongra.setVisibility(View.VISIBLE);
                                 txtTrans.setVisibility(View.VISIBLE);
                             } else {
                                 toastShowWrong(v);
@@ -509,7 +522,8 @@ public class PracticeActivity extends AppCompatActivity {
                             } else if (ans.equalsIgnoreCase(ansData4[i])) {
                                 // Toast.makeText(PracticeActivity.this, "true", Toast.LENGTH_SHORT).show();
                                 txtTrans.setText(transData4[i]);
-                                txtCongra.setVisibility(View.VISIBLE);
+                                toastShowTrue(v);
+                               // txtCongra.setVisibility(View.VISIBLE);
                                 txtTrans.setVisibility(View.VISIBLE);
                             } else {
                                 toastShowWrong(v);
@@ -529,7 +543,8 @@ public class PracticeActivity extends AppCompatActivity {
                             } else if (ans.equalsIgnoreCase(ansData5[i])) {
                                 // Toast.makeText(PracticeActivity.this, "true", Toast.LENGTH_SHORT).show();
                                 txtTrans.setText(transData5[i]);
-                                txtCongra.setVisibility(View.VISIBLE);
+                                toastShowTrue(v);
+                                //txtCongra.setVisibility(View.VISIBLE);
                                 txtTrans.setVisibility(View.VISIBLE);
                             } else {
                                 toastShowWrong(v);
@@ -554,7 +569,8 @@ public class PracticeActivity extends AppCompatActivity {
                                 txtTrans.setVisibility(View.VISIBLE);
                                 // Toast.makeText(PracticeActivity.this, "Please insert", Toast.LENGTH_SHORT).show();
                             } else if (ans.equalsIgnoreCase(ansData[i])) {
-                                txtCongra.setVisibility(View.VISIBLE);
+                                toastShowTrue(v);
+                                //txtCongra.setVisibility(View.VISIBLE);
                                 // Toast.makeText(PracticeActivity.this, "true", Toast.LENGTH_SHORT).show();
                             } else {
                                 toastShowWrong(v);
@@ -570,7 +586,8 @@ public class PracticeActivity extends AppCompatActivity {
                                 txtTrans.setVisibility(View.VISIBLE);
                                 //Toast.makeText(PracticeActivity.this, "Please insert", Toast.LENGTH_SHORT).show();
                             } else if (ans.equalsIgnoreCase(ansData2[i])) {
-                                txtCongra.setVisibility(View.VISIBLE);
+                                //txtCongra.setVisibility(View.VISIBLE);
+                                toastShowTrue(v);
                                 // Toast.makeText(PracticeActivity.this, "true", Toast.LENGTH_SHORT).show();
                             } else {
                                 toastShowWrong(v);
@@ -585,7 +602,8 @@ public class PracticeActivity extends AppCompatActivity {
                                 txtTrans.setVisibility(View.VISIBLE);
                                 //Toast.makeText(PracticeActivity.this, "Please insert", Toast.LENGTH_SHORT).show();
                             } else if (ans.equalsIgnoreCase(ansData3[i])) {
-                                txtCongra.setVisibility(View.VISIBLE);
+                                //txtCongra.setVisibility(View.VISIBLE);
+                                toastShowTrue(v);
                                 // Toast.makeText(PracticeActivity.this, "true", Toast.LENGTH_SHORT).show();
                             } else {
                                 toastShowWrong(v);
@@ -600,7 +618,8 @@ public class PracticeActivity extends AppCompatActivity {
                                 txtTrans.setVisibility(View.VISIBLE);
                                 //Toast.makeText(PracticeActivity.this, "Please insert", Toast.LENGTH_SHORT).show();
                             } else if (ans.equalsIgnoreCase(ansData4[i])) {
-                                txtCongra.setVisibility(View.VISIBLE);
+                                //txtCongra.setVisibility(View.VISIBLE);
+                                toastShowTrue(v);
                                 // Toast.makeText(PracticeActivity.this, "true", Toast.LENGTH_SHORT).show();
                             } else {
                                 toastShowWrong(v);
@@ -615,7 +634,8 @@ public class PracticeActivity extends AppCompatActivity {
                                 txtTrans.setVisibility(View.VISIBLE);
                                 //Toast.makeText(PracticeActivity.this, "Please insert", Toast.LENGTH_SHORT).show();
                             } else if (ans.equalsIgnoreCase(ansData5[i])) {
-                                txtCongra.setVisibility(View.VISIBLE);
+                                //txtCongra.setVisibility(View.VISIBLE);
+                                toastShowTrue(v);
                                 // Toast.makeText(PracticeActivity.this, "true", Toast.LENGTH_SHORT).show();
                             } else {
                                 toastShowWrong(v);
@@ -726,6 +746,19 @@ public class PracticeActivity extends AppCompatActivity {
 
         TextView text = view.findViewById(R.id.txt_toast);
         text.setText("Wrong");
+        Toast toast = new Toast(getApplicationContext());
+        toast.setGravity(Gravity.BOTTOM, 0, 0);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(view);
+        toast.show();
+    }
+    private void toastShowTrue(View view)
+    {
+        LayoutInflater inflater = getLayoutInflater();
+        view = inflater.inflate(R.layout.toast_layout,null);
+
+        TextView text = view.findViewById(R.id.txt_toast);
+        text.setText("Correctly");
         Toast toast = new Toast(getApplicationContext());
         toast.setGravity(Gravity.BOTTOM, 0, 0);
         toast.setDuration(Toast.LENGTH_SHORT);
